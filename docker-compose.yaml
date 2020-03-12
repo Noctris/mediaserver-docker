@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  nginx-proxy-manager:
+    container_name: ${COMPOSE_PROJECT_NAME}_nginx_proxy_manager
+    restart: always
+    image: 'jc21/nginx-proxy-manager:latest'
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    networks:
+      - default
+      - dmz
+      - db
+    links:
+      - nginx-proxy-manager-mariadb
+    depends_on: 
+      - nginx-proxy-manager-mariadb
+    
+  
+  nginx-proxy-manager-mariadb:
+    container_name: ${COMPOSE_PROJECT_NAME}_nginx_proxy_manager_mariadb
+    image: 'jc21/mariadb-aria:10.4'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - db
+
+volumes:
+  ${COMPOSE_PROJECT_NAME}_nginx_proxy_manager_mariadb_data:
