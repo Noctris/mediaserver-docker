@@ -10,9 +10,8 @@ services:
       - '81:81'
       - '443:443'
     networks:
-      - default
       - dmz
-      - db
+      - backend
     links:
       - nginx-proxy-manager-mariadb
     depends_on: 
@@ -30,7 +29,13 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
     networks:
-      - db
+      - backend
 
 volumes:
   nginx_proxy_manager_mariadb_data:
+
+networks:
+  dmz:
+    driver: bridge
+  backend:
+    driver: internal
