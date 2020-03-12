@@ -38,4 +38,4 @@ networks:
   dmz:
     driver: bridge
   backend:
-    driver: null
+    driver: overlay
