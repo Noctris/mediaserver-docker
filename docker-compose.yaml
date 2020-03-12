@@ -33,4 +33,4 @@ services:
       - db
 
 volumes:
-  ${COMPOSE_PROJECT_NAME}_nginx_proxy_manager_mariadb_data:
+  nginx_proxy_manager_mariadb_data:
