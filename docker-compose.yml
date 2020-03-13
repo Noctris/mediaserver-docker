@@ -12,7 +12,7 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
+      - "--entrypoints.${TRAEFIK_ENTRY_POINT}.address=:${TRAEFIK_ENTRY_POINT_PORT}"
     ports:
       - "80:80"
       - "8080:8080"
@@ -25,11 +25,11 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - ${DOCKER_VOL_MOUNT}/portainer:/data
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.lab.vanhoof.me`)"
-      - "traefik.http.routers.portainer.entrypoints=web"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.portainer.entrypoints=${TRAEFIK_ENTRY_POINT}"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
       # This is not necessary if you set your default network in Traefik config/parameters
       #- "traefik.docker.network=dmz"
@@ -41,32 +41,31 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Brussels
+      - TZ=${TZ}
       #- UMASK_SET=022 #optional
     volumes:
-      - /mnt/dockervol/sonarr:/config
-      - /mnt/pmedia/Tv Shows:/tv
-      - /mnt/downloads:/downloads
+      - ${DOCKER_VOL_MOUNT}/sonarr:/config
+      - ${PATH_P_TV_SHOW}:/tv
+      - ${PATH_DOWNLOADS}:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`sonarr.lab.vanhoof.me`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
-      #- "traefik.docker.network=mediaserverdocker_dmz"
+      - "traefik.http.routers.whoami.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.whoami.entrypoints=${TRAEFIK_ENTRY_POINT}"
     restart: unless-stopped
 
-volumes:
-  portainer_data:
-    #name: "portainer_data"
-    driver: "local"
-    driver_opts:
-      #Mountpoint: "/mnt/dockervol/portainer_data/_data"
-      type: "nfs"
-      o: "addr=10.32.1.3,nolock,soft,rw"
-      #device: ":/mnt/jet/jet-lab-docker"
-      device: ":/mnt/tank/system/dockervol/portainer"
-
-networks:
-  dmz:
-    driver: bridge
-  backend:
-    driver: bridge   
+  radarr:
+    restart: unless-stopped
+    image: linuxserver/radarr
+    container_name: radarr
+    depends_on:
+      - nzbget
+    volumes:
+      - ${DOCKER_VOL_MOUNT}/radarr:/config
+      - ${PATH_DOWNLOADS}:/downloads
+      - ${PATH_P_MOVIES}:/movies
+    environment:
+      - TZ=${TZ}
+     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.whoami.entrypoints=${TRAEFIK_ENTRY_POINT}"
