@@ -19,7 +19,6 @@ services:
       - "traefik.docker.network=mediaserverdocker_dmz"
     networks:
       - backend    
-
     restart: unless-stopped
 
 volumes:
