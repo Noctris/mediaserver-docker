@@ -12,6 +12,7 @@ services:
       - "--entrypoints.web.address=:80"
     networks:
       - dmz
+      - backend
     ports:
       - "80:80"
       - "8080:8080"
@@ -27,9 +28,12 @@ services:
       - "traefik.http.routers.whoami.entrypoints=web"
     networks:
       - backend
+  
   portainer:
     image: portainer/portainer
     restart: always
+    networks:
+      - backend
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
