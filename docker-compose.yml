@@ -24,8 +24,8 @@ services:
     image: portainer/portainer
     restart: always
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DOCKER_VOL_MOUNT}/portainer:/data
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${DOCKER_VOL_MOUNT}/portainer:/data"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
@@ -44,9 +44,9 @@ services:
       - TZ="${TZ}"
       #- UMASK_SET=022 #optional
     volumes:
-      - ${DOCKER_VOL_MOUNT}/sonarr:/config
-      - ${PATH_P_TV_SHOW}:/tv
-      - ${PATH_DOWNLOADS}:/downloads
+      - "${DOCKER_VOL_MOUNT}/sonarr:/config"
+      - "${PATH_P_TV_SHOW}:/tv"
+      - "${PATH_DOWNLOADS}:/downloads"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`sonarr.${DOMAIN_NAME}`)"
@@ -59,9 +59,9 @@ services:
     #depends_on:
      # - nzbget
     volumes:
-      - ${DOCKER_VOL_MOUNT}/radarr:/config
-      - ${PATH_DOWNLOADS}:/downloads
-      - ${PATH_P_MOVIES}:/movies
+      - "${DOCKER_VOL_MOUNT}/radarr:/config"
+      - "${PATH_DOWNLOADS}:/downloads"
+      - "${PATH_P_MOVIES}:/movies"
     environment:
       - TZ="${TZ}"
      labels:
