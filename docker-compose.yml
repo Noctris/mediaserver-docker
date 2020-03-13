@@ -80,8 +80,26 @@ services:
     restart: unless-stopped
 
 
+
     
-    # Some more fun tools
+  #Picture time!
+  lychee:
+    image: linuxserver/lychee
+    name: lychee
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/lychee:/config"
+      - "${PATH_LYCHEE}:/pictures"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lychee.rule=Host(`lychee.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.lychee.entrypoints=${TRAEFIK_ENTRY_POINT}"
+    restart: unless-stopped
+
+  # Some more fun tools
   heimdall:
     image: linuxserver/heimdall
     container_name: heimdall
