@@ -49,8 +49,8 @@ services:
       - "${PATH_DOWNLOADS}:/downloads"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`sonarr.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.whoami.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr.entrypoints=${TRAEFIK_ENTRY_POINT}"
     restart: unless-stopped
 
   radarr:
@@ -66,6 +66,6 @@ services:
       - TZ="${TZ}"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`radarr.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.whoami.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr.entrypoints=${TRAEFIK_ENTRY_POINT}"
     restart: unless-stopped
