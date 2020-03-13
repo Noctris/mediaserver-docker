@@ -73,19 +73,19 @@ services:
 
     
     # Some more fun tools
-    heimdall:
-      image: linuxserver/heimdall
-      container_name: heimdall
-      #depends_on:
-       # - nzbget
-      volumes:
-        - "${DOCKER_VOL_MOUNT}/heimdall:/config"
-      environment:
-        - PUID=1000
-        - PGID=1000
-        - TZ="${TZ}"
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.heimdall.rule=Host(`heimdall.${DOMAIN_NAME}`)"
-        - "traefik.http.routers.heimdall.entrypoints=${TRAEFIK_ENTRY_POINT}"
-      restart: unless-stopped
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
+    #depends_on:
+    # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/heimdall:/config"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.heimdall.rule=Host(`heimdall.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.heimdall.entrypoints=${TRAEFIK_ENTRY_POINT}"
+    restart: unless-stopped
