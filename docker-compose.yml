@@ -43,16 +43,14 @@ services:
 
 volumes:
   nfs_docker_example:
-    driver: local
     driver_opts:
-      type: nfs
-      o: addr=10.32.1.3,rw
-      device: ":/mnt/jet/jet-lab-docker"   
+      type: "nfs"
+      o: "addr=10.32.1.3,nolock,soft,rw"
+      device: ":/mnt/jet/jet-lab-docker"  
   portainer_data:
-    driver: local
     driver_opts:
-      type: nfs
-      o: addr=10.32.1.3,rw
+      type: "nfs"
+      o: "addr=10.32.1.3,nolock,soft,rw"
       device: ":/mnt/jet/jet-lab-docker"
 
 networks:
