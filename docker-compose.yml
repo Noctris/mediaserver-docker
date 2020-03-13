@@ -14,8 +14,8 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.${TRAEFIK_ENTRY_POINT}.address=:${TRAEFIK_ENTRY_POINT_PORT}"
     ports:
-      - "80:80"
       - "8080:8080"
+      - "80:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
