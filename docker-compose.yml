@@ -45,7 +45,7 @@ services:
       #- UMASK_SET=022 #optional
     volumes:
       - "${DOCKER_VOL_MOUNT}/sonarr:/config"
-      - "${PATH_P_TV_SHOW}:/tv"
+      - "${PATH_P_TV_SHOWS}:/tv"
       - "${PATH_DOWNLOADS}:/downloads"
     labels:
       - "traefik.enable=true"
