@@ -120,7 +120,7 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:latest
     container_name: gitlab
-    restart: always
+    #restart: always
     hostname: "gitlab.{DOMAIN_NAME}"
     environment: 
       GITLAB_OMNIBUS_CONFIG: |
