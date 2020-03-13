@@ -118,7 +118,7 @@ services:
     restart: unless-stopped
 
   gitlab:
-    image: gitlab/gitlab-ce:latest"
+    image: gitlab/gitlab-ce:latest
     container_name: gitlab
     hostname: "gitlab.{DOMAIN_NAME}"
     volumes:
