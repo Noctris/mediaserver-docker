@@ -13,6 +13,7 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.${TRAEFIK_ENTRY_POINT}.address=:${TRAEFIK_ENTRY_POINT_PORT}"
+      - "--entrypoints.ssl.address=:443"
     ports:
       - "8080:8080"
       - "80:80"
