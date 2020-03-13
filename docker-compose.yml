@@ -41,7 +41,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=${TZ}
+      - TZ="${TZ}"
       #- UMASK_SET=022 #optional
     volumes:
       - ${DOCKER_VOL_MOUNT}/sonarr:/config
@@ -54,11 +54,10 @@ services:
     restart: unless-stopped
 
   radarr:
-    restart: unless-stopped
     image: linuxserver/radarr
     container_name: radarr
-    depends_on:
-      - nzbget
+    #depends_on:
+     # - nzbget
     volumes:
       - ${DOCKER_VOL_MOUNT}/radarr:/config
       - ${PATH_DOWNLOADS}:/downloads
@@ -69,3 +68,4 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`radarr.${DOMAIN_NAME}`)"
       - "traefik.http.routers.whoami.entrypoints=${TRAEFIK_ENTRY_POINT}"
+    restart: unless-stopped
