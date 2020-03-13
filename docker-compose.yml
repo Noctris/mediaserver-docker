@@ -64,7 +64,7 @@ services:
       - ${PATH_DOWNLOADS}:/downloads
       - ${PATH_P_MOVIES}:/movies
     environment:
-      - TZ=${TZ}
+      - TZ="${TZ}"
      labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`radarr.${DOMAIN_NAME}`)"
