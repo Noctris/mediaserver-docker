@@ -49,7 +49,7 @@ services:
 
 volumes:
   portainer_data:
-    name: "portainer_data"
+    #name: "portainer_data"
     driver: "local"
     driver_opts:
       #Mountpoint: "/mnt/dockervol/portainer_data/_data"
