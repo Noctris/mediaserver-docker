@@ -56,7 +56,7 @@ volumes:
       type: "nfs"
       o: "addr=10.32.1.3,nolock,soft,rw"
       #device: ":/mnt/jet/jet-lab-docker"
-      device: ":/mnt/tank/system/dockervol"
+      device: ":/mnt/tank/system/dockervol/portainer_data"
 
 networks:
   dmz:
