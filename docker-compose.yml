@@ -85,7 +85,7 @@ services:
   #Picture time!
   lychee:
     image: linuxserver/lychee
-    name: lychee
+    container_name: lychee
     environment:
       - PUID=1000
       - PGID=1000
