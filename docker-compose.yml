@@ -129,4 +129,4 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.rule=Host(`gitlab.${DOMAIN_NAME}`)"
       - "traefik.http.routers.gitlab.entrypoints=${TRAEFIK_ENTRY_POINT}"
-      - "traefik.http.services.gitlab.loadbalancer.server.port=80"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=443"
