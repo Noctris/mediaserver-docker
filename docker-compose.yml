@@ -18,6 +18,7 @@ services:
       - "80:80"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik.entrypoints=${TRAEFIK_ENTRY_POINT}"
     volumes:
