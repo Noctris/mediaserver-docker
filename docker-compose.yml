@@ -42,9 +42,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Brussels
-      - UMASK_SET=022 #optional
+      #- UMASK_SET=022 #optional
     volumes:
-      - /mnt/dockervol/sonarr2:/config
+      - /mnt/dockervol/sonarr:/config
       - /mnt/pmedia/Tv Shows:/tv
       - /mnt/downloads:/downloads
     labels:
