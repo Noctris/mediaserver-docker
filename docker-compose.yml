@@ -46,13 +46,6 @@ services:
       # This is not necessary if you set your default network in Traefik config/parameters
       - "traefik.docker.network=dmz"
 
-volumes:
-  nfs_docker_example:
-    driver_opts:
-      type: "nfs"
-      o: "addr=10.32.1.3,nolock,soft,rw"
-      #device: ":/mnt/jet/jet-lab-docker"
-      device: ":/mnt/tank/system/dockervol/nfs_test"
   portainer_data:
     driver_opts:
       type: "nfs"
