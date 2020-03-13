@@ -49,8 +49,9 @@ services:
 
 volumes:
   portainer_data:
+    name: "portainer_data"
+    driver: "local"
     driver_opts:
-      driver: "local"
       #Mountpoint: "/mnt/dockervol/portainer_data/_data"
       type: "nfs"
       o: "addr=10.32.1.3,nolock,soft,rw"
