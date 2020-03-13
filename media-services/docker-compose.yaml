@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+  # The reverse proxy to all the internal dockers to ty this whole thing together
   nginx-proxy-manager:
     container_name: ${COMPOSE_PROJECT_NAME}_nginx_proxy_manager
     restart: always
