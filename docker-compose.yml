@@ -23,10 +23,23 @@ services:
     container_name: "simple-service"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`lab.vanhoof.me`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.lab.vanhoof.me`)"
       - "traefik.http.routers.whoami.entrypoints=web"
     networks:
       - backend
+  portainer:
+    image: portainer/portainer
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.lab.vanhoof.me`)"
+      - "traefik.http.routers.portainer.entrypoints=web"
+      # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
+      # This is not necessary if you set your default network in Traefik config/parameters
+      # - "traefik.docker.network=your-traefik-network-name"
 
 volumes:
   nfs_docker_example:
@@ -35,6 +48,12 @@ volumes:
       type: nfs
       o: addr=10.32.1.3,rw
       device: ":/mnt/jet/jet-lab-docker"   
+  portainer_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.32.1.3,rw
+      device: ":/mnt/jet/jet-lab-docker/portainer_data"
 
 networks:
   dmz:
