@@ -17,6 +17,7 @@ services:
     ports:
       - "8080:8080"
       - "80:80"
+      - "443:443"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
@@ -24,6 +25,8 @@ services:
       - "traefik.http.routers.traefik.entrypoints=${TRAEFIK_ENTRY_POINT}"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
+      - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
   
   # Management Platform Portainer to manage docker stuff
   portainer:
