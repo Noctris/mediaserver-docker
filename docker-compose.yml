@@ -46,6 +46,8 @@ services:
       # This is not necessary if you set your default network in Traefik config/parameters
       - "traefik.docker.network=dmz"
 
+
+volumes:
   portainer_data:
     driver_opts:
       type: "nfs"
