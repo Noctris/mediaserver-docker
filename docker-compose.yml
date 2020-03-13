@@ -1,8 +1,11 @@
 version: "3.3"
 
 services:
+
+  #First setup a reverse proxy to access everything that is running
   traefik:
     image: "traefik:latest"
+    restart: always
     container_name: "traefik"
     command:
       #- "--log.level=DEBUG"
@@ -10,30 +13,16 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-    networks:
-      - dmz
     ports:
       - "80:80"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-  whoami:
-    image: "containous/whoami"
-    container_name: "simple-service"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.lab.vanhoof.me`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
-      - "traefik.docker.network=dmz"
-    networks:
-      - backend
   
+  # Management Platform Portainer to manage docker stuff
   portainer:
     image: portainer/portainer
     restart: always
-    networks:
-      - backend
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
@@ -43,8 +32,27 @@ services:
       - "traefik.http.routers.portainer.entrypoints=web"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
       # This is not necessary if you set your default network in Traefik config/parameters
-      - "traefik.docker.network=dmz"
+      #- "traefik.docker.network=dmz"
 
+  # TV Show Tool
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+      - UMASK_SET=022 #optional
+    volumes:
+      - /mnt/dockervol/sonarr2:/config
+      - /mnt/pmedia/Tv Shows:/tv
+      - /mnt/downloads:/downloads
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`sonarr.lab.vanhoof.me`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+      #- "traefik.docker.network=mediaserverdocker_dmz"
+    restart: unless-stopped
 
 volumes:
   portainer_data:
