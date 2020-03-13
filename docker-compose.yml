@@ -26,6 +26,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`whoami.lab.vanhoof.me`)"
       - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.docker.network=dmz"
     networks:
       - backend
   
@@ -43,7 +44,7 @@ services:
       - "traefik.http.routers.portainer.entrypoints=web"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
       # This is not necessary if you set your default network in Traefik config/parameters
-      # - "traefik.docker.network=your-traefik-network-name"
+      - "traefik.docker.network=dmz"
 
 volumes:
   nfs_docker_example:
