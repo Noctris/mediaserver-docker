@@ -115,7 +115,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.heimdall.rule=Host(`heimdall.${DOMAIN_NAME}`)"
       - "traefik.http.routers.heimdall.entrypoints=${TRAEFIK_ENTRY_POINT}"
-  restart: unless-stopped
+    restart: unless-stopped
 
   # gitlab:
   #   image: gitlab/gitlab-ce:latest
