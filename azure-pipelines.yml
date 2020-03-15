@@ -53,7 +53,7 @@ steps:
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'down'
 - task: DockerCompose@0
-  displayName: Deploy the Mediaserver compose image
+  displayName: Deploy the Mediaserver in Lab
   inputs:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
