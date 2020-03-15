@@ -15,15 +15,15 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
     dockerComposeFileArgs: |
-      TRAEFIK_ENTRY_POINT=web
-      TRAEFIK_ENTRY_POINT_PORT=80
+      TRAEFIK_ENTRY_POINT=${TRAEFIK_ENTRY_POINT}
+      TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
       TZ=Europe/Brussels
-      DOMAIN_NAME=$DOMAIN_NAME
-      DOCKER_VOL_MOUNT=/mnt/dockervol
-      PATH_P_TV_SHOWS=/mnt/pmedia/Tv Shows
-      PATH_P_MOVIES=/mnt/pmedia/Film
-      PATH_DOWNLOADS=/mnt/downloads
-      PATH_LYCHEE=/mnt/lychee
+      DOMAIN_NAME=${VS_DOMAIN_NAME}
+      DOCKER_VOL_MOUNT=${DOCKER_VOL_MOUNT}
+      PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
+      PATH_P_MOVIES=${PATH_P_MOVIES}
+      PATH_DOWNLOADS=${PATH_DOWNLOADS}
+      PATH_LYCHEE=${PATH_LYCHEE}
     action: 'Combine configuration'
     outputDockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yml'
 - task: DockerCompose@0
@@ -31,21 +31,22 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
     dockerComposeFileArgs: |
-      TRAEFIK_ENTRY_POINT=web
-      TRAEFIK_ENTRY_POINT_PORT=80
+      TRAEFIK_ENTRY_POINT=${TRAEFIK_ENTRY_POINT}
+      TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
       TZ=Europe/Brussels
-      DOMAIN_NAME=$DOMAIN_NAME
-      DOCKER_VOL_MOUNT=/mnt/dockervol
-      PATH_P_TV_SHOWS=/mnt/pmedia/Tv Shows
-      PATH_P_MOVIES=/mnt/pmedia/Film
-      PATH_DOWNLOADS=/mnt/downloads
-      PATH_LYCHEE=/mnt/lychee
-    action: 'Run services'
-    buildImages: false
+      DOMAIN_NAME=${VS_DOMAIN_NAME}
+      DOCKER_VOL_MOUNT=${DOCKER_VOL_MOUNT}
+      PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
+      PATH_P_MOVIES=${PATH_P_MOVIES}
+      PATH_DOWNLOADS=${PATH_DOWNLOADS}
+      PATH_LYCHEE=${PATH_LYCHEE}
+    action: 'Run a Docker Compose command'
+    dockerComposeCommand: 'docker-compose config'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
     artifact: 'docker-media-server'
     publishLocation: 'pipeline'
+
 
     
