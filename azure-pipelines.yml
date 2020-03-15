@@ -21,12 +21,12 @@ steps:
 - bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> $(Build.StagingDirectory)/.env
 - bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> $(Build.StagingDirectory)/.env
 - bash: cat $(Build.StagingDirectory)/.env
-#- bash: cp docker-compose.yml $(Build.StagingDirectory)/docker-compose.yml
+- bash: cp docker-compose.yml $(Build.StagingDirectory)/docker-compose.yml
 - task: DockerCompose@0
   displayName: Docker Compose Config
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerComposeFile: '**/docker-compose.yaml'
+    dockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yml'
     dockerComposeFileArgs: |
       TRAEFIK_ENTRY_POINT=$(variables.TRAEFIK_ENTRY_POINT)
       TRAEFIK_ENTRY_POINT_PORT=$(variables.TRAEFIK_ENTRY_POINT_PORT)
@@ -43,7 +43,7 @@ steps:
   displayName: Kill the running setup
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerComposeFile: '**/docker-compose.yaml'
+    dockerComposeFile: '**/docker-compose.yml'
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'down'
 - task: DockerCompose@0
