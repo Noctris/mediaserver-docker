@@ -10,6 +10,24 @@ pool:
   name: 'home-lab-build-docker'
 steps:
 - task: PublishPipelineArtifact@1
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerComposeFile: '**/docker-compose.yml'
+    dockerComposeFileArgs: |
+      TRAEFIK_ENTRY_POINT=web
+      TRAEFIK_ENTRY_POINT_PORT=80
+      TZ=Europe/Brussels
+      DOMAIN_NAME=lab.vanhoof.me
+      DOCKER_VOL_MOUNT=/mnt/dockervol
+      
+      
+      PATH_P_TV_SHOWS=/mnt/pmedia/Tv Shows
+      PATH_P_MOVIES=/mnt/pmedia/Film
+      PATH_DOWNLOADS=/mnt/downloads
+      PATH_LYCHEE=/mnt/lychee
+    action: 'Run a Docker Compose command'
+    dockerComposeCommand: 'docker-compose config'
   inputs:
     targetPath: '$(Pipeline.Workspace)'
     artifact: 'docker-media-server'
