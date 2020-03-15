@@ -1,0 +1,10 @@
+- bash: echo TRAEFIK_ENTRY_POINT=$(TRAEFIK_ENTRY_POINT) >> $(Build.StagingDirectory)/.env
+- bash: echo TRAEFIK_ENTRY_POINT_PORT=$(TRAEFIK_ENTRY_POINT_PORT) >> $(Build.StagingDirectory)/.env
+- bash: echo TZ=Europe/Brussels >> $(Build.StagingDirectory)/.env
+- bash: echo DOMAIN_NAME=$(VS_DOMAIN_NAME) >> $(Build.StagingDirectory)/.env
+- bash: echo DOCKER_VOL_MOUNT=$(DOCKER_VOL_MOUNT) >> $(Build.StagingDirectory)/.env
+- bash: echo PATH_P_TV_SHOWS=$(PATH_P_TV_SHOWS) >> $(Build.StagingDirectory)/.env
+- bash: echo PATH_P_MOVIES=$(PATH_P_MOVIES) >> $(Build.StagingDirectory)/.env
+- bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> $(Build.StagingDirectory)/.env
+- bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> $(Build.StagingDirectory)/.env
+- bash: cat $(Build.StagingDirectory)/.env

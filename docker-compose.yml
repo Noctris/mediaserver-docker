@@ -19,7 +19,10 @@ services:
       - "80:80"
       - "443:443"
     labels:
+      #Need to check this. Api not workingy yet
       - "traefik.enable=true"
+      - "traefik.http.routers.traefikapi.service=api@internal"
+      - "traefik.http.routers.traefikapi.rule=Host(`api.traefik.${DOMAIN_NAME}`)"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik.entrypoints=${TRAEFIK_ENTRY_POINT}"
@@ -27,7 +30,29 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
      # - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
      # - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
-  
+  nginx_proxy_manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: "nginx_proxy_manager"
+    labels:
+      #Need to check this. Api not workingy yet
+      - "traefik.enable=true"
+      - "traefik.http.services.nginx_proxy_manager.loadbalancer.server.port=81"
+      - "traefik.http.routers.nginx_proxy_manager.rule=Host(`nginx.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.nginx_proxy_manager.entrypoints=${TRAEFIK_ENTRY_POINT}"
+    volumes:
+      - ${DOCKER_VOL_MOUNT}/nginx_proxy_manager/config.json:/app/config/production.json
+      - ${DOCKER_VOL_MOUNT}/nginx_proxy_manager/data:/data
+      - ${DOCKER_VOL_MOUNT}/letsencrypt_data:/etc/letsencrypt
+  nginx_proxy_manager_db:
+    container_name: "nginx_proxy_manager_db"
+    image: 'jc21/mariadb-aria:10.4'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      -${DOCKER_VOL_MOUNT}/nginx_proxy_manager_db/data/mysql:/var/lib/mysql    
   # Management Platform Portainer to manage docker stuff
   portainer:
     image: portainer/portainer
