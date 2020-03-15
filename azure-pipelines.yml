@@ -8,11 +8,11 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-
-- task: PublishBuildArtifacts@1
+steps:
+- task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'docker-media-server-build'
-    publishLocation: 'Container'
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: 'docker-media-server'
+    publishLocation: 'pipeline'
 
     
