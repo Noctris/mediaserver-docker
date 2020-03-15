@@ -11,7 +11,7 @@ pool:
   name: 'home-lab-build-docker'
 
 steps:
-- bash: sh scripts/generate-env-file.sh
+- bash: ./generate-env-file.sh
 - bash: pwd
 - bash: docker-compose config
   displayName: Docker Compose Config
