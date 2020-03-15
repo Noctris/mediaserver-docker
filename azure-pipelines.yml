@@ -7,7 +7,7 @@ trigger:
 - master develop
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'home-lab-build-docker'
 steps:
 - task: PublishPipelineArtifact@1
   inputs:
