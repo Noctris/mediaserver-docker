@@ -6,7 +6,9 @@
 
 trigger:
 - master develop
-
+variables:
+  - name: DOCKER_VOL_MOUNT
+  - value: /mnt/dockervol
 pool:
   name: 'home-lab-build-docker'
 steps:
@@ -19,7 +21,7 @@ steps:
       TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
       TZ=Europe/Brussels
       DOMAIN_NAME=${VS_DOMAIN_NAME}
-      DOCKER_VOL_MOUNT=$DOCKER_VOL_MOUNT
+      DOCKER_VOL_MOUNT=${DOCKER_VOL_MOUNT}
       PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
       PATH_P_MOVIES=${PATH_P_MOVIES}
       PATH_DOWNLOADS=${PATH_DOWNLOADS}
