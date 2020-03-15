@@ -8,7 +8,7 @@ trigger:
 - master develop
 variables:
   - name: DOCKER_VOL_MOUNT
-  - value: /mnt/dockervol
+    value: /mnt/dockervol
 pool:
   name: 'home-lab-build-docker'
 steps:
