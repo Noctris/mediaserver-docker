@@ -15,15 +15,15 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
     dockerComposeFileArgs: |
-      TRAEFIK_ENTRY_POINT=${TRAEFIK_ENTRY_POINT}
-      TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
+      TRAEFIK_ENTRY_POINT=${{variables.TRAEFIK_ENTRY_POINT}}
+      TRAEFIK_ENTRY_POINT_PORT=${{variables.TRAEFIK_ENTRY_POINT_PORT}}
       TZ=Europe/Brussels
-      DOMAIN_NAME=${VS_DOMAIN_NAME}
+      DOMAIN_NAME=${{variables.VS_DOMAIN_NAME}}
       DOCKER_VOL_MOUNT=${{variables.DOCKER_VOL_MOUNT}}
-      PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
-      PATH_P_MOVIES=${PATH_P_MOVIES}
-      PATH_DOWNLOADS=${PATH_DOWNLOADS}
-      PATH_LYCHEE=${PATH_LYCHEE}
+      PATH_P_TV_SHOWS=${{variables.PATH_P_TV_SHOWS}}
+      PATH_P_MOVIES=${{variables.PATH_P_MOVIES}}
+      PATH_DOWNLOADS=${{variables.PATH_DOWNLOADS}}
+      PATH_LYCHEE=${{variables.PATH_LYCHEE}}
     action: 'Combine configuration'
     outputDockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yml'
 - task: DockerCompose@0
@@ -31,15 +31,15 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
     dockerComposeFileArgs: |
-      TRAEFIK_ENTRY_POINT=${TRAEFIK_ENTRY_POINT}
-      TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
+      TRAEFIK_ENTRY_POINT=${{variables.TRAEFIK_ENTRY_POINT}}
+      TRAEFIK_ENTRY_POINT_PORT=${{variables.TRAEFIK_ENTRY_POINT_PORT}}
       TZ=Europe/Brussels
-      DOMAIN_NAME=${VS_DOMAIN_NAME}
-      DOCKER_VOL_MOUNT=${DOCKER_VOL_MOUNT}
-      PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
-      PATH_P_MOVIES=${PATH_P_MOVIES}
-      PATH_DOWNLOADS=${PATH_DOWNLOADS}
-      PATH_LYCHEE=${PATH_LYCHEE}
+      DOMAIN_NAME=${{variables.VS_DOMAIN_NAME}}
+      DOCKER_VOL_MOUNT=${{variables.DOCKER_VOL_MOUNT}}
+      PATH_P_TV_SHOWS=${{variables.PATH_P_TV_SHOWS}}
+      PATH_P_MOVIES=${{variables.PATH_P_MOVIES}}
+      PATH_DOWNLOADS=${{variables.PATH_DOWNLOADS}}
+      PATH_LYCHEE=${{variables.PATH_LYCHEE}}
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'config'
 - task: DockerCompose@0
@@ -47,15 +47,15 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
     dockerComposeFileArgs: |
-      TRAEFIK_ENTRY_POINT=${TRAEFIK_ENTRY_POINT}
-      TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
+      TRAEFIK_ENTRY_POINT=${{variables.TRAEFIK_ENTRY_POINT}}
+      TRAEFIK_ENTRY_POINT_PORT=${{variables.TRAEFIK_ENTRY_POINT_PORT}}
       TZ=Europe/Brussels
-      DOMAIN_NAME=${VS_DOMAIN_NAME}
-      DOCKER_VOL_MOUNT=${DOCKER_VOL_MOUNT}
-      PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
-      PATH_P_MOVIES=${PATH_P_MOVIES}
-      PATH_DOWNLOADS=${PATH_DOWNLOADS}
-      PATH_LYCHEE=${PATH_LYCHEE}
+      DOMAIN_NAME=${{variables.VS_DOMAIN_NAME}}
+      DOCKER_VOL_MOUNT=${{variables.DOCKER_VOL_MOUNT}}
+      PATH_P_TV_SHOWS=${{variables.PATH_P_TV_SHOWS}}
+      PATH_P_MOVIES=${{variables.PATH_P_MOVIES}}
+      PATH_DOWNLOADS=${{variables.PATH_DOWNLOADS}}
+      PATH_LYCHEE=${{variables.PATH_LYCHEE}}
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'up -d'
 - task: PublishPipelineArtifact@1
