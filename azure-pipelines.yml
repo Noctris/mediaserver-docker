@@ -10,23 +10,7 @@ trigger:
 pool:
   name: 'home-lab-build-docker'
 steps:
-- task: DockerCompose@0
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerComposeFile: '**/docker-compose.yml'
-    dockerComposeFileArgs: |
-      TRAEFIK_ENTRY_POINT=${TRAEFIK_ENTRY_POINT}
-      TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
-      TZ=Europe/Brussels
-      DOMAIN_NAME=${VS_DOMAIN_NAME}
-      DOCKER_VOL_MOUNT=${DOCKER_VOL_MOUNT}
-      PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
-      PATH_P_MOVIES=${PATH_P_MOVIES}
-      PATH_DOWNLOADS=${PATH_DOWNLOADS}
-      PATH_LYCHEE=${PATH_LYCHEE}
-    action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'up -d'
-- task: DockerCompose@0
+  - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
@@ -57,7 +41,23 @@ steps:
       PATH_DOWNLOADS=${PATH_DOWNLOADS}
       PATH_LYCHEE=${PATH_LYCHEE}
     action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'docker-compose config'
+    dockerComposeCommand: 'config'
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerComposeFile: '**/docker-compose.yml'
+    dockerComposeFileArgs: |
+      TRAEFIK_ENTRY_POINT=${TRAEFIK_ENTRY_POINT}
+      TRAEFIK_ENTRY_POINT_PORT=${TRAEFIK_ENTRY_POINT_PORT}
+      TZ=Europe/Brussels
+      DOMAIN_NAME=${VS_DOMAIN_NAME}
+      DOCKER_VOL_MOUNT=${DOCKER_VOL_MOUNT}
+      PATH_P_TV_SHOWS=${PATH_P_TV_SHOWS}
+      PATH_P_MOVIES=${PATH_P_MOVIES}
+      PATH_DOWNLOADS=${PATH_DOWNLOADS}
+      PATH_LYCHEE=${PATH_LYCHEE}
+    action: 'Run a Docker Compose command'
+    dockerComposeCommand: 'up -d'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
