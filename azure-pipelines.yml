@@ -11,9 +11,15 @@ pool:
   name: 'home-lab-build-docker'
 
 steps:
-- task: CmdLine@2
-  inputs:
-    script: echo $(DOCKER_VOL_MOUNT)
+- bash: echo TRAEFIK_ENTRY_POINT=$(TRAEFIK_ENTRY_POINT) >> .env
+- bash: echo TRAEFIK_ENTRY_POINT_PORT=$(TRAEFIK_ENTRY_POINT_PORT) >> .env
+- bash: echo TZ=Europe/Brussels >> .env
+- bash: echo DOMAIN_NAME=$(VS_DOMAIN_NAME) >> .env
+- bash: echo DOCKER_VOL_MOUNT=$(DOCKER_VOL_MOUNT) >> .env
+- bash: echo PATH_P_TV_SHOWS=$(PATH_P_TV_SHOWS) >> .env
+- bash: echo PATH_P_MOVIES=$(PATH_P_MOVIES) >> .env
+- bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> .env
+- bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> .env
 - task: DockerCompose@0
   displayName: Combine Configuration
   inputs:
