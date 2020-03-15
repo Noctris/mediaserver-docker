@@ -11,6 +11,9 @@ pool:
   name: 'home-lab-build-docker'
 
 steps:
+- task: CmdLine@2
+  inputs:
+    script: 'echo ${{variables.DOCKER_VOL_MOUNT}}'
 - task: DockerCompose@0
   displayName: Combine Configuration
   inputs:
