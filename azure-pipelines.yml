@@ -25,7 +25,7 @@ steps:
   displayName: Docker Compose Config
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerComposeFile: '**/docker-compose.yml'
+    dockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yaml'
     dockerComposeFileArgs: |
       TRAEFIK_ENTRY_POINT=${{variables.TRAEFIK_ENTRY_POINT}}
       TRAEFIK_ENTRY_POINT_PORT=${{variables.TRAEFIK_ENTRY_POINT_PORT}}
@@ -37,7 +37,7 @@ steps:
       PATH_DOWNLOADS=${{variables.PATH_DOWNLOADS}}
       PATH_LYCHEE=${{variables.PATH_LYCHEE}}
     action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'config > $(Build.StagingDirectory)/docker-compose.yaml'
+    dockerComposeCommand: 'config'
 - task: DockerCompose@0
   displayName: Kill the running setup
   inputs:
