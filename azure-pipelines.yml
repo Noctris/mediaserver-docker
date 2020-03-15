@@ -10,7 +10,7 @@ trigger:
 pool:
   name: 'home-lab-build-docker'
 steps:
-  - task: DockerCompose@0
+- task: DockerCompose@0
   inputs:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
