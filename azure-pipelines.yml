@@ -9,7 +9,6 @@ trigger:
 pool:
   name: 'home-lab-build-docker'
 steps:
-- task: PublishPipelineArtifact@1
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Container Registry'
@@ -28,6 +27,7 @@ steps:
       PATH_LYCHEE=/mnt/lychee
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'docker-compose config'
+- task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
     artifact: 'docker-media-server'
