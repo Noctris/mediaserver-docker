@@ -21,7 +21,7 @@ steps:
 - bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> $(Build.StagingDirectory)/.env
 - bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> $(Build.StagingDirectory)/.env
 - bash: cat $(Build.StagingDirectory)/.env
-- bash: cp docker-compose.yml $(Build.StagingDirectory)/
+- bash: cp docker-compose.yml $(Build.StagingDirectory)/docker-compose.yml
 - task: DockerCompose@0
   displayName: Docker Compose Config
   inputs:
