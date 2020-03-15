@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -25,8 +26,8 @@ steps:
       PATH_P_MOVIES=/mnt/pmedia/Film
       PATH_DOWNLOADS=/mnt/downloads
       PATH_LYCHEE=/mnt/lychee
-    action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'docker-compose config'
+    action: 'Combine configuration'
+    outputDockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yml'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
