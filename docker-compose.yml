@@ -25,8 +25,8 @@ services:
       - "traefik.http.routers.traefik.entrypoints=${TRAEFIK_ENTRY_POINT}"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
-      - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
+     # - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
+     # - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
   
   # Management Platform Portainer to manage docker stuff
   portainer:
