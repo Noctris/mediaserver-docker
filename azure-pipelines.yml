@@ -26,7 +26,7 @@ steps:
   displayName: Docker Compose Config
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yaml'
+    dockerComposeFile: '**/docker-compose.yaml'
     dockerComposeFileArgs: |
       TRAEFIK_ENTRY_POINT=${{variables.TRAEFIK_ENTRY_POINT}}
       TRAEFIK_ENTRY_POINT_PORT=${{variables.TRAEFIK_ENTRY_POINT_PORT}}
@@ -43,14 +43,14 @@ steps:
   displayName: Kill the running setup
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yaml'
+    dockerComposeFile: '**/docker-compose.yaml'
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'down'
 - task: DockerCompose@0
   displayName: Deploy the Mediaserver in Lab
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerComposeFile: $(Build.StagingDirectory)/docker-compose.yml'
+    dockerComposeFile: '**/docker-compose.yml'
     dockerComposeFileArgs: |
       TRAEFIK_ENTRY_POINT=${{variables.TRAEFIK_ENTRY_POINT}}
       TRAEFIK_ENTRY_POINT_PORT=${{variables.TRAEFIK_ENTRY_POINT_PORT}}
