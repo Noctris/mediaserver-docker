@@ -260,13 +260,20 @@ services:
   plex:
     image: linuxserver/plex
     container_name: plex
-    network_mode: host
+    #network_mode: host
     environment:
       - PUID=1000
       - PGID=1000
       - VERSION=docker
       - UMASK_SET=022 #optional
       #- PLEX_CLAIM= #optional
+    ports:
+      - 32400:32400
+      - 32400:32400/udp
+      - 32469:32469
+      - 32469:32469/udp
+      - 5353:5353/udp
+      - 1900:1900/udp
     volumes:
       - "${DOCKER_VOL_MOUNT}/plex:/config"
       - "${PATH_P_TV_SHOWS}:/tv"
@@ -277,9 +284,11 @@ services:
       - "traefik.http.routers.plex.middlewares=plex-secure"
       - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN_NAME}`)"
       - "traefik.http.routers.plex.entrypoints=web"
+      - "traefik.http.services.plex.loadbalancer.server.port=8080"
       - "traefik.http.middlewares.plex.redirectscheme.scheme=https"
       - "traefik.http.routers.plex-secure.rule=Host(`plex.${DOMAIN_NAME}`)"
       - "traefik.http.routers.plex-secure.entrypoints=webSecure"
       - "traefik.http.routers.plex-secure.tls=true"
       - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
+      - "traefik.http.services.plex-secure.loadbalancer.server.port=8080"
     restart: unless-stopped
