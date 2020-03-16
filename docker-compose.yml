@@ -147,7 +147,44 @@ services:
       - "traefik.http.routers.guacd-secure.tls.certresolver=myresolver"
     restart: unless-stopped
 
-
+  # habridge:
+  #   image: linuxserver/habridge
+  #   container_name: habridge
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - SEC_KEY=${HABRIDGE_KEY}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - ${DOCKER_VOL_MOUNT}/habridge:/config
+  #   ports:
+  #     - 8080:8080
+  #     - 50000:50000
+  #   restart: unless-stopped
+  duplicati:
+    image: linuxserver/duplicati
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - CLI_ARGS= #optional
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/duplicati/config:/config"
+      - "${DOCKER_VOL_MOUNT}/duplicati/backups:/backups"
+      - "${DOCKER_VOL_MOUNT}/duplicati/source:/source"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.duplicati-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.duplicati.middlewares=duplicati-secure"
+      - "traefik.http.routers.duplicati.rule=Host(`duplicati.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.duplicati.entrypoints=web"
+      - "traefik.http.middlewares.duplicati.redirectscheme.scheme=https"
+      - "traefik.http.routers.duplicati-secure.rule=Host(`duplicati.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.duplicati-secure.entrypoints=webSecure"
+      - "traefik.http.routers.duplicati-secure.tls=true"
+      - "traefik.http.routers.duplicati-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
     
   #Picture time!
   lychee:
@@ -163,7 +200,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.middlewares.lychee-secure.redirectscheme.scheme=https"
-      - "traefik.http.routers.lychee.middlewares=radarr-secure"
+      - "traefik.http.routers.lychee.middlewares=lychee-secure"
       - "traefik.http.routers.lychee.rule=Host(`lychee.${DOMAIN_NAME}`)"
       - "traefik.http.routers.lychee.entrypoints=web"
       - "traefik.http.middlewares.lychee.redirectscheme.scheme=https"
@@ -188,7 +225,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.middlewares.heimdall-secure.redirectscheme.scheme=https"
-      - "traefik.http.routers.heimdall.middlewares=radarr-secure"
+      - "traefik.http.routers.heimdall.middlewares=heimdall-secure"
       - "traefik.http.routers.heimdall.rule=Host(`dash.${DOMAIN_NAME}`)"
       - "traefik.http.routers.heimdall.entrypoints=web"
       - "traefik.http.middlewares.heimdall.redirectscheme.scheme=https"
