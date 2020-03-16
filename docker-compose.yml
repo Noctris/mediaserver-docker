@@ -52,7 +52,7 @@ services:
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'npm'
     volumes:
-      -${DOCKER_VOL_MOUNT}/nginx_proxy_manager_db/data/mysql:/var/lib/mysql    
+      - ${DOCKER_VOL_MOUNT}/nginx_proxy_manager_db/data/mysql:/var/lib/mysql    
   # Management Platform Portainer to manage docker stuff
   portainer:
     image: portainer/portainer
