@@ -14,6 +14,9 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.${TRAEFIK_ENTRY_POINT}.address=:${TRAEFIK_ENTRY_POINT_PORT}"
       - "--entrypoints.ssl.address=:443"
+      - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
+      - "--certificatesResolvers.myresolver.acme.storage=acme.json"
+      - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web"
     ports:
       - "8080:8080"
       - "80:80"
@@ -29,7 +32,7 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
      # - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
-     # - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
+      - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
   nginx_proxy_manager:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: "nginx_proxy_manager"
@@ -64,6 +67,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.routers.portainer.tls.certresolver=myresolver"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
       # This is not necessary if you set your default network in Traefik config/parameters
       #- "traefik.docker.network=dmz"
