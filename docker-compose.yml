@@ -38,8 +38,15 @@ services:
       - "traefik.http.routers.traefikapi.rule=Host(`api.traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefikapi.entrypoints=web"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.traefik-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.traefik.middlewares=sonarr-secure"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.traefik.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.middlewares.traefik.redirectscheme.scheme=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefik-secure.entrypoints=webSecure"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
      # - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
@@ -108,8 +115,15 @@ services:
       - "${PATH_DOWNLOADS}:/downloads"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.middlewares.sonarr-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr.middlewares=sonarr-secure"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.sonarr.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.sonarr.entrypoints=web"
+      - "traefik.http.middlewares.sonarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr-secure.entrypoints=webSecure"
+      - "traefik.http.routers.sonarr-secure.tls=true"
+      - "traefik.http.routers.sonarr-secure.tls.certresolver=myresolver"
     restart: unless-stopped
 
   radarr:
@@ -125,8 +139,15 @@ services:
       - TZ="${TZ}"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.middlewares.radarr-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr.middlewares=radarr-secure"
       - "traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.radarr.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.radarr.entrypoints=web"
+      - "traefik.http.middlewares.radarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr-secure.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr-secure.entrypoints=webSecure"
+      - "traefik.http.routers.radarr-secure.tls=true"
+      - "traefik.http.routers.radarr-secure.tls.certresolver=myresolver"
     restart: unless-stopped
 
 
@@ -145,8 +166,15 @@ services:
       - "${PATH_LYCHEE}:/pictures"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.middlewares.lychee-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.lychee.middlewares=radarr-secure"
       - "traefik.http.routers.lychee.rule=Host(`lychee.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.lychee.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.lychee.entrypoints=web"
+      - "traefik.http.middlewares.lychee.redirectscheme.scheme=https"
+      - "traefik.http.routers.lychee-secure.rule=Host(`lychee.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.lychee-secure.entrypoints=webSecure"
+      - "traefik.http.routers.lychee-secure.tls=true"
+      - "traefik.http.routers.lychee-secure.tls.certresolver=myresolver"
     restart: unless-stopped
 
   # Some more fun tools
@@ -163,11 +191,15 @@ services:
       - TZ="${TZ}"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.heimdall.rule=Host(`heimdall.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.heimdall.entrypoints=${TRAEFIK_ENTRY_POINT}"
-      - "traefik.http.routers.heimdall.entrypoints=webSecure"
-      - "traefik.http.routers.heimdall.tls=true"
-      - "traefik.http.routers.heimdall.tls.certresolver=myresolver"
+      - "traefik.http.middlewares.heimdall-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.heimdall.middlewares=radarr-secure"
+      - "traefik.http.routers.heimdall.rule=Host(`dash.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.heimdall.entrypoints=web"
+      - "traefik.http.middlewares.heimdall.redirectscheme.scheme=https"
+      - "traefik.http.routers.heimdall-secure.rule=Host(`dash.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.heimdall-secure.entrypoints=webSecure"
+      - "traefik.http.routers.heimdall-secure.tls=true"
+      - "traefik.http.routers.heimdall-secure.tls.certresolver=myresolver"
     restart: unless-stopped
 
   # gitlab:
