@@ -25,13 +25,13 @@ steps:
 - bash: pwd
 - bash: docker-compose config
   displayName: Docker Compose Config
-- task: DockerCompose@0
-  displayName: Kill the running setup
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerComposeFile: '**/docker-compose.yml'
-    action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'down'
+# - task: DockerCompose@0
+#   displayName: Kill the running setup
+#   inputs:
+#     containerregistrytype: 'Container Registry'
+#     dockerComposeFile: '**/docker-compose.yml'
+#     action: 'Run a Docker Compose command'
+#     dockerComposeCommand: 'down'
 - task: DockerCompose@0
   displayName: Deploy the Mediaserver in Lab
   inputs:
