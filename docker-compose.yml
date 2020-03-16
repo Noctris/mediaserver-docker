@@ -51,7 +51,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
      # - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
       - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
-      
+
   # Management Platform Portainer to manage docker stuff
   portainer:
     image: portainer/portainer
@@ -127,6 +127,23 @@ services:
       - "traefik.http.routers.radarr-secure.tls.certresolver=myresolver"
     restart: unless-stopped
 
+    guacd:
+      image: linuxserver/guacd
+      container_name: guacd
+      environment:
+        - TZ="${TZ}"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.guacd-secure.redirectscheme.scheme=https"
+        - "traefik.http.routers.guacd.middlewares=guacd-secure"
+        - "traefik.http.routers.guacd.rule=Host(`ts.${DOMAIN_NAME}`)"
+        - "traefik.http.routers.guacd.entrypoints=web"
+        - "traefik.http.middlewares.guacd.redirectscheme.scheme=https"
+        - "traefik.http.routers.guacd-secure.rule=Host(`ts.${DOMAIN_NAME}`)"
+        - "traefik.http.routers.guacd-secure.entrypoints=webSecure"
+        - "traefik.http.routers.guacd-secure.tls=true"
+        - "traefik.http.routers.guacd-secure.tls.certresolver=myresolver"
+      restart: unless-stopped
 
 
     
