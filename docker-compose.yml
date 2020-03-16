@@ -10,12 +10,17 @@ services:
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
+      - "--api.entryPoing=admin"
+      - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.webSecure.address=:443"
+      - "--entrypoints.https.tls"
+      - "--entrypoints.admin.address=8080"
       - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
       - "--certificatesResolvers.myresolver.acme.storage=acme.json"
+      - "--certificatesResolvers.myresolver.acme.entryPoint=webSecure"
       - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web"
       - "--certificatesResolvers.myresolver.acme.onHostRule=true"
     ports:
@@ -69,7 +74,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer.entrypoints=web"
-      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.entrypoints=webSecure"
       - "traefik.http.routers.portainer.tls=true"
       - "traefik.http.routers.portainer.tls.certresolver=myresolver"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
