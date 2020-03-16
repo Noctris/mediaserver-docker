@@ -130,6 +130,8 @@ services:
   guacd:
     image: linuxserver/guacd
     container_name: guacd
+    ports:
+      - 4822:4822
     environment:
       - TZ="${TZ}"
     labels:
