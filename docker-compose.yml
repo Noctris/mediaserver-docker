@@ -128,7 +128,7 @@ services:
     restart: unless-stopped
 
   guacd:
-    image: guacamole/guacd:stable
+    image: guacamole/guacd
     container_name: guacd
     ports:
       - 4822:4822
