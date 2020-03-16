@@ -20,7 +20,8 @@ services:
       #- "--entrypoints.admin.address=8080"
       - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
       - "--certificatesResolvers.myresolver.acme.storage=acme.json"
-      - "--certificatesResolvers.myresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+#      - "--certificatesResolvers.myresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesResolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
       # - "--certificatesResolvers.myresolver.acme.entryPoint=webSecure"
       # - "--certificatesResolvers.myresolver.acme.domains.main=${DOMAIN_NAME}"
@@ -70,6 +71,7 @@ services:
   # Management Platform Portainer to manage docker stuff
   portainer:
     image: portainer/portainer
+    container_name: portainer
     restart: always
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
