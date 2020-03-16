@@ -81,7 +81,7 @@ services:
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer.entrypoints=web"
       - "traefik.http.routers.portainer.entrypoints=webSecure"
-      #- "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.routers.portainer.tls=true"
       - "traefik.http.routers.portainer.tls.certresolver=myresolver"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
       # This is not necessary if you set your default network in Traefik config/parameters
@@ -159,6 +159,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.heimdall.rule=Host(`heimdall.${DOMAIN_NAME}`)"
       - "traefik.http.routers.heimdall.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.heimdall.entrypoints=webSecure"
+      - "traefik.http.routers.heimdall.tls=true"
+      - "traefik.http.routers.heimdall.tls.certresolver=myresolver"
     restart: unless-stopped
 
   # gitlab:
