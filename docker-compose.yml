@@ -128,7 +128,7 @@ services:
     restart: unless-stopped
 
   guacd:
-    image: linuxserver/guacd
+    image: linuxserver/guacd:latest
     container_name: guacd
     ports:
       - 4822:4822
