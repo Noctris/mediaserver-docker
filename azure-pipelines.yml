@@ -38,7 +38,7 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'up -d'
+    dockerComposeCommand: 'up -d --remove-orphans'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
