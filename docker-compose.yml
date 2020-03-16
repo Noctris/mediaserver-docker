@@ -128,7 +128,7 @@ services:
     restart: unless-stopped
 
   guacd:
-    image: guacamole/guacd:latest
+    image: guacamole/guacd:stable
     container_name: guacd
     ports:
       - 4822:4822
@@ -267,27 +267,20 @@ services:
       - VERSION=docker
       - UMASK_SET=022 #optional
       #- PLEX_CLAIM= #optional
-    ports:
-      - 32400:32400/udp
-      - 32469:32469
-      - 32469:32469/udp
-      - 5353:5353/udp
-      - 1900:1900/udp
     volumes:
       - "${DOCKER_VOL_MOUNT}/plex:/config"
       - "${PATH_P_TV_SHOWS}:/tv"
       - "${PATH_P_MOVIES}:/movies"
     labels:
       - "traefik.enable=true"
+      - "traefik.port=32400"
       - "traefik.http.middlewares.plex-secure.redirectscheme.scheme=https"
       - "traefik.http.routers.plex.middlewares=plex-secure"
       - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN_NAME}`)"
       - "traefik.http.routers.plex.entrypoints=web"
-      - "traefik.http.services.plex.loadbalancer.server.port=32400"
       - "traefik.http.middlewares.plex.redirectscheme.scheme=https"
       - "traefik.http.routers.plex-secure.rule=Host(`plex.${DOMAIN_NAME}`)"
       - "traefik.http.routers.plex-secure.entrypoints=webSecure"
       - "traefik.http.routers.plex-secure.tls=true"
       - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
-      - "traefik.http.services.plex-secure.loadbalancer.server.port=32400"
     restart: unless-stopped
