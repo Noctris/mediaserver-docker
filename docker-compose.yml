@@ -16,7 +16,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.webSecure.address=:443"
-      #- "--entrypoints.https.tls"
+      - "--entrypoints.webSecure.tls=true"
       #- "--entrypoints.admin.address=8080"
       - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
       - "--certificatesResolvers.myresolver.acme.storage=acme.json"
