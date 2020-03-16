@@ -46,6 +46,7 @@ services:
       - ${DOCKER_VOL_MOUNT}/nginx_proxy_manager/config.json:/app/config/production.json
       - ${DOCKER_VOL_MOUNT}/nginx_proxy_manager/data:/data
       - ${DOCKER_VOL_MOUNT}/letsencrypt_data:/etc/letsencrypt
+
   nginx_proxy_manager_db:
     container_name: "nginx_proxy_manager_db"
     image: 'jc21/mariadb-aria:10.4'
@@ -55,7 +56,7 @@ services:
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'npm'
     volumes:
-      -${DOCKER_VOL_MOUNT}/nginx_proxy_manager_db/data/mysql:/var/lib/mysql    
+      - ${DOCKER_VOL_MOUNT}/nginx_proxy_manager_db/data/mysql:/var/lib/mysql    
   # Management Platform Portainer to manage docker stuff
   portainer:
     image: portainer/portainer
