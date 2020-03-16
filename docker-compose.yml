@@ -257,9 +257,9 @@ services:
   #     - "traefik.http.services.gitlab.loadbalancer.server.port=80"
 
   # Media Services
-  plex:
-    image: linuxserver/plex
-    container_name: plex
+  plexmediaserver:
+    image: plexinc/pms-docker
+    container_name: plexmediaserver
     #network_mode: host
     environment:
       - PUID=1000
@@ -278,7 +278,7 @@ services:
       - 32413:32413/udp
       - 32414:32414/udp
     volumes:
-      - "${DOCKER_VOL_MOUNT}/plex:/config"
+      - "${DOCKER_VOL_MOUNT}/plexmediaserver:/config"
       - "${PATH_P_TV_SHOWS}:/tv"
       - "${PATH_P_MOVIES}:/movies"
     labels:
