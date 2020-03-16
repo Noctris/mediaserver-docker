@@ -12,11 +12,12 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.${TRAEFIK_ENTRY_POINT}.address=:${TRAEFIK_ENTRY_POINT_PORT}"
-      - "--entrypoints.ssl.address=:443"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
       - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
       - "--certificatesResolvers.myresolver.acme.storage=acme.json"
       - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web"
+      - "--certificatesResolvers.myresolver.acme.onHostRule=true"
     ports:
       - "8080:8080"
       - "80:80"
@@ -67,7 +68,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.portainer.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.routers.portainer.entrypoints=web"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.routers.portainer.tls=true"
       - "traefik.http.routers.portainer.tls.certresolver=myresolver"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
