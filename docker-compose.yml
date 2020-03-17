@@ -141,3 +141,12 @@ services:
       - "traefik.http.routers.plex-secure.tls=true"
       - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
     restart: unless-stopped
+
+
+volumes:
+  parent-media:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: "addr=10.32.1.3,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14"
+      device: /mnt/tank/media/parents
