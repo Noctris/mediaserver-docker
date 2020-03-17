@@ -1,7 +1,6 @@
 version: "3.3"
 
 services:
-
   #First setup a reverse proxy to access everything that is running
   traefik:
     image: "traefik:latest"
@@ -20,7 +19,7 @@ services:
       #- "--entrypoints.admin.address=8080"
       - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
       - "--certificatesResolvers.myresolver.acme.storage=acme.json"
-#      - "--certificatesResolvers.myresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      #      - "--certificatesResolvers.myresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
       # - "--certificatesResolvers.myresolver.acme.entryPoint=webSecure"
@@ -49,7 +48,7 @@ services:
       - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-     # - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
+      # - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
       - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
 
   # Management Platform Portainer to manage docker stuff
@@ -73,7 +72,7 @@ services:
       - "traefik.http.routers.portainer-secure.entrypoints=webSecure"
       - "traefik.http.routers.portainer-secure.tls=true"
       - "traefik.http.routers.portainer-secure.tls.certresolver=myresolver"
-      # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
+      # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name
       # This is not necessary if you set your default network in Traefik config/parameters
       #- "traefik.docker.network=dmz"
 
@@ -113,7 +112,7 @@ services:
       - VERSION=docker
       - UMASK_SET=022 #optional
       - PLEX_CLAIM=${PLEX_CLAIM}
-      - ADVERTISE_IP=https://plex${DOMAIN_NAME}:443
+      - ADVERTISE_IP=http://10.32.4.10:32400,https://plex${DOMAIN_NAME}:443
     ports:
       - 32400:32400/tcp
       - 3005:3005/tcp
@@ -135,13 +134,12 @@ services:
       #- "traefik.http.routers.plex.middlewares=plex-secure"
       - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN_NAME}`)"
       - "traefik.http.routers.plex.entrypoints=web"
-  #    - "traefik.http.middlewares.plex.redirectscheme.scheme=https"
+      #    - "traefik.http.middlewares.plex.redirectscheme.scheme=https"
       - "traefik.http.routers.plex-secure.rule=Host(`plex.${DOMAIN_NAME}`)"
       - "traefik.http.routers.plex-secure.entrypoints=webSecure"
       - "traefik.http.routers.plex-secure.tls=true"
       - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
     restart: unless-stopped
-
 
 volumes:
   parent-media:
