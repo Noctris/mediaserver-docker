@@ -38,7 +38,7 @@ services:
       - "traefik.http.routers.traefikapi.entrypoints=web"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
       - "traefik.http.middlewares.traefik-secure.redirectscheme.scheme=https"
-      - "traefik.http.routers.traefik.middlewares=sonarr-secure"
+      - "traefik.http.routers.traefik.middlewares=traefik-secure"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik.entrypoints=web"
       - "traefik.http.middlewares.traefik.redirectscheme.scheme=https"
@@ -112,7 +112,7 @@ services:
       - VERSION=docker
       - UMASK_SET=022 #optional
       - PLEX_CLAIM=${PLEX_CLAIM}
-      - ADVERTISE_IP=http://10.32.4.10:32400,https://plex${DOMAIN_NAME}:443
+      - ADVERTISE_IP=http://10.32.4.10:32400,https://plex.${DOMAIN_NAME}:443
     ports:
       - 32400:32400/tcp
       - 3005:3005/tcp
