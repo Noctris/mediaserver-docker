@@ -128,7 +128,6 @@ services:
       - "${DOCKER_VOL_MOUNT}/plexmediaserver:/config"
       - "${PATH_P_TV_SHOWS}:/tv"
       - "${PATH_P_MOVIES}:/movies"
-      - "parent-media:/media"
     labels:
       - "traefik.enable=true"
       - "traefik.port=32400"
