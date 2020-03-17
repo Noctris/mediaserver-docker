@@ -77,7 +77,140 @@ services:
       # This is not necessary if you set your default network in Traefik config/parameters
       #- "traefik.docker.network=dmz"
 
-  # Heimdall Dashboard
+  # TV Show Tool
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+      #- UMASK_SET=022 #optional
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/sonarr:/config"
+      - "${PATH_P_TV_SHOWS}:/tv"
+      - "${PATH_DOWNLOADS}:/downloads"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.sonarr-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr.middlewares=sonarr-secure"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr.entrypoints=web"
+      - "traefik.http.middlewares.sonarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr-secure.entrypoints=webSecure"
+      - "traefik.http.routers.sonarr-secure.tls=true"
+      - "traefik.http.routers.sonarr-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    #depends_on:
+     # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/radarr:/config"
+      - "${PATH_DOWNLOADS}:/downloads"
+      - "${PATH_P_MOVIES}:/movies"
+    environment:
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.radarr-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr.middlewares=radarr-secure"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr.entrypoints=web"
+      - "traefik.http.middlewares.radarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr-secure.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr-secure.entrypoints=webSecure"
+      - "traefik.http.routers.radarr-secure.tls=true"
+      - "traefik.http.routers.radarr-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+  guacd:
+    image: guacamole/guacd
+    container_name: guacd
+    ports:
+      - 4822:4822
+    environment:
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.guacd-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.guacd.middlewares=guacd-secure"
+      - "traefik.http.routers.guacd.rule=Host(`ts.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.guacd.entrypoints=web"
+      - "traefik.http.middlewares.guacd.redirectscheme.scheme=https"
+      - "traefik.http.routers.guacd-secure.rule=Host(`ts.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.guacd-secure.entrypoints=webSecure"
+      - "traefik.http.routers.guacd-secure.tls=true"
+      - "traefik.http.routers.guacd-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+  # habridge:
+  #   image: linuxserver/habridge
+  #   container_name: habridge
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - SEC_KEY=${HABRIDGE_KEY}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - ${DOCKER_VOL_MOUNT}/habridge:/config
+  #   ports:
+  #     - 8080:8080
+  #     - 50000:50000
+  #   restart: unless-stopped
+  duplicati:
+    image: linuxserver/duplicati
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - CLI_ARGS= #optional
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/duplicati/config:/config"
+      - "${DOCKER_VOL_MOUNT}/duplicati/backups:/backups"
+      - "${DOCKER_VOL_MOUNT}/duplicati/source:/source"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.duplicati-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.duplicati.middlewares=duplicati-secure"
+      - "traefik.http.routers.duplicati.rule=Host(`duplicati.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.duplicati.entrypoints=web"
+      - "traefik.http.middlewares.duplicati.redirectscheme.scheme=https"
+      - "traefik.http.routers.duplicati-secure.rule=Host(`duplicati.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.duplicati-secure.entrypoints=webSecure"
+      - "traefik.http.routers.duplicati-secure.tls=true"
+      - "traefik.http.routers.duplicati-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+    
+  #Picture time!
+  lychee:
+    image: linuxserver/lychee
+    container_name: lychee
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/lychee:/config"
+      - "${PATH_LYCHEE}:/pictures"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.lychee-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.lychee.middlewares=lychee-secure"
+      - "traefik.http.routers.lychee.rule=Host(`lychee.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.lychee.entrypoints=web"
+      - "traefik.http.middlewares.lychee.redirectscheme.scheme=https"
+      - "traefik.http.routers.lychee-secure.rule=Host(`lychee.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.lychee-secure.entrypoints=webSecure"
+      - "traefik.http.routers.lychee-secure.tls=true"
+      - "traefik.http.routers.lychee-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+  # Some more fun tools
   heimdall:
     image: linuxserver/heimdall
     container_name: heimdall
@@ -101,6 +234,27 @@ services:
       - "traefik.http.routers.heimdall-secure.tls=true"
       - "traefik.http.routers.heimdall-secure.tls.certresolver=myresolver"
     restart: unless-stopped
+
+  # gitlab:
+  #   image: gitlab/gitlab-ce:latest
+  #   container_name: gitlab
+  #   #restart: always
+  #   hostname: "gitlab.{DOMAIN_NAME}"
+  #   environment: 
+  #     GITLAB_OMNIBUS_CONFIG: |
+  #       external_url 'http://gitlab.${DOMAIN_NAME}:80'
+  #       gitlab_rails['gitlab_shell_ssh_port'] = 
+  #   ports:
+  #     - '2224:22'
+  #   volumes:
+  #     - "${DOCKER_VOL_MOUNT}/gitlab/config:/etc/gitlab"
+  #     - "${DOCKER_VOL_MOUNT}/gitlab/logs:/var/logs/gitlab"
+  #     - "${DOCKER_VOL_MOUNT}/gitlab/data:/var/opt/gitlab"
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.gitlab.rule=Host(`gitlab.${DOMAIN_NAME}`)"
+  #     - "traefik.http.routers.gitlab.entrypoints=${TRAEFIK_ENTRY_POINT}"
+  #     - "traefik.http.services.gitlab.loadbalancer.server.port=80"
 
   # Media Services
   plexmediaserver:
