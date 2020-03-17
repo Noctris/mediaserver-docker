@@ -21,6 +21,7 @@ steps:
 - bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> $(Build.StagingDirectory)/.env
 - bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> $(Build.StagingDirectory)/.env
 - bash: echo ACME_MAIL=$(ACME_MAIL) >> $(Build.StagingDirectory)/.env
+- bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> $(Build.StagingDirectory)/.env
 - bash: cat $(Build.StagingDirectory)/.env
 - bash: pwd
 - bash: docker-compose config
