@@ -25,5 +25,6 @@ steps:
 - bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> $(Build.StagingDirectory)/environment.env
 - bash: echo COMPOSE_PROJECT_NAME=frankenstack >> $(Build.StagingDirectory)/environment.env
 - bash: cat $(Build.StagingDirectory)/environment.env
+- bash: cd $(Build.StagingDirectory)
 - bash: pwd
 - bash: sh compose.sh
