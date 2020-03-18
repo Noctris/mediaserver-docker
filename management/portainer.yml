@@ -26,7 +26,7 @@ services:
       - "traefik.http.routers.portainer-secure.tls.certresolver=myresolver"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
       # This is not necessary if you set your default network in Traefik config/parameters
-      - "traefik.docker.network=	noctrismediaserverdocker_proxy"
+      - "traefik.docker.network=noctrismediaserverdocker_proxy"
     networks:
       - mgmt
 
