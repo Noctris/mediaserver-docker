@@ -295,3 +295,73 @@ services:
       - "traefik.http.routers.plex-secure.tls=true"
       - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
     restart: unless-stopped
+
+
+
+  # Heimdall Dashboard
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
+    #depends_on:
+    # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/heimdall:/config"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.heimdall-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.heimdall.middlewares=heimdall-secure"
+      - "traefik.http.routers.heimdall.rule=Host(`dash.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.heimdall.entrypoints=web"
+      - "traefik.http.middlewares.heimdall.redirectscheme.scheme=https"
+      - "traefik.http.routers.heimdall-secure.rule=Host(`dash.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.heimdall-secure.entrypoints=webSecure"
+      - "traefik.http.routers.heimdall-secure.tls=true"
+      - "traefik.http.routers.heimdall-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+  # Media Services
+  plexmediaserver:
+    image: plexinc/pms-docker
+    container_name: plexmediaserver
+    #network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - UMASK_SET=022 #optional
+      - PLEX_CLAIM=${PLEX_CLAIM}
+      - ADVERTISE_IP=http://10.32.4.10:32400,https://plex.${DOMAIN_NAME}:443,https://10.32.4.10:443
+    ports:
+      - target: 32400
+        published: 32400
+        mode: host
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/plexmediaserver:/config"
+      - "${PATH_P_TV_SHOWS}:/tv"
+      - "${PATH_P_MOVIES}:/movies"
+    labels:
+      # added the redirect
+      - "traefik.enable=true"
+      - "traefik.port=32400"
+      - "traefik.http.middlewares.plex-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.plex.middlewares=plex-secure"
+      - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.plex.entrypoints=web"
+      - "traefik.http.middlewares.plex.redirectscheme.scheme=https"
+      - "traefik.http.routers.plex-secure.rule=Host(`plex.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.plex-secure.entrypoints=webSecure"
+      - "traefik.http.routers.plex-secure.tls=true"
+      - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
