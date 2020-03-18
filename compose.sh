@@ -1,3 +1,3 @@
-docker-compose up -f environment.yml -d
+docker-compose up -d
 cd proxy
-docker-compose up -f traefik.yml -d
+docker-compose up -d -f setup-environment-compose.yml
