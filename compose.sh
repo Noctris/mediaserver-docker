@@ -1,2 +1,2 @@
-docker-compose -f proxy/docker-compoose.ylm \
+docker-compose -f proxy/docker-compoose.yml \
 up -d
