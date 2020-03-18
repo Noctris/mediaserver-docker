@@ -1,7 +1,7 @@
-version: "3.3"
+version: "3.5"
 
 networks:
     proxy:
         name: proxy
         driver: bridge
-        env_file: environment.env
+
