@@ -36,7 +36,7 @@ steps:
 - bash: echo ACME_MAIL=$(ACME_MAIL) >> environment.env
 - bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> environment.env
 #- bash: echo COMPOSE_PROJECT_NAME=franken >> $(Build.StagingDirectory)/environment.env
-- bash: cat $(Build.StagingDirectory)/environment.env
+- bash: cat environment.env
 - bash: pwd
   displayName: Docker Compose Config
 # - task: DockerCompose@0
