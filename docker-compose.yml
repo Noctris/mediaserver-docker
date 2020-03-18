@@ -5,7 +5,6 @@ services:
     image: "traefik:latest"
     restart: always
     container_name: "traefik"
-    env_file: environment.env
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"
