@@ -50,3 +50,10 @@ services:
       #- "${DOCKER_VOL_MOUNT}/traefik/traefik.toml:/traefik.toml"
       - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
       - "${DOCKER_VOL_MOUNT}/traefik/servers.toml:/servers.toml"
+    networks:
+      - proxy
+
+
+networks:
+  proxy:
+    driver: bridge
