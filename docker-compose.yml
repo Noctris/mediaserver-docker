@@ -61,6 +61,8 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${DOCKER_VOL_MOUNT}/portainer:/data"
+    ports:
+      - 9000:9000
     labels:
       - "traefik.enable=true"
       - "traefik.http.middlewares.portainer-secure.redirectscheme.scheme=https"

@@ -11,18 +11,30 @@ pool:
   name: 'home-lab-build-docker'
 
 steps:
-- bash: echo TRAEFIK_NETWORK=proxy >> $(Build.StagingDirectory)/environment.env
-- bash: echo TRAEFIK_ENTRY_POINT=$(TRAEFIK_ENTRY_POINT) >> $(Build.StagingDirectory)/environment.env
-- bash: echo TRAEFIK_ENTRY_POINT_PORT=$(TRAEFIK_ENTRY_POINT_PORT) >> $(Build.StagingDirectory)/environment.env
-- bash: echo TZ=Europe/Brussels >> $(Build.StagingDirectory)/environment.env
-- bash: echo DOMAIN_NAME=$(VS_DOMAIN_NAME) >> $(Build.StagingDirectory)/environment.env
-- bash: echo DOCKER_VOL_MOUNT=$(DOCKER_VOL_MOUNT) >> $(Build.StagingDirectory)/environment.env
-- bash: echo PATH_P_TV_SHOWS=$(PATH_P_TV_SHOWS) >> $(Build.StagingDirectory)/environment.env
-- bash: echo PATH_P_MOVIES=$(PATH_P_MOVIES) >> $(Build.StagingDirectory)/environment.env
-- bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> $(Build.StagingDirectory)/environment.env
-- bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> $(Build.StagingDirectory)/environment.env
-- bash: echo ACME_MAIL=$(ACME_MAIL) >> $(Build.StagingDirectory)/environment.env
-- bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo TRAEFIK_NETWORK=proxy >> $(Build.StagingDirectory)/environment.env
+# - bash: echo TRAEFIK_ENTRY_POINT=$(TRAEFIK_ENTRY_POINT) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo TRAEFIK_ENTRY_POINT_PORT=$(TRAEFIK_ENTRY_POINT_PORT) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo TZ=Europe/Brussels >> $(Build.StagingDirectory)/environment.env
+# - bash: echo DOMAIN_NAME=$(VS_DOMAIN_NAME) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo DOCKER_VOL_MOUNT=$(DOCKER_VOL_MOUNT) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo PATH_P_TV_SHOWS=$(PATH_P_TV_SHOWS) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo PATH_P_MOVIES=$(PATH_P_MOVIES) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo ACME_MAIL=$(ACME_MAIL) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> $(Build.StagingDirectory)/environment.env
+# - bash: echo TRAEFIK_NETWORK=proxy >> $(Build.StagingDirectory)/environment.env
+- bash: echo TRAEFIK_ENTRY_POINT=$(TRAEFIK_ENTRY_POINT) >> environment.env
+- bash: echo TRAEFIK_ENTRY_POINT_PORT=$(TRAEFIK_ENTRY_POINT_PORT) >> environment.env
+- bash: echo TZ=Europe/Brussels >> environment.env
+- bash: echo DOMAIN_NAME=$(VS_DOMAIN_NAME) >> environment.env
+- bash: echo DOCKER_VOL_MOUNT=$(DOCKER_VOL_MOUNT) >> environment.env
+- bash: echo PATH_P_TV_SHOWS=$(PATH_P_TV_SHOWS) >> environment.env
+- bash: echo PATH_P_MOVIES=$(PATH_P_MOVIES) >> environment.env
+- bash: echo PATH_DOWNLOADS=$(PATH_DOWNLOADS) >> environment.env
+- bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> environment.env
+- bash: echo ACME_MAIL=$(ACME_MAIL) >> environment.env
+- bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> environment.env
 #- bash: echo COMPOSE_PROJECT_NAME=franken >> $(Build.StagingDirectory)/environment.env
 - bash: cat $(Build.StagingDirectory)/environment.env
 - bash: pwd
