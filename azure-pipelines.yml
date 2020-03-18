@@ -35,7 +35,7 @@ steps:
 - bash: echo PATH_LYCHEE=$(PATH_LYCHEE) >> environment.env
 - bash: echo ACME_MAIL=$(ACME_MAIL) >> environment.env
 - bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> environment.env
-#- bash: echo COMPOSE_PROJECT_NAME=franken >> $(Build.StagingDirectory)/environment.env
+- bash: echo COMPOSE_PROJECT_NAME=frankenbuild_lab_ >> environment.env
 - bash: cat  environment.env
 - bash: pwd
   displayName: Docker Compose Config
@@ -51,6 +51,12 @@ steps:
   inputs:
     containerregistrytype: 'Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
+    additionalDockerComposeFiles: |
+      management/portainer.yml
+      management/heimdall.yml
+      PVR/sonarr.yml
+      PVR/radarr.yml
+      mediaserver/plex.yml
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'up -d --remove-orphans'
 - task: PublishPipelineArtifact@1

@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  duplicati:
+    image: linuxserver/duplicati
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - CLI_ARGS= #optional
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/duplicati/config:/config"
+      - "${DOCKER_VOL_MOUNT}/duplicati/backups:/backups"
+      - "${DOCKER_VOL_MOUNT}/duplicati/source:/source"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.duplicati-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.duplicati.middlewares=duplicati-secure"
+      - "traefik.http.routers.duplicati.rule=Host(`duplicati.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.duplicati.entrypoints=web"
+      - "traefik.http.middlewares.duplicati.redirectscheme.scheme=https"
+      - "traefik.http.routers.duplicati-secure.rule=Host(`duplicati.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.duplicati-secure.entrypoints=webSecure"
+      - "traefik.http.routers.duplicati-secure.tls=true"
+      - "traefik.http.routers.duplicati-secure.tls.certresolver=myresolver"
+    restart: unless-stopped

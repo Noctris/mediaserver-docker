@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  # TV Show Tool
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+      #- UMASK_SET=022 #optional
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/sonarr:/config"
+      - "${PATH_P_TV_SHOWS}:/tv"
+      - "${PATH_DOWNLOADS}:/downloads"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.sonarr-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr.middlewares=sonarr-secure"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr.entrypoints=web"
+      - "traefik.http.middlewares.sonarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr-secure.entrypoints=webSecure"
+      - "traefik.http.routers.sonarr-secure.tls=true"
+      - "traefik.http.routers.sonarr-secure.tls.certresolver=myresolver"
+    restart: unless-stopped

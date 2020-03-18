@@ -1,0 +1,26 @@
+version: "3.3"
+
+services:
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    #depends_on:
+     # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/radarr:/config"
+      - "${PATH_DOWNLOADS}:/downloads"
+      - "${PATH_P_MOVIES}:/movies"
+    environment:
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.radarr-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr.middlewares=radarr-secure"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr.entrypoints=web"
+      - "traefik.http.middlewares.radarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr-secure.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr-secure.entrypoints=webSecure"
+      - "traefik.http.routers.radarr-secure.tls=true"
+      - "traefik.http.routers.radarr-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
