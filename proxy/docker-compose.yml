@@ -6,7 +6,7 @@ services:
     image: "traefik:latest"
     restart: always
     container_name: "traefik"
-    env_file: ../environment.env
+    env_file: /home/mvhoof/docker-lab-01-agent/_work/1/a/environment.env
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"
