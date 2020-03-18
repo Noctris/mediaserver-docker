@@ -114,7 +114,9 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM}
       - ADVERTISE_IP=http://10.32.4.10:32400,https://plex.${DOMAIN_NAME}:443,https://10.32.4.10:443
     ports:
-      - 32400:32400/tcp
+      - target: 32400
+        published: 32400
+        mode: host
       - 3005:3005/tcp
       - 8324:8324/tcp
       - 32469:32469/tcp
