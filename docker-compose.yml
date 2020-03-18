@@ -4,3 +4,4 @@ networks:
     proxy:
         name: proxy
         driver: bridge
+        env_file: environment.env

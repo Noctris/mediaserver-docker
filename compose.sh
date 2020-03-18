@@ -1,3 +1,2 @@
-docker-compose up -d
-cd proxy
-docker-compose up -d
+docker-compose -f proxy/docker-compoose.ylm \
+up -d
