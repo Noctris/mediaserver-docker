@@ -54,3 +54,9 @@ services:
       - "${DOCKER_VOL_MOUNT}/traefik/servers.toml:/servers.toml"
     networks: 
       - proxy
+
+networks:
+  proxy:
+    name: proxy
+    driver: bridge
+    
