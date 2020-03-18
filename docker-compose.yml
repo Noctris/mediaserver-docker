@@ -1,7 +1,129 @@
-version: "3.6"
+version: "3.3"
 
-networks:
-    proxy:
-        name: proxy
-        driver: bridge
+services:
+  traefik:
+    image: "traefik:latest"
+    restart: always
+    container_name: "traefik"
+    env_file: /home/mvhoof/docker-lab-01-agent/_work/1/a/environment.env
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      #- "--api.entryPoing=admin"
+      #- "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.webSecure.address=:443"
+      #- "--entrypoints.webSecure.tls=true"
+      #- "--entrypoints.admin.address=8080"
+      - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
+      - "--certificatesResolvers.myresolver.acme.storage=acme.json"
+      #      - "--certificatesResolvers.myresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesResolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
+      - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
+      # - "--certificatesResolvers.myresolver.acme.entryPoint=webSecure"
+      # - "--certificatesResolvers.myresolver.acme.domains.main=${DOMAIN_NAME}"
+      - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web"
+      # - "--certificatesResolvers.myresolver.acme.onHostRule=true"
+    ports:
+      - "8080:8080"
+      - "80:80"
+      - "443:443"
+    labels:
+      #Need to check this. Api not workingy yet
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefikapi.service=api@internal"
+      - "traefik.http.routers.traefikapi.rule=Host(`api.traefik.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefikapi.entrypoints=web"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.traefik-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.traefik.middlewares=traefik-secure"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.middlewares.traefik.redirectscheme.scheme=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefik-secure.entrypoints=webSecure"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${DOCKER_VOL_MOUNT}/traefik/trafik.toml:/traefik.toml"
+      - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
+      - "${DOCKER_VOL_MOUNT}/traefik/servers.toml:/servers.toml"
 
+  # Heimdall Dashboard
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
+    #depends_on:
+    # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/heimdall:/config"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.heimdall-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.heimdall.middlewares=heimdall-secure"
+      - "traefik.http.routers.heimdall.rule=Host(`dash.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.heimdall.entrypoints=web"
+      - "traefik.http.middlewares.heimdall.redirectscheme.scheme=https"
+      - "traefik.http.routers.heimdall-secure.rule=Host(`dash.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.heimdall-secure.entrypoints=webSecure"
+      - "traefik.http.routers.heimdall-secure.tls=true"
+      - "traefik.http.routers.heimdall-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+  # Media Services
+  plexmediaserver:
+    image: plexinc/pms-docker
+    container_name: plexmediaserver
+    #network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - UMASK_SET=022 #optional
+      - PLEX_CLAIM=${PLEX_CLAIM}
+      - ADVERTISE_IP=http://10.32.4.10:32400,https://plex.${DOMAIN_NAME}:443,https://10.32.4.10:443
+    ports:
+      - target: 32400
+        published: 32400
+        mode: host
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/plexmediaserver:/config"
+      - "${PATH_P_TV_SHOWS}:/tv"
+      - "${PATH_P_MOVIES}:/movies"
+    labels:
+      # added the redirect
+      - "traefik.enable=true"
+      - "traefik.port=32400"
+      - "traefik.http.middlewares.plex-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.plex.middlewares=plex-secure"
+      - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.plex.entrypoints=web"
+      - "traefik.http.middlewares.plex.redirectscheme.scheme=https"
+      - "traefik.http.routers.plex-secure.rule=Host(`plex.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.plex-secure.entrypoints=webSecure"
+      - "traefik.http.routers.plex-secure.tls=true"
+      - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+volumes:
+  parent-media:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: "addr=10.32.1.3,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14"
+      device: /mnt/tank/media/parents
