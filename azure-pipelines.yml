@@ -24,6 +24,7 @@ steps:
 # - bash: echo ACME_MAIL=$(ACME_MAIL) >> $(Build.StagingDirectory)/environment.env
 # - bash: echo PLEX_CLAIM=$(PLEX_CLAIM) >> $(Build.StagingDirectory)/environment.env
 # - bash: echo TRAEFIK_NETWORK=proxy >> $(Build.StagingDirectory)/environment.env
+- bash: rm environment.env
 - bash: echo TRAEFIK_ENTRY_POINT=$(TRAEFIK_ENTRY_POINT) >> environment.env
 - bash: echo TRAEFIK_ENTRY_POINT_PORT=$(TRAEFIK_ENTRY_POINT_PORT) >> environment.env
 - bash: echo TZ=Europe/Brussels >> environment.env
