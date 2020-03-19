@@ -1,0 +1,20 @@
+version: "3.5"
+
+services:
+  traefik:
+    image: "traefik:latest"
+    restart: always
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+      - "--entrypoints.web.address=:80"
+      - "--providers.docker"
+      - "--api.insecure"
+    ports:
+      - "80:80"
+      - "443:443"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
