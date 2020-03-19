@@ -22,6 +22,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:traefik.${DOMAIN_NAME}"
+      - "traefik.frontend.endpoint=web"
       - "traefik.port=8080"
       - "traefik.frontend.auth.basic=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
     restart: always
