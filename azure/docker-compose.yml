@@ -8,7 +8,6 @@ services:
     command:
       - "--log.level=DEBUG"
       - "--entrypoints.web.address=:80"
-      #- "--entrypoints.dashboard.auth.basic=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--api.insecure"
@@ -24,8 +23,8 @@ services:
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=web"
       - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
-      - "traefik.http.routers.traefik-dashboard.auth.basic=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
-
+      - "traefik.http.routers.traefik-dashboard.middlewares=traefikbasicAuth"
+      - "traefik.http.middlewares.traefikbasicAuth.basicauth.users=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
        #Need to check this. Api not workingy yet
       # - "traefik.enable=true"
       # - "traefik.http.routers.traefikapi.service=api@internal"
@@ -41,4 +40,5 @@ services:
       # - "traefik.http.routers.traefik-secure.entrypoints=webSecure"
       # - "traefik.http.routers.traefik-secure.tls=true"
       # - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
+
     restart: always
