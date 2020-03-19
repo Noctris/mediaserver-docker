@@ -11,7 +11,7 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--certificatesResolvers.myresolver.acme.email=${ACME_MAIL}"
-      - "--certificatesResolvers.myresolver.acme.storage=acme.json"
+      - "--certificatesResolvers.myresolver.acme.storage=/traefik_data/acme.json"
       - "--certificatesResolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
       - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web"
@@ -21,7 +21,7 @@ services:
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
+      - "${DOCKER_VOL_MOUNT}/traefik:/traefik_data"
     labels:
       - "traefik.enable=true"
       - "traefik.port=8080"
