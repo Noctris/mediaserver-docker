@@ -20,7 +20,7 @@ services:
       - "443:443"
       - "8080:8080"
     volumes:
-      - ${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json
+      - "${DOCKER_VOL_MOUNT}/traefik/acme.json:/acme.json"
       - "/var/run/docker.sock:/var/run/docker.sock"
     labels:
       - "traefik.enable=true"
