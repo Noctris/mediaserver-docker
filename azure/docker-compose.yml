@@ -24,7 +24,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     labels:
       - "traefik.enable=true"
-#      - "traefik.port=8080"
+      - "traefik.port=8080"
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=web"
       - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
@@ -47,5 +47,4 @@ services:
       # - "traefik.http.routers.traefik-secure.entrypoints=webSecure"
       # - "traefik.http.routers.traefik-secure.tls=true"
       # - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
-
     restart: always
