@@ -8,7 +8,8 @@ services:
     command:
       - "--log.level=DEBUG"
       - "--entrypoints.web.address=:80"
-      - "--providers.docker"
+      - "--providers.docker=true"
+      #- "--providers.docker.endpoint=unix:///var/run/docker.sock"
       - "--api.insecure"
     ports:
       - "80:80"
