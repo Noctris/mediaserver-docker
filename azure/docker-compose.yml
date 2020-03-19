@@ -8,6 +8,7 @@ services:
     command:
       - "--log.level=DEBUG"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.webSecure.address=:443"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--api=true"
