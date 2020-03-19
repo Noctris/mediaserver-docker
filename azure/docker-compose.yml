@@ -8,9 +8,10 @@ services:
     command:
       - "--log.level=DEBUG"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.dashboard.address=:8080"
+      - "--entrypoints.dashboard.auth.basic.users=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      #- "--providers.docker.endpoint=/var/run/docker.sock"
       - "--api.insecure"
     ports:
       - "80:80"
