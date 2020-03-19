@@ -32,7 +32,7 @@ services:
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       #- "traefik.http.routers.https-redirect.rule=HostRegexp(`{any:.*}`)"
       #- "traefik.http.routers.https-redirect.entrypoints=web"
-      - "traefik.http.routers.api.middlewares=traefikbasicAuth"
+      - "traefik.http.routers.api.middlewares=https-redirect"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.api.entrypoints=http"
