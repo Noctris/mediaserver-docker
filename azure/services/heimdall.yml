@@ -17,10 +17,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.heimdall.middlewares=heimdall-secure"
       - "traefik.http.routers.heimdall.rule=Host(`heimdall.${SUB_DOMAIN_NAME}`) || dashboard.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.heimdall.entrypoints=web"
+      - "traefik.http.routers.heimdall.entrypoints=http"
       - "traefik.http.routers.heimdall.middlewares=https-redirect"
       - "traefik.http.routers.heimdall-secure.rule=Host(`heimdall.${SUB_DOMAIN_NAME}`) || dashboard.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.heimdall-secure.entrypoints=webSecure"
+      - "traefik.http.routers.heimdall-secure.entrypoints=https"
       - "traefik.http.routers.heimdall-secure.tls=true"
       - "traefik.http.routers.heimdall-secure.tls.certresolver=myresolver"
     restart: unless-stopped
