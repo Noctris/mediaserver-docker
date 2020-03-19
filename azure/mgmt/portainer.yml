@@ -14,7 +14,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.portainer.entrypoints=webSecure"
+      - "traefik.http.routers.portainer.entrypoints=web"
       - "traefik.http.middlewares.portainer.redirectscheme.schema=https"
       - "traefik.http.middlewares.portainer.redirectscheme.permanent=true"
       - "traefik.http.routers.portainer-ssl.rule=Host(`portainer.${DOMAIN_NAME}`)"
