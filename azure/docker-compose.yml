@@ -47,4 +47,3 @@ services:
       # - "traefik.http.routers.traefik-secure.entrypoints=webSecure"
       # - "traefik.http.routers.traefik-secure.tls=true"
       # - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
-    restart: always
