@@ -29,8 +29,8 @@ services:
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=web"
       - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
-     # - "traefik.http.routers.traefik-dashboard.middlewares=traefikbasicAuth"
-      #- "traefik.http.middlewares.traefikbasicAuth.basicauth.users=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
+      - "traefik.http.routers.traefik-dashboard.middlewares=traefikbasicAuth"
+      - "traefik.http.middlewares.traefikbasicAuth.basicauth.users=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
       # Enable API at some point
       # - "traefik.http.routers.traefikapi.service=api@internal"
       # - "traefik.http.routers.traefikapi.rule=Host(`api.traefik.${DOMAIN_NAME}`)"
