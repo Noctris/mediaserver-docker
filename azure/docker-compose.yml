@@ -18,6 +18,7 @@ services:
       - "8080:8080"
     volumes:
       - $PWD/acme.json:/acme.json
+      - "/var/run/docker.sock:/var/run/docker.sock"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=web"
