@@ -17,12 +17,11 @@ services:
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer.entrypoints=http"
       - "traefik.http.middlewares.portainer.redirectscheme.scheme=https"
-      - "traefik.http.routers.heimdall.middlewares=portainer-ssl"
+      - "traefik.http.routers.portainer.middlewares=portainer-ssl"
       - "traefik.http.routers.portainer-ssl.entrypoints=https"
       - "traefik.http.routers.portainer-ssl.rule=Host(`portainer.${DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer-ssl.tls=true"
       - "traefik.http.routers.portainer-ssl.tls.certresolver=myresolver"
-
       # - "traefik.http.middlewares.heimdall-secure.redirectscheme.scheme=https"
       # - "traefik.http.routers.heimdall.middlewares=heimdall-secure"
       # - "traefik.http.routers.heimdall.rule=Host(`dash.${DOMAIN_NAME}`)"
