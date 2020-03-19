@@ -29,7 +29,7 @@ services:
     labels:
       - "traefik.enable=true"
       # define some generic middlewares
-      - "traefik.http.middlewares.hhtps-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       #- "traefik.http.routers.https-redirect.rule=HostRegexp(`{any:.*}`)"
       #- "traefik.http.routers.https-redirect.entrypoints=web"
       - "traefik.http.routers.api.middlewares=traefikbasicAuth"
