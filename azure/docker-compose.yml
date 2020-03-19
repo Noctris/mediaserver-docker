@@ -21,8 +21,24 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:traefik.${DOMAIN_NAME}"
-      - "traefik.frontend.endpoint=web"
-      - "traefik.port=8080"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=web"
+      - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
       #- "traefik.frontend.auth.basic=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
+
+       #Need to check this. Api not workingy yet
+      # - "traefik.enable=true"
+      # - "traefik.http.routers.traefikapi.service=api@internal"
+      # - "traefik.http.routers.traefikapi.rule=Host(`api.traefik.${DOMAIN_NAME}`)"
+      # - "traefik.http.routers.traefikapi.entrypoints=web"
+      # - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      # - "traefik.http.middlewares.traefik-secure.redirectscheme.scheme=https"
+      # - "traefik.http.routers.traefik.middlewares=traefik-secure"
+      # - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
+      # - "traefik.http.routers.traefik.entrypoints=web"
+      # - "traefik.http.middlewares.traefik.redirectscheme.scheme=https"
+      # - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${DOMAIN_NAME}`)"
+      # - "traefik.http.routers.traefik-secure.entrypoints=webSecure"
+      # - "traefik.http.routers.traefik-secure.tls=true"
+      # - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
     restart: always
