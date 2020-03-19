@@ -13,15 +13,13 @@ services:
       - 9000:9000
     labels:
       - "traefik.enable=true"
-      # - "traefik.http.middlewares.portainer-secure.redirectscheme.scheme=https"
-      # - "traefik.http.routers.portainer.middlewares=portainer-secure"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer.entrypoints=web"
+      - "traefik.http.routers.portainer.entrypoints=webSecure"
       - "traefik.http.middlewares.portainer.redirectscheme.scheme=https"
-      - "traefik.http.routers.portainer-secure.rule=Host(`portainer.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.portainer-secure.entrypoints=webSecure"
-      - "traefik.http.routers.portainer-secure.tls=true"
-      - "traefik.http.routers.portainer-secure.tls.certresolver=myresolver"
-
+      - "traefik.http.middlewares.portainer.redirectscheme.permanent=true"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.routers.portainer.tls.certresolver=myresolver"
+ 
 volumes:
   portainer_data:
