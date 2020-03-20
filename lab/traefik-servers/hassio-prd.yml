@@ -1,7 +1,22 @@
 http:
-    services:
-      hassio-prd:
-        loadBalancer:
-          servers:
-            - url: "http://10.32.1.8:8123/"
+  routers:
+    hassio-prd-http:
+      entryPoints:
+        - http
+      rule: Host(`hassio-prd.lab.vanhoof.me`) || Host(`hassio.vanhoof.me`)
+      middlewares: 
+        - https-redirect@docker
+      service: "hassio-prd-backend"
+    hassio-prd-https:
+        entryPoints:
+          - https
+        rule: Host(`hassio-prd.lab.vanhoof.me`) || Host(`hassio.vanhoof.me`)
+        service: hassio-prd-backend
+        tls: {}
+        certresolver: myresolver
+  services:
+    hassio-prd-backend:
+      loadBalancer:
+        servers:
+          - url: "https://10.32.1.8:8123/"
   
