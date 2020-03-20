@@ -7,6 +7,11 @@ http:
         middlewares: 
           - https-redirect@docker
         service: "vcenter-ssl-backend"
+      vcenter-https:
+          entryPoints:
+            - https
+          rule: Host(`vcenter.lab.vanhoof.me`)
+          service: vcenter-ssl-backend
     services:
       vcenter-ssl-backend:
         loadBalancer:
