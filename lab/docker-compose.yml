@@ -44,4 +44,4 @@ services:
       - "traefik.http.routers.api-ssl.tls=true"
       - "traefik.http.routers.api-ssl.tls.certresolver=myresolver"
       # try an existing backend
-      - "traefik.http.services.hassio.loadbalancer.servers=http://10.32.1.8:8123"
+      #- "traefik.http.services.hassio.loadbalancer.servers=http://10.32.1.8:8123"
