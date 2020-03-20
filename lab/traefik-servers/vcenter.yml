@@ -1,12 +1,21 @@
 http:
     routers:
       vcenter-http:
+        entrypoints: http
         rule: Host(`vcenter.lab.vanhoof.me`)
         service: vcenter@file
+        middlewares: https-redirect
+      vcenter-https:
+        entrypoints: https
+        rule: Host(`vcenter.lab.vanhoof.me`)
+        service: vcenter@file
+        tls: true
+        certresolver: myresolver
     services:
       vcenter:
         loadBalancer:
           scheme: https
           servers:
             - url: "https://10.32.1.219/"
-  
+            - "traefik.http.routers.api.middlewares=https-redirect"
+            
