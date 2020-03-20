@@ -6,11 +6,11 @@ http:
         rule: Host(`vcenter.lab.vanhoof.me`)
         middlewares: 
           - https-redirect@docker
-        service: "vcenter"
+        service: "vcenter-ssl-backend"
     services:
-      vcenter:
+      vcenter-ssl-backend:
         loadBalancer:
-#          scheme: "https"
+          scheme: "https"
           servers:
             - url: "https://10.32.1.219/"
             
