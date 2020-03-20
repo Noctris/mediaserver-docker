@@ -8,5 +8,5 @@ http:
         loadBalancer:
           scheme: https
           servers:
-            - url: "http://10.32.1.9:8123/"
+            - url: "https://10.32.1.219/"
   
