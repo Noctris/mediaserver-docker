@@ -1,0 +1,12 @@
+http:
+    routers:
+      vcenter-http:
+        rule: Host(`vcenter.lab.vanhoof.me`)
+        service: vcenter@file
+    services:
+      vcenter:
+        loadBalancer:
+          scheme: https
+          servers:
+            - url: "http://10.32.1.9:8123/"
+  

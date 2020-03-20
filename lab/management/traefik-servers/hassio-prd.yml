@@ -1,0 +1,7 @@
+http:
+    services:
+      hassio-prd:
+        loadBalancer:
+          servers:
+            - url: "http://10.32.1.8:8123/"
+  

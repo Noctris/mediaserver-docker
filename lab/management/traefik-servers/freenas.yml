@@ -1,0 +1,7 @@
+http:
+    services:
+      freenas:
+        loadBalancer:
+          servers:
+            - url: "http://10.32.1.3/"
+  
