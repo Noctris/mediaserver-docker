@@ -1,7 +1,8 @@
 http:
     routers:
       vcenter-http:
-        entrypoints: "http"
+        entrypoints:
+          - http
         rule: Host(`vcenter.lab.vanhoof.me`)
         middlewares: 
           - https-redirect@docker
