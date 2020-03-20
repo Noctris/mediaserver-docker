@@ -4,13 +4,6 @@ http:
         entrypoints: "http"
         rule: Host(`vcenter.lab.vanhoof.me`)
         service: "vcenter@file"
-        middlewares: "https-redirect"
-      vcenter-https:
-        entrypoints: "https"
-        rule: Host(`vcenter.lab.vanhoof.me`)
-        service: "vcenter@file"
-        tls: true
-        certresolver: "myresolver"
     services:
       vcenter:
         loadBalancer:
