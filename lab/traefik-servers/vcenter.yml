@@ -12,6 +12,8 @@ http:
             - https
           rule: Host(`vcenter.lab.vanhoof.me`)
           service: vcenter-ssl-backend
+          tls: true
+          certresolver: myresolver
     services:
       vcenter-ssl-backend:
         loadBalancer:
