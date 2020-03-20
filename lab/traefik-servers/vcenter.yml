@@ -10,7 +10,7 @@ http:
     services:
       vcenter:
         loadBalancer:
-          scheme: "https"
+#          scheme: "https"
           servers:
             - url: "https://10.32.1.219/"
             
