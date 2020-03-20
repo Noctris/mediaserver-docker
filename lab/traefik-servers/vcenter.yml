@@ -1,7 +1,7 @@
 http:
     routers:
       vcenter-http:
-        entrypoints:
+        entryPoints:
           - http
         rule: Host(`vcenter.lab.vanhoof.me`)
 
