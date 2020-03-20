@@ -1,0 +1,33 @@
+version: "3.5"
+
+services:
+# zabbix Dashboard
+  zabbix:
+    image: zabbix/zabbix-appliance
+    container_name: zabbix
+    #depends_on:
+    # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/zabbix:/config"
+      - "${DOCKER_VOL_MOUNT}zabbix/mysql:/var/lib/mysql"
+      - "${DOCKER_VOL_MOUNT}/zabbix/etc/localtime:/etc/localtime:ro"
+      - "${DOCKER_VOL_MOUNT}/zabbix/var_lib_zabbix:/var/lib/zabbix/"
+      - "${DOCKER_VOL_MOUNT}/zabbix/usr_lib_zabbix:/usr/lib/zabbix/"
+      - "${DOCKER_VOL_MOUNT}/alertscripts:/usr/lib/zabbix/alertscripts"
+    ports:
+        - 10051:10051
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.zabbix.middlewares=zabbix-dashboard-secure"
+      - "traefik.http.routers.zabbix.rule=Host(`zabbix.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.zabbix.entrypoints=http"
+      - "traefik.http.routers.zabbix.middlewares=https-redirect"
+      - "traefik.http.routers.zabbix-secure.rule=Host(`zabbix.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.zabbix-secure.entrypoints=https"
+      - "traefik.http.routers.zabbix-secure.tls=true"
+      - "traefik.http.routers.zabbix-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
