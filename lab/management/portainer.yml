@@ -16,7 +16,7 @@ services:
       - "traefik.http.middlewares.portainer-secure.redirectscheme.scheme=https"
       - "traefik.http.routers.portainer.middlewares=portainer-secure"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.portainer.entrypoints=htp"
+      - "traefik.http.routers.portainer.entrypoints=http"
       - "traefik.http.middlewares.portainer.redirectscheme.scheme=https"
       #- "traefik.http.routers.portainer.entrypoints.web.redirect=entryPoint=webSecure"
       #- "traefik.http.routers.portainer.entrypoints=webSecure"
