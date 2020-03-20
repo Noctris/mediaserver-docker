@@ -17,5 +17,4 @@ http:
           scheme: https
           servers:
             - url: "https://10.32.1.219/"
-            - "traefik.http.routers.api.middlewares=https-redirect"
             
