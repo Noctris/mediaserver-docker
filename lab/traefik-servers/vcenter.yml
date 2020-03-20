@@ -3,7 +3,7 @@ http:
       vcenter-http:
         entrypoints: "http"
         rule: Host(`vcenter.lab.vanhoof.me`)
-        service: "vcenter@file"
+        service: "vcenter"
     services:
       vcenter:
         loadBalancer:
