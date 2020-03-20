@@ -9,11 +9,11 @@ services:
     # - nzbget
     volumes:
       - "${DOCKER_VOL_MOUNT}/zabbix:/config"
-      - "${DOCKER_VOL_MOUNT}zabbix/mysql:/var/lib/mysql"
+      - "${DOCKER_VOL_MOUNT}/zabbix/mysql:/var/lib/mysql"
       - "${DOCKER_VOL_MOUNT}/zabbix/etc/localtime:/etc/localtime:ro"
       - "${DOCKER_VOL_MOUNT}/zabbix/var_lib_zabbix:/var/lib/zabbix/"
       - "${DOCKER_VOL_MOUNT}/zabbix/usr_lib_zabbix:/usr/lib/zabbix/"
-      - "${DOCKER_VOL_MOUNT}/alertscripts:/usr/lib/zabbix/alertscripts"
+      - "${DOCKER_VOL_MOUNT}/zabbix/alertscripts:/usr/lib/zabbix/alertscripts"
     ports:
         - 10051:10051
     environment:
