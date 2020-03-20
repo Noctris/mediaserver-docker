@@ -1,6 +1,22 @@
 http:
-    services:
-      hassio-dev:
-        loadBalancer:
-          servers:
-            - url: "http://10.32.1.9:8123/"
+  routers:
+    hassio-dev-http:
+      entryPoints:
+        - http
+      rule: Host(`hassio-dev.lab.vanhoof.me`) || Host(`hassio-dev.vanhoof.me`)
+      middlewares: 
+        - https-redirect@docker
+      service: "hassio-dev-backend"
+    hassio-dev-https:
+        entryPoints:
+          - https
+        rule: Host(`hassio-dev.lab.vanhoof.me`) || Host(`hassio-dev.vanhoof.me`)
+        service: hassio-dev-backend
+        tls: {}
+        certresolver: myresolver
+  services:
+    hassio-dev-backend:
+      loadBalancer:
+        servers:
+          - url: "https://10.32.1.9:8123/"
+  
