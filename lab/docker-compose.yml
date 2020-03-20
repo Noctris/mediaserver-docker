@@ -49,4 +49,4 @@ services:
       #- "traefik.http.services.hassio.loadbalancer.server=http://10.32.1.8:8123"
       - "traefik.http.routers.hassio-test.rule=Host(`blabla.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.hassio-test.entrypoints=http"
-      - "traefik.http.routers.hassio-test.service=vcenter-ssl@file"
+      - "traefik.http.routers.hassio-test.service=freenas@file"
