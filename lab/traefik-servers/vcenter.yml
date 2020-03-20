@@ -3,7 +3,7 @@ http:
       vcenter-http:
         entrypoints: "http"
         rule: Host(`vcenter.lab.vanhoof.me`)
-        middlewares: "https-redirect"
+        middlewares: "https-redirect@docker"
         service: "vcenter"
     services:
       vcenter:
