@@ -30,7 +30,7 @@ services:
       - "traefik.enable=true"
       # define some generic middlewares
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.traefikbasicAuth.basicauth.users=${TRAEFIK_USER}:$$apr1$$6ltp1kg8$$V0mBDQSBNhrjEOGqEcCZP."
+      - "traefik.http.middlewares.traefikbasicAuth.basicauth.users=${TRAEFIK_USER}:${TRAEFIK_PASSW}"
       # Define API Redirect http listener
       - "traefik.http.routers.api.middlewares=https-redirect"
       - "traefik.http.routers.api.service=api@internal"
