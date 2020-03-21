@@ -4,7 +4,6 @@ cp traefik-config/* /mnt/dockervol/traefik/servers/
 sudo docker-compose -f docker-compose.yml \
 -f management/portainer.yml \
 -f management/phpmyadmin.yml \
--f management/phpipam.yml \
 -f services/mariadb_test.yml \
 -f infra/influxdb.yml \
 -f infra/mariadb.yml \
