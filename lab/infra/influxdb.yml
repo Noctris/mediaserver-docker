@@ -27,6 +27,19 @@ services:
         - "traefik.http.routers.influxdb-secure.entrypoints=https"
         - "traefik.http.routers.influxdb-secure.tls=true"
         - "traefik.http.routers.influxdb-secure.tls.certresolver=myresolver"
+  chronograf:
+    image: chronograf:latest
+    ports:
+        - '127.0.0.1:8888:8888'
+    volumes:
+        - chronograf-storage:/var/lib/chronograf
+    depends_on:
+        - influxdb
+    environment:
+        - INFLUXDB_URL=http://influxdb:8086
+        - INFLUXDB_USERNAME=${INFLUXDB_USERNAME}
+        - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
 
 volumes:
     influxdb-storage:
+    chronograf-storage:
