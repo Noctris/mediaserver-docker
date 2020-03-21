@@ -45,8 +45,3 @@ services:
       - "traefik.http.routers.api-ssl.entrypoints=https"
       - "traefik.http.routers.api-ssl.tls=true"
       - "traefik.http.routers.api-ssl.tls.certresolver=myresolver"
-      # try an existing backend
-      #- "traefik.http.services.hassio.loadbalancer.server=http://10.32.1.8:8123"
-      - "traefik.http.routers.hassio-test.rule=Host(`blabla.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.hassio-test.entrypoints=http"
-      - "traefik.http.routers.hassio-test.service=freenas@file"
