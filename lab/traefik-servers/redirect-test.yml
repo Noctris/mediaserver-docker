@@ -10,13 +10,13 @@ http:
                 - http
             rule: Host(`blip.lab.vanhoof.me`)
             middlewares: 
-                - test-redirectregex:
+                - test-redirectregex
         redirect-test-router-https:
             entryPoints:
                 - https
             rule: Host(`blip.lab.vanhoof.me`)
             middlewares: 
-                - test-redirectregex:
+                - test-redirectregex
             tls: {}
             certresolver: myresolver
 
