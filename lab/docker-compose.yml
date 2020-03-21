@@ -24,7 +24,7 @@ services:
       - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
       - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=http"
       - "--metrics.influxdb=true"
-      - "--metrics.influxdb.address=localhost:8086"
+      - "--metrics.influxdb.address=influxdb:8086"
       - "--metrics.influxdb.protocol=udp"
       - "--metrics.influxdb.username=traefik"
       - "--metrics.influxdb.password=traefik"
