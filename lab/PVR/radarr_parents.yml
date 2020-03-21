@@ -17,10 +17,10 @@ services:
       - "traefik.http.middlewares.radarr_parents-secure.redirectscheme.scheme=https"
       - "traefik.http.routers.radarr_parents.middlewares=radarr_parents-secure"
       - "traefik.http.routers.radarr_parents.rule=Host(`radarr-parents.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.radarr_parents.entrypoints=web"
+      - "traefik.http.routers.radarr_parents.entrypoints=http"
       - "traefik.http.middlewares.radarr_parents.redirectscheme.scheme=https"
       - "traefik.http.routers.radarr_parents-secure.rule=Host(`radarr-parents.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.radarr_parents-secure.entrypoints=webSecure"
+      - "traefik.http.routers.radarr_parents-secure.entrypoints=https"
       - "traefik.http.routers.radarr_parents-secure.tls=true"
       - "traefik.http.routers.radarr_parents-secure.tls.certresolver=myresolver"
     restart: unless-stopped
