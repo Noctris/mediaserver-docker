@@ -28,6 +28,7 @@ services:
       - "--metrics.influxdb.protocol=http"
       - "--metrics.influxdb.username=traefik"
       - "--metrics.influxdb.password=traefik"
+      - "--metrics.influxdb.database=traefik"
     ports:
       - "80:80"
       - "443:443"
