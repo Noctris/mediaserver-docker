@@ -6,17 +6,17 @@ http:
             replacement: "http://www.microsoft.com"
     routers:
         redirect-test-router-http:
-        entryPoints:
-          - http
-        rule: Host(`blip.lab.vanhoof.me`)
-        middlewares: 
-            - test-redirectregex:
-      redirect-test-router-https:
-        entryPoints:
-            - https
-        rule: Host(`blip.lab.vanhoof.me`)
-        middlewares: 
-            - test-redirectregex:
-        tls: {}
-        certresolver: myresolver
+            entryPoints:
+                - http
+            rule: Host(`blip.lab.vanhoof.me`)
+            middlewares: 
+                - test-redirectregex:
+        redirect-test-router-https:
+            entryPoints:
+                - https
+            rule: Host(`blip.lab.vanhoof.me`)
+            middlewares: 
+                - test-redirectregex:
+            tls: {}
+            certresolver: myresolver
 
