@@ -9,4 +9,5 @@ sudo docker-compose -f docker-compose.yml \
 -f infra/influxdb.yml \
 -f infra/mariadb.yml \
 -f PVR/radarr_parents.yml \
+-f PVR/sonarr_parents.yml \
 up -d
