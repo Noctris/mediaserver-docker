@@ -4,6 +4,7 @@ http:
           redirectRegex:
             regex: "^http(.?)://blip.lab.vanhoof.me"
             replacement: "http://www.microsoft.com"
+            permanent: true
     routers:
         redirect-test-router-http:
             entryPoints:
