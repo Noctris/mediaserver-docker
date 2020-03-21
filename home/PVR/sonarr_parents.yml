@@ -1,0 +1,28 @@
+version: "3.5"
+
+services:
+  sonarr_parents:
+    image: linuxserver/sonarr
+    container_name: sonarr_parents
+    #depends_on:
+     # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/sonarr_parents:/config"
+      - "${PARENT_DOWNLOAD}:/downloads"
+      - "${PARENT_MEDIA}/Tv Shows:/tv"
+    environment:
+      - TZ="${TZ}"
+      - PUID=1000
+      - PGID=1000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.sonarr_parents-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr_parents.middlewares=sonarr_parents-secure"
+      - "traefik.http.routers.sonarr_parents.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr_parents.entrypoints=http"
+      - "traefik.http.middlewares.sonarr_parents.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr_parents-secure.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr_parents-secure.entrypoints=https"
+      - "traefik.http.routers.sonarr_parents-secure.tls=true"
+      - "traefik.http.routers.sonarr_parents-secure.tls.certresolver=myresolver"
+    restart: unless-stopped

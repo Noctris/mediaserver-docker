@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  radarr_parents:
+    image: linuxserver/radarr
+    container_name: radarr_parents
+    #depends_on:
+     # - nzbget
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/radarr_parents:/config"
+      - "${PARENT_DOWNLOAD}:/downloads"
+      - "${PARENT_MEDIA}/Film:/movies"
+    environment:
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.radarr_parents-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr_parents.middlewares=radarr_parents-secure"
+      - "traefik.http.routers.radarr_parents.rule=Host(`radarr-parents.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr_parents.entrypoints=http"
+      - "traefik.http.middlewares.radarr_parents.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr_parents-secure.rule=Host(`radarr-parents.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr_parents-secure.entrypoints=https"
+      - "traefik.http.routers.radarr_parents-secure.tls=true"
+      - "traefik.http.routers.radarr_parents-secure.tls.certresolver=myresolver"
+    restart: unless-stopped

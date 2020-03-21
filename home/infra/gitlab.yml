@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    #restart: always
+    hostname: "gitlab.{DOMAIN_NAME}"
+    environment: 
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.${DOMAIN_NAME}:80'
+        gitlab_rails['gitlab_shell_ssh_port'] = 
+    ports:
+      - '2224:22'
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/gitlab/config:/etc/gitlab"
+      - "${DOCKER_VOL_MOUNT}/gitlab/logs:/var/logs/gitlab"
+      - "${DOCKER_VOL_MOUNT}/gitlab/data:/var/opt/gitlab"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitlab.rule=Host(`gitlab.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.gitlab.entrypoints=${TRAEFIK_ENTRY_POINT}"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=80"

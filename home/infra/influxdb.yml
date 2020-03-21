@@ -1,0 +1,47 @@
+version: "3.5"
+
+services:
+  # Management Platform influxdb to manage docker stuff
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    volumes:
+        - influxdb-storage:/var/lib/influxdb
+    restart: always
+    ports:
+        - 8086:8086
+    environment:
+        - INFLUXDB_DB=db0
+        - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
+        - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.influxdb-secure.redirectscheme.scheme=https"
+        - "traefik.http.routers.influxdb.middlewares=influxdb-secure"
+        - "traefik.http.routers.influxdb.rule=Host(`influxdb.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.influxdb.entrypoints=http"
+        - "traefik.http.middlewares.influxdb.redirectscheme.scheme=https"
+        #- "traefik.http.routers.influxdb.entrypoints.web.redirect=entryPoint=webSecure"
+        #- "traefik.http.routers.influxdb.entrypoints=webSecure"
+        - "traefik.http.routers.influxdb-secure.rule=Host(`influxdb.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.influxdb-secure.entrypoints=https"
+        - "traefik.http.routers.influxdb-secure.tls=true"
+        - "traefik.http.routers.influxdb-secure.tls.certresolver=myresolver"
+  chronograf:
+    image: chronograf:latest
+    container_name: chronograf
+    ports:
+        - 8888:8888
+    volumes:
+        - chronograf-storage:/var/lib/chronograf
+    depends_on:
+        - influxdb
+    environment:
+        #- INFLUXDB_URL=http://influxdb:8086
+        - INFLUXDB_URL=https://influxdb.lab.vanhoof.me
+        - INFLUXDB_USERNAME=${INFLUXDB_USERNAME}
+        - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
+
+volumes:
+    influxdb-storage:
+    chronograf-storage:

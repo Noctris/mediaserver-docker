@@ -1,0 +1,23 @@
+
+version: "3.3"
+
+services:
+  guacd:
+    image: guacamole/guacd
+    container_name: guacd
+    ports:
+      - 4822:4822
+    environment:
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.guacd-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.guacd.middlewares=guacd-secure"
+      - "traefik.http.routers.guacd.rule=Host(`ts.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.guacd.entrypoints=web"
+      - "traefik.http.middlewares.guacd.redirectscheme.scheme=https"
+      - "traefik.http.routers.guacd-secure.rule=Host(`ts.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.guacd-secure.entrypoints=webSecure"
+      - "traefik.http.routers.guacd-secure.tls=true"
+      - "traefik.http.routers.guacd-secure.tls.certresolver=myresolver"
+    restart: unless-stopped
