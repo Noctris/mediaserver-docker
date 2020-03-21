@@ -10,6 +10,7 @@ services:
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
       - "--entrypoints.mariadb-port-test=:3307"
+      - "--entrypoints.mariadb-port=:3306"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.file.directory=/traefik_data/servers"
