@@ -1,0 +1,19 @@
+version: "3.5"
+
+services:
+  # Management Platform Portainer to manage docker stuff
+  portainer_edge_agent:
+    image: portainer/agent
+    container_name: portainer_edge_agent
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${DOCKER_VOL_MOUNT}/portainer_agent_data:/data"
+      - "/:/host"
+    environment:
+      - EDGE=1
+      - EDGE_ID=${PORTAINER_EDGE_ID}
+      - EDGE_KEY=${PORTAINER_EDGE_KEY}
+      - CAP_HOST_MANAGEMENT=1
+    labels:
+      - "traefik.enable=false"
