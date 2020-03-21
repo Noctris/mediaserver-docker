@@ -8,6 +8,8 @@ services:
     volumes:
         - influxdb-storage:/var/lib/influxdb
     restart: always
+    ports:
+        - 8086:8086
     environment:
         - INFLUXDB_DB=db0
         - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
