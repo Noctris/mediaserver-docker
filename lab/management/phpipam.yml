@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+  # Management Platform phpipam to manage docker stuff
+  phpipam:
+    image: pierrecdn/phpipam
+    container_name: pierrecdn/phpipam
+    depends_on:
+        - phpipam
+    environment:
+        - MYSQL_ENV_MYSQL_USER=root
+        - MYSQL_ENV_MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_TEST}
+        - MYSQL_ENV_MYSQL_HOST=mariadb_test
+    restart: always
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.phpipam-secure.redirectscheme.scheme=https"
+        - "traefik.http.routers.phpipam.middlewares=phpipam-secure"
+        - "traefik.http.routers.phpipam.rule=Host(`phpipam.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.phpipam.entrypoints=http"
+        - "traefik.http.middlewares.phpipam.redirectscheme.scheme=https"
+        #- "traefik.http.routers.phpipam.entrypoints.web.redirect=entryPoint=webSecure"
+        #- "traefik.http.routers.phpipam.entrypoints=webSecure"
+        - "traefik.http.routers.phpipam-secure.rule=Host(`phpipam.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.phpipam-secure.entrypoints=https"
+        - "traefik.http.routers.phpipam-secure.tls=true"
+        - "traefik.http.routers.phpipam-secure.tls.certresolver=myresolver"
+        # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
+        # This is not necessary if you set your default network in Traefik config/parameters
+        #- "traefik.docker.network=noctrismediaserverdocker_proxy"
+  
