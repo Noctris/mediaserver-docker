@@ -1,0 +1,23 @@
+http:
+    routers:
+      lab-forward-http:
+        entryPoints:
+          - http
+        rule: HostRegexp(`http://(.*).lab.vanhoof.me`)
+        service: "lab-forward-http-backend"
+      lab-forward-https:
+        entryPoints:
+            - https
+        rule: HostRegexp(`https://(.*).lab.vanhoof.me`)
+        service: lab-forward-https-backend
+#        tls: {}
+#        certresolver: myresolver
+    services:
+      lab-forward-http-backend:
+        loadBalancer:
+          servers:
+            - url: "http://10.32.4.10"
+      lab-forward-https-backend:
+        loadBalancer:
+          servers:
+            - url: "http://10.32.4.10"
