@@ -1,6 +1,6 @@
 metrics:
     influxDB:
-      address: influxdb-lab:8086
+      address: localhost:8086
       username: "traefik"
       password: "traefik"
       
