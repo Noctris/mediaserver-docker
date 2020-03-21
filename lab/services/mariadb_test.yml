@@ -3,8 +3,8 @@ version: "3.5"
 services:
   # Management Platform mariadb_test to manage docker stuff
   mariadb_test:
-    image: mariadb/mariadb
-    container_name: mariadb
+    image: mariadb
+    container_name: mariadb_test
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_TEST}
