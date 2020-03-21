@@ -4,7 +4,7 @@ services:
   # Management Platform phpipam to manage docker stuff
   phpipam:
     image: pierrecdn/phpipam
-    container_name: pierrecdn/phpipam
+    container_name: phpipam
     depends_on:
         - mariadb_test
     environment:
