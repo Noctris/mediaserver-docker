@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  # Management Platform phpmyadmin to manage docker stuff
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    variables:
+      - PMA_ARBITRARY=1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.phpmyadmin-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.phpmyadmin.middlewares=phpmyadmin-secure"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.phpmyadmin.entrypoints=http"
+      - "traefik.http.middlewares.phpmyadmin.redirectscheme.scheme=https"
+      #- "traefik.http.routers.phpmyadmin.entrypoints.web.redirect=entryPoint=webSecure"
+      #- "traefik.http.routers.phpmyadmin.entrypoints=webSecure"
+      - "traefik.http.routers.phpmyadmin-secure.rule=Host(`phpmyadmin.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.phpmyadmin-secure.entrypoints=https"
+      - "traefik.http.routers.phpmyadmin-secure.tls=true"
+      - "traefik.http.routers.phpmyadmin-secure.tls.certresolver=myresolver"
+      # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
+      # This is not necessary if you set your default network in Traefik config/parameters
+      #- "traefik.docker.network=noctrismediaserverdocker_proxy"
