@@ -24,8 +24,8 @@ services:
       - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
       - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=http"
       - "--metrics.influxdb=true"
-      - "--metrics.influxdb.address=influxdb:8086"
-      - "--metrics.influxdb.protocol=udp"
+      - "--metrics.influxdb.address=https://influxdb.lab.vanhoof.me"
+      - "--metrics.influxdb.protocol=http"
       - "--metrics.influxdb.username=traefik"
       - "--metrics.influxdb.password=traefik"
     ports:
