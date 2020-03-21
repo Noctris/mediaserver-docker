@@ -1,0 +1,21 @@
+http:
+    routers:
+      tm-old-http:
+        entryPoints:
+          - http
+        rule: Host(`tm.vanhoof.me`)
+        middlewares: 
+          - https-redirect@docker
+        service: "tm-old-backend"
+      tm-old-https:
+        entryPoints:
+            - https
+        rule: Host(`tm.vanhoof.me`)
+        service: tm-old-backend
+        tls: {}
+        certresolver: myresolver
+    services:
+      tm-old-backend:
+        loadBalancer:
+          servers:
+            - url: "http://10.32.1.10:9091"
