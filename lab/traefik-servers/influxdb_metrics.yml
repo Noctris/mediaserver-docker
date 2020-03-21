@@ -1,0 +1,6 @@
+metrics:
+    influxDB:
+      address: influxdb:8086
+      username: "traefik"
+      password: "traefik"
+      
