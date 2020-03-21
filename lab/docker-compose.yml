@@ -9,6 +9,7 @@ services:
       - "--log.level=DEBUG"
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
+      - "--entrypoints.mariadb-port-test=:3307"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.file.directory=/traefik_data/servers"
