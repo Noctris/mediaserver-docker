@@ -1,0 +1,22 @@
+http:
+  routers:
+    ipam-old-http:
+      entryPoints:
+        - http
+      rule: Host(`ipam-old.lab.vanhoof.me`) || Host(`ipam-old.vanhoof.me`) || Host(`ipam.vanhoof.me`)
+      middlewares: 
+        - https-redirect@docker
+      service: "ipam-old-backend"
+    ipam-old-https:
+        entryPoints:
+          - https
+        rule: Host(`ipam-old.lab.vanhoof.me`) || Host(`ipam-old.vanhoof.me`) || Host(`ipam.vanhoof.me`)
+        service: ipam-old-backend
+        tls: {}
+        certresolver: myresolver
+  services:
+    ipam-old-backend:
+      loadBalancer:
+        servers:
+          - url: "http://10.32.1.6:80"
+  

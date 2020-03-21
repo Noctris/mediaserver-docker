@@ -1,0 +1,21 @@
+http:
+    routers:
+      nzb-mvh-old-http:
+        entryPoints:
+          - http
+        rule: Host(`nzb-mvh-old.lab.vanhoof.me`) || Host(`nzb-old.mvh.vanhoof.me`) || Host(`nzb.mvh.vanhoof.me`)
+        middlewares: 
+          - https-redirect@docker
+        service: "nzb-mvh-old-backend"
+      nzb-mvh-old-https:
+        entryPoints:
+            - https
+        rule: Host(`nzb-mvh-old.lab.vanhoof.me`) || Host(`nzb-old.mvh.vanhoof.me`) || Host(`nzb.mvh.vanhoof.me`)
+        service: nzb-mvh-old-backend
+        tls: {}
+        certresolver: myresolver
+    services:
+      nzb-mvh-old-backend:
+        loadBalancer:
+          servers:
+            - url: "http://10.32.1.10:18080"

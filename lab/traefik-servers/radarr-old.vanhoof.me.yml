@@ -1,0 +1,21 @@
+http:
+    routers:
+      radarr-old-http:
+        entryPoints:
+          - http
+        rule: Host(`radarr-old.lab.vanhoof.me`) || Host(`radarr-old.vanhoof.me`) || Host(`radarr.vanhoof.me`)
+        middlewares: 
+          - https-redirect@docker
+        service: "radarr-old-backend"
+      radarr-old-https:
+        entryPoints:
+            - https
+        rule: Host(`radarr-old.lab.vanhoof.me`) || Host(`radarr-old.vanhoof.me`) || Host(`radarr.vanhoof.me`)
+        service: radarr-old-backend
+        tls: {}
+        certresolver: myresolver
+    services:
+      radarr-old-backend:
+        loadBalancer:
+          servers:
+            - url: "http://10.32.1.10:7878"
