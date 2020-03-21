@@ -6,7 +6,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     restart: always
-    variables:
+    environment:
       - PMA_ARBITRARY=1
     labels:
       - "traefik.enable=true"
