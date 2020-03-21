@@ -37,7 +37,8 @@ services:
     depends_on:
         - influxdb
     environment:
-        - INFLUXDB_URL=http://influxdb:8086
+        #- INFLUXDB_URL=http://influxdb:8086
+        - INFLUXDB_URL=https://influxdb.lab.vanhoof.me
         - INFLUXDB_USERNAME=${INFLUXDB_USERNAME}
         - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
 
