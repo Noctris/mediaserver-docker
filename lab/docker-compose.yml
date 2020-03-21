@@ -23,6 +23,11 @@ services:
       - "--certificatesResolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
       - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=http"
+      - "--metrics.influxdb=true"
+      - "--metrics.influxdb.address=localhost:8086"
+      - "--metrics.influxdb.protocol=udp"
+      - "--metrics.influxdb.username=traefik"
+      - "--metrics.influxdb.password=traefik"
     ports:
       - "80:80"
       - "443:443"

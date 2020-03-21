@@ -1,7 +1,0 @@
-metrics:
-    influxDB:
-      address: localhost:8086
-      username: "traefik"
-      password: "traefik"
-      protocol: http
-      
