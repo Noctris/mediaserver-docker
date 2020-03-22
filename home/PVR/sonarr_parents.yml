@@ -7,7 +7,7 @@ services:
     #depends_on:
      # - nzbget
     volumes:
-      - "${DOCKER_VOL_MOUNT}/sonarr_parents:/config"
+      - "sonarr_parents_config:/config"
       - "${PARENT_DOWNLOAD}:/downloads"
       - "${PARENT_MEDIA}/Tv Shows:/tv"
     environment:
@@ -26,3 +26,6 @@ services:
       - "traefik.http.routers.sonarr_parents-secure.tls=true"
       - "traefik.http.routers.sonarr_parents-secure.tls.certResolver=myresolver"
     restart: unless-stopped
+
+volumes:
+  sonarr_parents_config:
