@@ -11,7 +11,9 @@ services:
       - "${PARENT_DOWNLOAD}:/downloads"
       - "${PARENT_MEDIA}/Tv Shows:/parents_tvshows"
       - "${PARENT_MEDIA}/Film:/parents_movies"
+      - "${PARENT_MEDIA}:/parents_media"
       - "${KIDS_MEDIA}/TV Shows:/kids_tvshows"
+      - "${KIDS_MEDIA}:/kids_media"
       - "${KIDS_MEDIA}/Films:/kids_movies"
     ports:
       - 8096:8096
