@@ -7,7 +7,7 @@ services:
     #depends_on:
      # - nzbget
     volumes:
-      - "${DOCKER_VOL_MOUNT}/radarr_parents:/config"
+      - "radarr_parents_config:/config"
       - "${PARENT_DOWNLOAD}:/downloads"
       - "${PARENT_MEDIA}/Film:/movies"
     environment:
@@ -24,3 +24,6 @@ services:
       - "traefik.http.routers.radarr_parents-secure.tls=true"
       - "traefik.http.routers.radarr_parents-secure.tls.certResolver=myresolver"
     restart: unless-stopped
+
+volumes:
+  radarr_parents_config:
