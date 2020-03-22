@@ -1,0 +1,29 @@
+version: "3.5"
+
+services:
+  radarr_kids:
+    image: linuxserver/radarr
+    container_name: radarr_kids
+    #depends_on:
+     # - nzbget
+    volumes:
+      - "radarr_kids_config:/config"
+      - "${KIDS_DOWNLOAD}:/downloads"
+      - "${KIDS_MEDIA}/Film:/movies"
+    environment:
+      - TZ="${TZ}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.radarr_kids-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr_kids.middlewares=radarr_kids-secure"
+      - "traefik.http.routers.radarr_kids.rule=Host(`radarr-kids.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr_kids.entrypoints=http"
+      - "traefik.http.middlewares.radarr_kids.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr_kids-secure.rule=Host(`radarr-kids.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr_kids-secure.entrypoints=https"
+      - "traefik.http.routers.radarr_kids-secure.tls=true"
+      - "traefik.http.routers.radarr_kids-secure.tls.certResolver=myresolver"
+    restart: unless-stopped
+
+volumes:
+  radarr_kids_config:

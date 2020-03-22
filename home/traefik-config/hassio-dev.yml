@@ -12,11 +12,11 @@ http:
           - https
         rule: Host(`hassio-dev.home.vanhoof.me`) || Host(`hassio-dev.vanhoof.me`)
         service: hassio-dev-backend
-        tls: {}
-        certResolver: myresolver
+        tls:
+          certResolver: myresolver
   services:
     hassio-dev-backend:
       loadBalancer:
         servers:
-          - url: "http://10.32.1.9:8123/"
+          - url: "http://10.32.1.9:8123"
   
