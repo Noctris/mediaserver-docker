@@ -13,6 +13,7 @@ sudo docker-compose -f docker-compose.yml \
 -f PVR/sonarr_parents.yml \
 -f PVR/radarr_kids.yml \
 -f PVR/sonarr_kids.yml \
--f mediaservers/emby_kids.yml \
+-f mediaservers/kids_emby.yml \
+-f mediaservers/parents_emby.yml \
 -f mediaservers/kids_plex.yml \
 up -d --remove-orphans
