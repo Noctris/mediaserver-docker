@@ -8,8 +8,8 @@ services:
      # - nzbget
     volumes:
       - "sonarr_kids_config:/config"
-      - "${PARENT_DOWNLOAD}:/downloads"
-      - "${PARENT_MEDIA}/Tv Shows:/tv"
+      - "${KIDS_DOWNLOAD}:/downloads"
+      - "${KIDS_MEDIA}/Tv Shows:/tv"
     environment:
       - TZ="${TZ}"
       - PUID=1000
