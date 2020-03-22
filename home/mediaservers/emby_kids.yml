@@ -11,6 +11,8 @@ services:
       - "${KIDS_DOWNLOAD}:/downloads"
       - "${KIDS_MEDIA}/TV Shows:/tvshows"
       - "${KIDS_MEDIA}/Films:/movies"
+    ports:
+        - 8096:8096
     environment:
       - TZ="${TZ}"
       - PUID=1000
