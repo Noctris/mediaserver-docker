@@ -5,6 +5,7 @@ sudo docker-compose -f docker-compose.yml \
 -f management/portainer.yml \
 -f management/phpmyadmin.yml \
 -f services/mariadb_test.yml \
+-f services/nntp2nntp.yml \
 -f infra/influxdb.yml \
 -f infra/mariadb.yml \
 -f PVR/radarr_parents.yml \
