@@ -1,0 +1,38 @@
+version: "3.5"
+
+services:
+    kids_plex:
+    image: linuxserver/plex
+    container_name: kids_plex
+    #depends_on:
+     # - nzbget
+    volumes:
+      - "kids_plex_config:/config"
+      - "${KIDS_MEDIA}/Films:/movies"
+      - "${KIDS_MEDIA}/TV Shows:/tv"
+    ports:
+      - target: 32400
+        published: 32401
+        mode: host
+    environment:
+      - TZ="${TZ}"
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=022
+      - ADVERTISE_IP=http://10.32.1.15:32401,https://kids-plex.${SUB_DOMAIN_NAME}:443,https://10.32.1.15:443
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=32400"
+      - "traefik.http.middlewares.kids_plex-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.kids_plex.middlewares=kids_plex-secure"
+      - "traefik.http.routers.kids_plex.rule=Host(`kids-plex.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.kids_plex.entrypoints=http"
+      - "traefik.http.middlewares.kids_plex.redirectscheme.scheme=https"
+      - "traefik.http.routers.kids_plex-secure.rule=Host(`kids-plex.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.kids_plex-secure.entrypoints=https"
+      - "traefik.http.routers.kids_plex-secure.tls=true"
+      - "traefik.http.routers.kids_plex-secure.tls.certResolver=myresolver"
+    restart: unless-stopped
+
+volumes:
+  kids_plex_config:
