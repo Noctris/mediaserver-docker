@@ -1,29 +1,31 @@
 version: "3.5"
 
 services:
-  radarr_kids:
-    image: linuxserver/radarr
-    container_name: radarr_kids
+  sonarr_kids:
+    image: linuxserver/sonarr
+    container_name: sonarr_kids
     #depends_on:
      # - nzbget
     volumes:
-      - "radarr_kids_config:/config"
-      - "${KIDS_DOWNLOAD}:/downloads"
-      - "${KIDS_MEDIA}/Film:/movies"
+      - "sonarr_kids_config:/config"
+      - "${PARENT_DOWNLOAD}:/downloads"
+      - "${PARENT_MEDIA}/Tv Shows:/tv"
     environment:
       - TZ="${TZ}"
+      - PUID=1000
+      - PGID=1000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.radarr_kids-secure.redirectscheme.scheme=https"
-      - "traefik.http.routers.radarr_kids.middlewares=radarr_kids-secure"
-      - "traefik.http.routers.radarr_kids.rule=Host(`radarr-kids.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.radarr_kids.entrypoints=http"
-      - "traefik.http.middlewares.radarr_kids.redirectscheme.scheme=https"
-      - "traefik.http.routers.radarr_kids-secure.rule=Host(`radarr-kids.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.radarr_kids-secure.entrypoints=https"
-      - "traefik.http.routers.radarr_kids-secure.tls=true"
-      - "traefik.http.routers.radarr_kids-secure.tls.certResolver=myresolver"
+      - "traefik.http.middlewares.sonarr_kids-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr_kids.middlewares=sonarr_kids-secure"
+      - "traefik.http.routers.sonarr_kids.rule=Host(`sonarr-kids.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr_kids.entrypoints=http"
+      - "traefik.http.middlewares.sonarr_kids.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr_kids-secure.rule=Host(`sonarr-kids.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr_kids-secure.entrypoints=https"
+      - "traefik.http.routers.sonarr_kids-secure.tls=true"
+      - "traefik.http.routers.sonarr_kids-secure.tls.certResolver=myresolver"
     restart: unless-stopped
 
 volumes:
-  radarr_kids_config:
+  sonarr_kids_config:
