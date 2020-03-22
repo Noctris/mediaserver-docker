@@ -13,7 +13,7 @@ http:
         rule: Host(`hassio-dev.home.vanhoof.me`) || Host(`hassio-dev.vanhoof.me`)
         service: hassio-dev-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
   services:
     hassio-dev-backend:
       loadBalancer:

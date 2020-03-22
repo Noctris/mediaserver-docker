@@ -41,5 +41,5 @@ services:
       - "traefik.http.routers.plex-secure.rule=Host(`plex.${DOMAIN_NAME}`)"
       - "traefik.http.routers.plex-secure.entrypoints=webSecure"
       - "traefik.http.routers.plex-secure.tls=true"
-      - "traefik.http.routers.plex-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.plex-secure.tls.certResolver=myresolver"
     restart: unless-stopped

@@ -13,7 +13,7 @@ http:
         rule: Host(`sonarr-old.lab.vanhoof.me`) || Host(`sonarr-old.vanhoof.me`) || Host(`sonarr.vanhoof.me`)
         service: sonarr-old-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
     services:
       sonarr-old-backend:
         loadBalancer:

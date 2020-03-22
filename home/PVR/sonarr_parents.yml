@@ -24,5 +24,5 @@ services:
       - "traefik.http.routers.sonarr_parents-secure.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.sonarr_parents-secure.entrypoints=https"
       - "traefik.http.routers.sonarr_parents-secure.tls=true"
-      - "traefik.http.routers.sonarr_parents-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.sonarr_parents-secure.tls.certResolver=myresolver"
     restart: unless-stopped

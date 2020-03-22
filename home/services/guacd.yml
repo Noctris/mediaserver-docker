@@ -19,5 +19,5 @@ services:
       - "traefik.http.routers.guacd-secure.rule=Host(`ts.${DOMAIN_NAME}`)"
       - "traefik.http.routers.guacd-secure.entrypoints=webSecure"
       - "traefik.http.routers.guacd-secure.tls=true"
-      - "traefik.http.routers.guacd-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.guacd-secure.tls.certResolver=myresolver"
     restart: unless-stopped

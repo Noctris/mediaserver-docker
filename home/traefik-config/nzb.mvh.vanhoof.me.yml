@@ -13,7 +13,7 @@ http:
         rule: Host(`nzb.mvh.vanhoof.me`)
         service: nzb-mvh-old-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
     services:
       nzb-mvh-old-backend:
         loadBalancer:

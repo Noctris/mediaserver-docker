@@ -22,9 +22,9 @@ services:
       - "traefik.http.routers.heimdall-secure.rule=Host(`heimdall.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.heimdall-secure.entrypoints=https"
       - "traefik.http.routers.heimdall-secure.tls=true"
-      - "traefik.http.routers.heimdall-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.heimdall-secure.tls.certResolver=myresolver"
       - "traefik.http.routers.heimdall-dasboard-secure.rule=Host(`dashboard.${DOMAIN_NAME}`)"
       - "traefik.http.routers.heimdall-dasboard-secure.entrypoints=https"
       - "traefik.http.routers.heimdall-dasboard-secure.tls=true"
-      - "traefik.http.routers.heimdall-dasboard-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.heimdall-dasboard-secure.tls.certResolver=myresolver"
     restart: unless-stopped

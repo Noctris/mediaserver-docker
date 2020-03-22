@@ -19,5 +19,5 @@ http:
             middlewares: 
                 - test-redirectregex
             tls: {}
-            certresolver: myresolver
+            certResolver: myresolver
 

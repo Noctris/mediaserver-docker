@@ -13,7 +13,7 @@ http:
         rule: Host(`ipam-old.lab.vanhoof.me`) || Host(`ipam-old.vanhoof.me`) || Host(`ipam.vanhoof.me`)
         service: ipam-old-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
   services:
     ipam-old-backend:
       loadBalancer:

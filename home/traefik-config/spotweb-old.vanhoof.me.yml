@@ -13,7 +13,7 @@ http:
         rule: Host(`spotweb.vanhoof.me`)
         service: spotweb-old-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
     services:
       spotweb-old-backend:
         loadBalancer:

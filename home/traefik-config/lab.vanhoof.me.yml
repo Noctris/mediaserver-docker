@@ -11,7 +11,7 @@ http:
         rule: HostRegexp(`https://(.*).lab.vanhoof.me`)
         service: lab-forward-https-backend
 #        tls: {}
-#        certresolver: myresolver
+#        certResolver: myresolver
     services:
       lab-forward-http-backend:
         loadBalancer:

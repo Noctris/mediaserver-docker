@@ -13,7 +13,7 @@ http:
         rule: Host(`radarr.vanhoof.me`)
         service: radarr-old-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
     services:
       radarr-old-backend:
         loadBalancer:

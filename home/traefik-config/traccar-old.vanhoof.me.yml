@@ -13,7 +13,7 @@ http:
         rule: Host(`traccar.vanhoof.me`)
         service: traccar-old-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
     services:
       traccar-old-backend:
         loadBalancer:

@@ -23,5 +23,5 @@ services:
       - "traefik.http.routers.duplicati-secure.rule=Host(`duplicati.${DOMAIN_NAME}`)"
       - "traefik.http.routers.duplicati-secure.entrypoints=webSecure"
       - "traefik.http.routers.duplicati-secure.tls=true"
-      - "traefik.http.routers.duplicati-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.duplicati-secure.tls.certResolver=myresolver"
     restart: unless-stopped

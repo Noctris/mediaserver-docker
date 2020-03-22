@@ -26,7 +26,7 @@ services:
         - "traefik.http.routers.influxdb-secure.rule=Host(`influxdb.${SUB_DOMAIN_NAME}`)"
         - "traefik.http.routers.influxdb-secure.entrypoints=https"
         - "traefik.http.routers.influxdb-secure.tls=true"
-        - "traefik.http.routers.influxdb-secure.tls.certresolver=myresolver"
+        - "traefik.http.routers.influxdb-secure.tls.certResolver=myresolver"
   chronograf:
     image: chronograf:latest
     container_name: chronograf

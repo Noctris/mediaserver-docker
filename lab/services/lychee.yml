@@ -22,5 +22,5 @@ services:
       - "traefik.http.routers.lychee-secure.rule=Host(`lychee.${DOMAIN_NAME}`)"
       - "traefik.http.routers.lychee-secure.entrypoints=webSecure"
       - "traefik.http.routers.lychee-secure.tls=true"
-      - "traefik.http.routers.lychee-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.lychee-secure.tls.certResolver=myresolver"
     restart: unless-stopped

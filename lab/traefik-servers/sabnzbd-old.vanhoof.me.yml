@@ -13,7 +13,7 @@ http:
         rule: Host(`sabnzbd-old.lab.vanhoof.me`) || Host(`sabnzbd-old.vanhoof.me`) || Host(`sabnzbd.vanhoof.me`)
         service: sabnzbd-old-backend
         tls: {}
-        certresolver: myresolver
+        certResolver: myresolver
     services:
       sabnzbd-old-backend:
         loadBalancer:

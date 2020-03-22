@@ -22,5 +22,5 @@ services:
       - "traefik.http.routers.radarr_parents-secure.rule=Host(`radarr-parents.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.radarr_parents-secure.entrypoints=https"
       - "traefik.http.routers.radarr_parents-secure.tls=true"
-      - "traefik.http.routers.radarr_parents-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.radarr_parents-secure.tls.certResolver=myresolver"
     restart: unless-stopped

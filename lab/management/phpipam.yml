@@ -24,7 +24,7 @@ services:
         - "traefik.http.routers.phpipam-secure.rule=Host(`phpipam.${SUB_DOMAIN_NAME}`)"
         - "traefik.http.routers.phpipam-secure.entrypoints=https"
         - "traefik.http.routers.phpipam-secure.tls=true"
-        - "traefik.http.routers.phpipam-secure.tls.certresolver=myresolver"
+        - "traefik.http.routers.phpipam-secure.tls.certResolver=myresolver"
         # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
         # This is not necessary if you set your default network in Traefik config/parameters
         #- "traefik.docker.network=noctrismediaserverdocker_proxy"
