@@ -1,23 +1,23 @@
-http:
-    middlewares:
-        test-redirectregex:
-          redirectRegex:
-            regex: "^http(.?)://blip.lab.vanhoof.me"
-            replacement: "http://www.microsoft.com"
-            permanent: true
-    routers:
-        redirect-test-router-http:
-            entryPoints:
-                - http
-            rule: Host(`blip.lab.vanhoof.me`)
-            middlewares: 
-                - test-redirectregex
-        redirect-test-router-https:
-            entryPoints:
-                - https
-            rule: Host(`blip.lab.vanhoof.me`)
-            middlewares: 
-                - test-redirectregex
-            tls: {}
-            certresolver: myresolver
+# http:
+#     middlewares:
+#         test-redirectregex:
+#           redirectRegex:
+#             regex: "^http(.?)://blip.lab.vanhoof.me"
+#             replacement: "http://www.microsoft.com"
+#             permanent: true
+#     routers:
+#         redirect-test-router-http:
+#             entryPoints:
+#                 - http
+#             rule: Host(`blip.lab.vanhoof.me`)
+#             middlewares: 
+#                 - test-redirectregex
+#         redirect-test-router-https:
+#             entryPoints:
+#                 - https
+#             rule: Host(`blip.lab.vanhoof.me`)
+#             middlewares: 
+#                 - test-redirectregex
+#             tls: {}
+#             certresolver: myresolver
 
