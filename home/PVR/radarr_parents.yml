@@ -1,9 +1,9 @@
 version: "3.5"
 
 services:
-  radarr_parents:
+  parents_radarr:
     image: linuxserver/radarr
-    container_name: radarr_parents
+    container_name: parents_radarr
     #depends_on:
      # - nzbget
     volumes:

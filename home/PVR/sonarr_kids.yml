@@ -1,9 +1,9 @@
 version: "3.5"
 
 services:
-  sonarr_kids:
+  kids_sonarr:
     image: linuxserver/sonarr
-    container_name: sonarr_kids
+    container_name: kids_sonarr
     #depends_on:
      # - nzbget
     volumes:

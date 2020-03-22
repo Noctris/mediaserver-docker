@@ -1,9 +1,9 @@
 version: "3.5"
 
 services:
-  emby_kids:
+  kids_emby:
     image: linuxserver/emby
-    container_name: emby_kids
+    container_name: kids_emby
     #depends_on:
      # - nzbget
     volumes:

@@ -1,9 +1,9 @@
 version: "3.5"
 
 services:
-  sonarr_parents:
+  parents_sonarr:
     image: linuxserver/sonarr
-    container_name: sonarr_parents
+    container_name: parents_sonarr
     #depends_on:
      # - nzbget
     volumes:
@@ -16,15 +16,15 @@ services:
       - PGID=1000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.sonarr_parents-secure.redirectscheme.scheme=https"
-      - "traefik.http.routers.sonarr_parents.middlewares=sonarr_parents-secure"
-      - "traefik.http.routers.sonarr_parents.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.sonarr_parents.entrypoints=http"
-      - "traefik.http.middlewares.sonarr_parents.redirectscheme.scheme=https"
-      - "traefik.http.routers.sonarr_parents-secure.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.sonarr_parents-secure.entrypoints=https"
-      - "traefik.http.routers.sonarr_parents-secure.tls=true"
-      - "traefik.http.routers.sonarr_parents-secure.tls.certResolver=myresolver"
+      - "traefik.http.middlewares.parents_sonarr-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents_sonarr.middlewares=parents_sonarr-secure"
+      - "traefik.http.routers.parents_sonarr.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents_sonarr.entrypoints=http"
+      - "traefik.http.middlewares.parents_sonarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents_sonarr-secure.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents_sonarr-secure.entrypoints=https"
+      - "traefik.http.routers.parents_sonarr-secure.tls=true"
+      - "traefik.http.routers.parents_sonarr-secure.tls.certResolver=myresolver"
     restart: unless-stopped
 
 volumes:
