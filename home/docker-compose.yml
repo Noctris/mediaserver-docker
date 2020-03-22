@@ -7,6 +7,9 @@ services:
     container_name: "traefik"
     command:
       - "--log.level=DEBUG"
+      - "--log.filePath=/traefik_data/traefik.log"
+      - "--accesslog=true"
+      - "--accesslog.filePath=/traefik_data/access.log"
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
       - "--entrypoints.mariadb-port-test=:3307"
