@@ -1,7 +1,7 @@
 version: "3.5"
 
 services:
-    kids_plex:
+  kids_plex:
     image: linuxserver/plex
     container_name: kids_plex
     #depends_on:
