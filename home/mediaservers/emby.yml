@@ -1,0 +1,39 @@
+version: "3.5"
+
+services:
+  emby:
+    image: linuxserver/emby
+    container_name: emby
+    #depends_on:
+     # - nzbget
+    volumes:
+      - "emby_config:/config"
+      - "${PARENT_DOWNLOAD}:/downloads"
+      - "${PARENT_MEDIA}/Tv Shows:/parents_tvshows"
+      - "${PARENT_MEDIA}/Film:/parents_movies"
+      - "${KIDS_MEDIA}/TV Shows:/kids_tvshows"
+      - "${KIDS_MEDIA}/Films:/kids_movies"
+    ports:
+      - 8096:8096
+      - 8920:8920
+    environment:
+      - TZ="${TZ}"
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=022
+    labels:
+      - "traefik.enable=true"
+      - "trafik.port=8096"
+      - "traefik.http.middlewares.emby-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.emby.middlewares=emby-secure"
+      - "traefik.http.routers.emby.rule=Host(`emby.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.emby.entrypoints=http"
+      - "traefik.http.middlewares.emby.redirectscheme.scheme=https"
+      - "traefik.http.routers.emby-secure.rule=Host(`emby.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.emby-secure.entrypoints=https"
+      - "traefik.http.routers.emby-secure.tls=true"
+      - "traefik.http.routers.emby-secure.tls.certResolver=myresolver"
+    restart: unless-stopped
+
+volumes:
+  emby_config:
