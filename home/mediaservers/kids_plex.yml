@@ -30,7 +30,7 @@ services:
       - "traefik.http.middlewares.kids_plex.redirectscheme.scheme=https"
       - "traefik.http.routers.kids_plex-secure.rule=Host(`kids-plex.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.kids_plex-secure.entrypoints=https"
-      - "traefik.http.routers.kids_plex-secure.loadBalancer.port=32400"
+      - "traefik.http.routers.kids_plex-secure.loadBalancer.server.port=32400"
       - "traefik.http.routers.kids_plex-secure.tls=true"
       - "traefik.http.routers.kids_plex-secure.tls.certResolver=myresolver"
     restart: unless-stopped
