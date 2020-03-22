@@ -12,12 +12,10 @@ http:
           - https
         rule: Host(`hassio.vanhoof.me`)
         service: hassio-prd-backend
-        tls: {}
-        certresolver: myresolver
+        tls:
+          certresolver: myresolver
   services:
     hassio-prd-backend:
       loadBalancer:
         servers:
           - url: "http://10.32.1.8:8123"
-          # Commend just to to another git push :-s
-  
