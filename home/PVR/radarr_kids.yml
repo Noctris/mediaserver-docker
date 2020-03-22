@@ -9,7 +9,7 @@ services:
     volumes:
       - "radarr_kids_config:/config"
       - "${KIDS_DOWNLOAD}:/downloads"
-      - "${KIDS_MEDIA}/Film:/movies"
+      - "${KIDS_MEDIA}/Films:/movies"
     environment:
       - TZ="${TZ}"
     labels:
