@@ -3,14 +3,14 @@ http:
     hassio-prd-http:
       entryPoints:
         - http
-      rule: Host(`hassio.vanhoof.me`) || Host(`hassio-prd.home.vanhoof.me`)
-      # middlewares: 
-      #   - https-redirect@docker
+      rule: Host(`hassio.vanhoof.me`)
+      middlewares: 
+        - https-redirect@docker
       service: "hassio-prd-backend"
     hassio-prd-https:
         entryPoints:
           - https
-        rule: Host(`hassio.vanhoof.me`) || Host(`hassio-prd.home.vanhoof.me`)
+        rule: Host(`hassio.vanhoof.me`)
         service: hassio-prd-backend
         tls: {}
         certresolver: myresolver
