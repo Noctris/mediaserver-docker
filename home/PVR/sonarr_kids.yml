@@ -9,7 +9,7 @@ services:
     volumes:
       - "sonarr_kids_config:/config"
       - "${KIDS_DOWNLOAD}:/downloads"
-      - "${KIDS_MEDIA}/Tv Shows:/tv"
+      - "${KIDS_MEDIA}/TV Shows:/tv"
     environment:
       - TZ="${TZ}"
       - PUID=1000
