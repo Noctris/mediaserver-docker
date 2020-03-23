@@ -13,7 +13,7 @@ services:
       - AZURE_TENANT_ID=${TRAEFIK_AZURE_TENANT_ID}
     command:
       - "--log.level=DEBUG"
-      - "--log.filePath=/traefik_data/traefik.log"
+#      - "--log.filePath=/traefik_data/traefik.log"
       - "--accesslog=true"
       - "--accesslog.filePath=/traefik_data/access.log"
       - "--entrypoints.http.address=:80"
