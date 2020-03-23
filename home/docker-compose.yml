@@ -37,6 +37,7 @@ services:
       - "--certificatesResolvers.azure.acme.caServer=https://acme-v02.api.letsencrypt.org/directory" #https://acme-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.azure.acme.dnschallenge=true"
       - "--certificatesResolvers.azure.acme.dnschallenge.provider=azure"
+      - "--certificatesResolvers.azure.acme.dnschallenge.resolvers=40.90.4.7:53"
       - "--metrics.influxdb=true"
       - "--metrics.influxdb.address=https://influxdb.home.vanhoof.me"
       - "--metrics.influxdb.protocol=http"
