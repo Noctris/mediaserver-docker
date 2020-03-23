@@ -23,7 +23,7 @@ services:
       - "traefik.http.routers.radarr_kids-secure.entrypoints=https"
       - "traefik.http.routers.radarr_kids-secure.tls=true"
       - "traefik.http.routers.radarr_kids-secure.tls.certResolver=azure"
-      - "traefik.http.routers.radarr_kids-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.radarr_kids-secure.tls.domains[0].main=${DOMAIN_NAME}"
       - "traefik.http.routers.radarr_kids-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
 

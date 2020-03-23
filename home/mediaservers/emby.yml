@@ -35,7 +35,7 @@ services:
       - "traefik.http.routers.emby-secure.entrypoints=https"
       - "traefik.http.routers.emby-secure.tls=true"
       - "traefik.http.routers.emby-secure.tls.certResolver=azure"
-      - "traefik.http.routers.emby-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.emby-secure.tls.domains[0].main=${DOMAIN_NAME}"
       - "traefik.http.routers.emby-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
 
