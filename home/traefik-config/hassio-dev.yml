@@ -14,6 +14,11 @@ http:
         service: hassio-dev-backend
         tls:
           certResolver: azure
+          domains:
+            - main: "vanhoof.me"
+              sans:
+                - "*.vanhoof.me"
+                - "*.home.vanhoof.me"
   services:
     hassio-dev-backend:
       loadBalancer:
