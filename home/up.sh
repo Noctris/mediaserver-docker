@@ -8,6 +8,7 @@ sudo docker-compose -f docker-compose.yml \
 -f services/nntp2nntp.yml \
 -f services/jackett.yml \
 -f services/spotweb.yml \
+-f services/parents_sabnzbd.yml \
 -f infra/influxdb.yml \
 -f infra/mariadb.yml \
 -f PVR/radarr_parents.yml \
