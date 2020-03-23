@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+  parents_sabnzbd:
+    image: linuxserver/sabnzbd
+    container_name: parents_sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - parents_sabnzbd_config:/config
+      - "${PARENT_DOWNLOAD}:/downloads"
+      - "${PARENT_DOWNLOAD}/incomplete-sabnzbd:/incomplete-downloads"
+    # ports:
+    #   - 8080:8080
+    #   - 9090:9090
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8080"
+      - "traefik.http.middlewares.parents-sabnzbd-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents-sabnzbd.middlewares=parents-sabnzbd-secure"
+      - "traefik.http.routers.parents-sabnzbd.rule=Host(`parents-sabnzbd.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents-sabnzbd.entrypoints=http"
+      - "traefik.http.middlewares.parents-sabnzbd.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents-sabnzbd-secure.rule=Host(`parents-sabnzbd.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents-sabnzbd-secure.entrypoints=https"
+      - "traefik.http.routers.parents-sabnzbd-secure.tls=true"
+      - "traefik.http.routers.parents-sabnzbd-secure.tls.certResolver=myresolver" 
+    restart: unless-stopped

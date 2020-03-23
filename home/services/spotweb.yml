@@ -1,7 +1,7 @@
 version: "3.5"
 
 services:
-  # Management Platform spotweb to manage docker stuff
+  #  https://hub.docker.com/r/jgeusebroek/spotweb/
   spotweb:
     image: jgeusebroek/spotweb
     container_name: spotweb
