@@ -10,7 +10,7 @@ services:
     depends_on:
       - nntp2nntp
     volumes:
-      - private_sabnzbd_config:/config
+      - "private_sabnzbd_config:/config"
       - "${PRIVATE_DOWNLOAD}:/downloads"
     # ports:
     #   - 8080:8080
