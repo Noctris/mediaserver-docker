@@ -14,17 +14,17 @@ services:
       - TZ="${TZ}"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.radarr_parents-secure.redirectscheme.scheme=https"
-      - "traefik.http.routers.radarr_parents.middlewares=radarr_parents-secure"
-      - "traefik.http.routers.radarr_parents.rule=Host(`radarr-parents.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.radarr_parents.entrypoints=http"
-      - "traefik.http.middlewares.radarr_parents.redirectscheme.scheme=https"
-      - "traefik.http.routers.radarr_parents-secure.rule=Host(`radarr-parents.${SUB_DOMAIN_NAME}`)"
-      - "traefik.http.routers.radarr_parents-secure.entrypoints=https"
-      - "traefik.http.routers.radarr_parents-secure.tls=true"
-      - "traefik.http.routers.radarr_parents-secure.tls.certResolver=azure"
-      - "traefik.http.routers.radarr_parents-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
-      - "traefik.http.routers.radarr_parents-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+      - "traefik.http.middlewares.parents-radarr-ssl.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents_radarr.middlewares=parents-radarr-ssl"
+      - "traefik.http.routers.parents_radarr.rule=Host(`parents-radarr.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents_radarr.entrypoints=http"
+      - "traefik.http.middlewares.parents_radarr.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents-radarr-ssl.rule=Host(`parents-radarr.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents-radarr-ssl.entrypoints=https"
+      - "traefik.http.routers.parents-radarr-ssl.tls=true"
+      - "traefik.http.routers.parents-radarr-ssl.tls.certResolver=azure"
+      - "traefik.http.routers.parents-radarr-ssl.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.parents-radarr-ssl.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
 
 volumes:
