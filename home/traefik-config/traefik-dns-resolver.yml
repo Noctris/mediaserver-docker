@@ -1,0 +1,10 @@
+certificatesResolvers:
+    azure:
+      acme:
+        email: mvhoof@vanhoof.me
+        storage: acme.json
+        caServer: https://acme-staging-v02.api.letsencrypt.org/directory #https://acme-v02.api.letsencrypt.org/directory"
+          provider: azure
+          resolvers:
+            - "1.1.1.1:53"
+            - "1.0.0.1:53"
