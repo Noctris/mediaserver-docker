@@ -31,7 +31,9 @@ services:
       - "traefik.http.routers.spotweb-secure.rule=Host(`spotweb.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.spotweb-secure.entrypoints=https"
       - "traefik.http.routers.spotweb-secure.tls=true"
-      - "traefik.http.routers.spotweb-secure.tls.certResolver=myresolver"
+      - "traefik.http.routers.spotweb-secure.tls.certResolver=azure"
+      - "traefik.http.routers.spotweb-secure.tls.domains[0].main=${DOMAIN_NAME}"
+      - "traefik.http.routers.spotweb-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
       # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
       # This is not necessary if you set your default network in Traefik config/parameters
       #- "traefik.docker.network=noctrismediaserverdocker_proxy"

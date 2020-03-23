@@ -5,6 +5,12 @@ services:
     image: "traefik:latest"
     restart: always
     container_name: "traefik"
+    environment:
+      - AZURE_CLIENT_ID=${TRAEFIK_AZURE_CLIENT_ID}
+      - AZURE_CLIENT_SECRET=${TRAEFIK_AZURE_CLIENT_SECRET}
+      - AZURE_RESOURCE_GROUP=${TRAEFIK_AZURE_RESOURCE_GROUP}
+      - AZURE_SUBSCRIPTION_ID=${TRAFIK_AZURE_SUBSCRIPTION_ID}
+      - AZURE_TENANT_ID=${TRAEFIK_AZURE_TENANT_ID}
     command:
       - "--log.level=INFO"
       - "--log.filePath=/traefik_data/traefik.log"
