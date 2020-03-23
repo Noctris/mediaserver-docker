@@ -18,6 +18,7 @@ services:
       - SPOTWEB_DB_NAME=${SPOTWEB_DB}
       - SPOTWEB_DB_USER=${SPOTWEB_DB_USER}
       - SPOTWEB_DB_PASS=${SPOTWEB_DB_PASSWORD}
+      - SPOTWEB_CRON_RETRIEVE=*/15 * * * *
     labels:
       - "traefik.enable=true"
       - "traefik.http.middlewares.spotweb-secure.redirectscheme.scheme=https"
