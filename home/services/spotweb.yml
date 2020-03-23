@@ -10,6 +10,8 @@ services:
       - spotweb_config_data:/config
     ports:
       - 2280:80
+    depends_on:
+      - mariadb
     environment:
       - TZ=${TZ}
       - SPOTWEB_DB_TYPE=pdo_mysql
