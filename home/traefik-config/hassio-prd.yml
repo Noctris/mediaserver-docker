@@ -13,7 +13,12 @@ http:
         rule: Host(`hassio.vanhoof.me`)
         service: hassio-prd-backend
         tls:
-          certResolver: myresolver
+          certResolver: azure
+          domains:
+            - main: "vanhoof.me"
+              sans:
+                - "*.vanhoof.me"
+                - "*.home.vanhoof.me"
   services:
     hassio-prd-backend:
       loadBalancer:
