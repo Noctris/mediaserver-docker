@@ -6,8 +6,8 @@ services:
     image: jgeusebroek/spotweb
     container_name: spotweb
     restart: unless-stopped
-    #volumes:
-#        - spotweb_config_data:/config
+    volumes:
+      - spotweb_config_data:/config
     environment:
       - TZ=${TZ}
       - SPOTWEB_DB_TYPE=pdo_mysql
