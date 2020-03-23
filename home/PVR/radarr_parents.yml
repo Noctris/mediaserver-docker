@@ -22,7 +22,9 @@ services:
       - "traefik.http.routers.radarr_parents-secure.rule=Host(`radarr-parents.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.radarr_parents-secure.entrypoints=https"
       - "traefik.http.routers.radarr_parents-secure.tls=true"
-      - "traefik.http.routers.radarr_parents-secure.tls.certResolver=myresolver"
+      - "traefik.http.routers.radarr_parents-secure.tls.certResolver=azure"
+      - "traefik.http.routers.radarr_parents-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.radarr_parents-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
 
 volumes:

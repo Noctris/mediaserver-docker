@@ -15,7 +15,7 @@ services:
       - ADVERTISE_IP=http://10.32.4.10:32400,https://plex.${DOMAIN_NAME}:443,https://10.32.4.10:443
     ports:
       - target: 32400
-        published: 32400
+        published: 32401
         mode: host
       - 3005:3005/tcp
       - 8324:8324/tcp

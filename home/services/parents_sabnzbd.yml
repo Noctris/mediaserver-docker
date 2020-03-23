@@ -25,7 +25,9 @@ services:
       - "traefik.http.routers.parents-sabnzbd-secure.rule=Host(`parents-sabnzbd.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.parents-sabnzbd-secure.entrypoints=https"
       - "traefik.http.routers.parents-sabnzbd-secure.tls=true"
-      - "traefik.http.routers.parents-sabnzbd-secure.tls.certResolver=myresolver" 
+      - "traefik.http.routers.parents-sabnzbd-secure.tls.certResolver=azure"
+      - "traefik.http.routers.parents-sabnzbd-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.parents-sabnzbd-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
     
 volumes:

@@ -12,8 +12,8 @@ http:
             - https
         rule: Host(`nzb.mvh.vanhoof.me`)
         service: nzb-mvh-old-backend
-        tls: {}
-        certResolver: myresolver
+        tls: 
+          certResolver: myresolver
     services:
       nzb-mvh-old-backend:
         loadBalancer:

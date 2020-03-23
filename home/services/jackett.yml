@@ -21,7 +21,9 @@ services:
       - "traefik.http.routers.jackett-secure.rule=Host(`jackett.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.jackett-secure.entrypoints=https"
       - "traefik.http.routers.jackett-secure.tls=true"
-      - "traefik.http.routers.jackett-secure.tls.certResolver=myresolver"
+      - "traefik.http.routers.jackett-secure.tls.certResolver=azure"
+      - "traefik.http.routers.jackett-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.jackett-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
 
 volumes:

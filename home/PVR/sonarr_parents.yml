@@ -24,7 +24,9 @@ services:
       - "traefik.http.routers.parents_sonarr-secure.rule=Host(`sonarr-parents.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.parents_sonarr-secure.entrypoints=https"
       - "traefik.http.routers.parents_sonarr-secure.tls=true"
-      - "traefik.http.routers.parents_sonarr-secure.tls.certResolver=myresolver"
+      - "traefik.http.routers.parents_sonarr.tls.certResolver=azure"
+      - "traefik.http.routers.parents_sonarr.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.parents_sonarr.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
 
 volumes:

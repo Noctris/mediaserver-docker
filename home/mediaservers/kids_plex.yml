@@ -32,7 +32,9 @@ services:
       - "traefik.http.routers.kids_plex-secure.entrypoints=https"
       - "traefik.http.routers.kids_plex-secure.loadBalancer.server.port=32400"
       - "traefik.http.routers.kids_plex-secure.tls=true"
-      - "traefik.http.routers.kids_plex-secure.tls.certResolver=myresolver"
+      - "traefik.http.routers.kids_plex-secure.tls.certResolver=azure"
+      - "traefik.http.routers.kids_plex-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.kids_plex-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
 
 volumes:

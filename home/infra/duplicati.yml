@@ -23,5 +23,7 @@ services:
       - "traefik.http.routers.duplicati-secure.rule=Host(`duplicati.${DOMAIN_NAME}`)"
       - "traefik.http.routers.duplicati-secure.entrypoints=webSecure"
       - "traefik.http.routers.duplicati-secure.tls=true"
-      - "traefik.http.routers.duplicati-secure.tls.certResolver=myresolver"
+      - "traefik.http.routers.duplicati-secure.tls.certResolver=azure"
+      - "traefik.http.routers.duplicati-secure.tls.domains[0].main=${SUB_DOMAIN_NAME}"
+      - "traefik.http.routers.duplicati-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
