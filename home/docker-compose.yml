@@ -12,7 +12,7 @@ services:
       - AZURE_SUBSCRIPTION_ID=${TRAEFIK_AZURE_SUBSCRIPTION_ID}
       - AZURE_TENANT_ID=${TRAEFIK_AZURE_TENANT_ID}
     command:
-      - "--log.level=INFO"
+      - "--log.level=DEBUG"
       - "--log.filePath=/traefik_data/traefik.log"
       - "--accesslog=true"
       - "--accesslog.filePath=/traefik_data/access.log"
