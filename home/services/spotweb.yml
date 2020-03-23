@@ -1,0 +1,36 @@
+version: "3.5"
+
+services:
+  # Management Platform spotweb to manage docker stuff
+  spotweb:
+    image: jgeusebroek/spotweb
+    container_name: spotweb
+    restart: unless-stopped
+    volumes:
+        - spotweb_config_data:/config
+    environment:
+      - TZ=${TZ}
+      - SPOTWEB_DB_TYPE=pdo_mysql
+      - SPOTWEB_DB_HOST=mariadb
+      - SPOTWEB_DB_PORT=3306
+      - SPOTWEB_DB_NAME=${SPOTWEB_DB}
+      - SPOTWEB_DB_USER=${SPOTWEB_DB_USER}
+      - SPOTWEB_DB_PASS=${SPOTWEB_DB_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.spotweb-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.spotweb.middlewares=spotweb-secure"
+      - "traefik.http.routers.spotweb.rule=Host(`spotweb.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.spotweb.entrypoints=http"
+      - "traefik.http.middlewares.spotweb.redirectscheme.scheme=https"
+      #- "traefik.http.routers.spotweb.entrypoints.web.redirect=entryPoint=webSecure"
+      #- "traefik.http.routers.spotweb.entrypoints=webSecure"
+      - "traefik.http.routers.spotweb-secure.rule=Host(`spotweb.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.spotweb-secure.entrypoints=https"
+      - "traefik.http.routers.spotweb-secure.tls=true"
+      - "traefik.http.routers.spotweb-secure.tls.certResolver=myresolver"
+      # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
+      # This is not necessary if you set your default network in Traefik config/parameters
+      #- "traefik.docker.network=noctrismediaserverdocker_proxy"
+volumes:
+    spotweb_config_data:
