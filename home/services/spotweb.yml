@@ -8,6 +8,8 @@ services:
     restart: unless-stopped
     volumes:
       - spotweb_config_data:/config
+    ports:
+      - 2280:80
     environment:
       - TZ=${TZ}
       - SPOTWEB_DB_TYPE=pdo_mysql
