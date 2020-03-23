@@ -1,0 +1,35 @@
+version: "3.5"
+services:
+  private_sabnzbd:
+    image: linuxserver/sabnzbd
+    container_name: private_sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    depends_on:
+      - nntp2nntp
+    volumes:
+      - private_sabnzbd_config:/config
+      - "${PRIVATE_DOWNLOAD}:/downloads"
+    # ports:
+    #   - 8080:8080
+    #   - 9090:9090
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8080"
+      - "traefik.http.middlewares.private-sabnzbd-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.private-sabnzbd.middlewares=private-sabnzbd-secure"
+      - "traefik.http.routers.private-sabnzbd.rule=Host(`private-sabnzbd.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.private-sabnzbd.entrypoints=http"
+      - "traefik.http.middlewares.private-sabnzbd.redirectscheme.scheme=https"
+      - "traefik.http.routers.private-sabnzbd-secure.rule=Host(`private-sabnzbd.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.private-sabnzbd-secure.entrypoints=https"
+      - "traefik.http.routers.private-sabnzbd-secure.tls=true"
+      - "traefik.http.routers.private-sabnzbd-secure.tls.certResolver=azure"
+      - "traefik.http.routers.private-sabnzbd-secure.tls.domains[0].main=${DOMAIN_NAME}"
+      - "traefik.http.routers.private-sabnzbd-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+    restart: unless-stopped
+    
+volumes:
+    private_sabnzbd_config:
