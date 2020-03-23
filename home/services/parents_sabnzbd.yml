@@ -27,3 +27,6 @@ services:
       - "traefik.http.routers.parents-sabnzbd-secure.tls=true"
       - "traefik.http.routers.parents-sabnzbd-secure.tls.certResolver=myresolver" 
     restart: unless-stopped
+    
+volumes:
+    parents_sabnzbd_config:
