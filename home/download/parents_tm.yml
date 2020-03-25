@@ -1,0 +1,34 @@
+version: "3.5"
+services:
+  parents_transmission:
+    image: linuxserver/transmission
+    container_name: parents_transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=${TM_PARENTS_USER}
+      - PASS=${TM_PARENTS_PASS}
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/parents_tm:/config"
+      - "${PARENT_DOWNLOAD}/transmission/completed:/downloads"
+      - "${PARENT_DOWNLOAD}/transmission/watch:/watch"
+    ports:
+      - 51413:51413
+      - 51413:51413/udp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=9091"
+      - "traefik.http.middlewares.parents-tm-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents-tm.middlewares=parents-tm-secure"
+      - "traefik.http.routers.parents-tm.rule=Host(`parents-tm.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents-tm.entrypoints=http"
+      - "traefik.http.middlewares.parents-tm.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents-tm-secure.rule=Host(`parents-tm.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents-tm-secure.entrypoints=https"
+      - "traefik.http.routers.parents-tm-secure.tls=true"
+      - "traefik.http.routers.parents-tm-secure.tls.certResolver=azure"
+      - "traefik.http.routers.parents-tm-secure.tls.domains[0].main=${DOMAIN_NAME}"
+      - "traefik.http.routers.parents-tm-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+    restart: unless-stopped
