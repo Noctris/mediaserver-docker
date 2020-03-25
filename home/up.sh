@@ -18,6 +18,7 @@ sudo docker-compose -f docker-compose.yml \
 -f infra/mariadb.yml \
 -f PVR/radarr_parents.yml \
 -f PVR/parents_bazarr.yml \
+-f PVR/parents_lazylibrarian.yml \
 -f PVR/sonarr_parents.yml \
 -f PVR/radarr_kids.yml \
 -f PVR/sonarr_kids.yml \

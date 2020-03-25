@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+  parents_lazylibrarian:
+    image: linuxserver/lazylibrarian
+    container_name: parents_lazylibrarian
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      #- DOCKER_MODS=linuxserver/calibre-web:calibre #optional
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/parents_ll:/config"
+      - "${PARENT_DOWNLOAD}:/downloads"
+      - "${PARENT_MEDIA}/Books:/books"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=9091"
+      - "traefik.http.middlewares.parents-ll-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents-ll.middlewares=parents-ll-secure"
+      - "traefik.http.routers.parents-ll.rule=Host(`parents-ll.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents-ll.entrypoints=http"
+      - "traefik.http.middlewares.parents-ll.redirectscheme.scheme=https"
+      - "traefik.http.routers.parents-ll-secure.rule=Host(`parents-ll.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.parents-ll-secure.entrypoints=https"
+      - "traefik.http.routers.parents-ll-secure.tls=true"
+      - "traefik.http.routers.parents-ll-secure.tls.certResolver=azure"
+      - "traefik.http.routers.parents-ll-secure.tls.domains[0].main=${DOMAIN_NAME}"
+      - "traefik.http.routers.parents-ll-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+    restart: unless-stopped
