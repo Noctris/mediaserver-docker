@@ -1,7 +1,6 @@
 version: "3.5"
 
 services:
-#Picture time!
   lychee:
     image: linuxserver/lychee
     container_name: lychee
