@@ -7,7 +7,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ="${TZ}"
+      - TZ=${TZ}
     volumes:
       - "${DOCKER_VOL_MOUNT}/lychee:/config"
       - "${PATH_LYCHEE}:/pictures"
