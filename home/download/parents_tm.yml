@@ -12,7 +12,7 @@ services:
       - PASS=${TM_PARENTS_PASS}
     volumes:
       - "${DOCKER_VOL_MOUNT}/parents_tm:/config"
-      - "${PARENT_DOWNLOAD}/transmission/completed:/downloads"
+      - "${PARENT_DOWNLOAD}/transmission:/downloads"
       - "${PARENT_DOWNLOAD}/transmission/watch:/watch"
     ports:
       - 51413:51413
