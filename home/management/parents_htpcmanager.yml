@@ -8,7 +8,7 @@ services:
       - PGID=1000
       - TZ=${TZ}
     volumes:
-      - ${DOCKER_VOL_MOUNT}/parents_htpcmanager:/config
+      - "${DOCKER_VOL_MOUNT}/parents_htpcmanager:/config"
     restart: unless-stopped
     labels:
         - "traefik.enable=true"
