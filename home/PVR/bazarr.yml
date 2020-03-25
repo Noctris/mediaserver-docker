@@ -1,0 +1,31 @@
+version: "3.5"
+services:
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - UMASK_SET=022 #optional
+    volumes:
+      - bazarr_config:/config
+      - "${PARENT_MEDIA}/parents:/parents"
+      - "${KIDS_MEDIA}/kids:/kids"
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.bazarr-ssl.redirectscheme.scheme=https"
+        - "traefik.http.routers.bazarr.middlewares=bazarr-ssl"
+        - "traefik.http.routers.bazarr.rule=Host(`bazarr.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.bazarr.entrypoints=http"
+        - "traefik.http.middlewares.bazarr.redirectscheme.scheme=https"
+        - "traefik.http.routers.bazarr-ssl.rule=Host(`bazarr.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.bazarr-ssl.entrypoints=https"
+        - "traefik.http.routers.bazarr-ssl.tls=true"
+        - "traefik.http.routers.bazarr-ssl.tls.certResolver=azure"
+        - "traefik.http.routers.bazarr-ssl.tls.domains[0].main=${DOMAIN_NAME}"
+        - "traefik.http.routers.bazarr-ssl.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+      restart: unless-stopped
+
+volumes:
+    bazarr_config:
