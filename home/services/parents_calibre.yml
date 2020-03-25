@@ -1,0 +1,33 @@
+version: "3.5"
+services:
+  parents_calibre:
+    image: linuxserver/calibre
+    container_name: parents_calibre
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      #- GUAC_USER=abc #optional
+      #- GUAC_PASS=900150983cd24fb0d6963f7d28e17f72 #optional
+      #- UMASK_SET=022 #optional
+    volumes:
+      - parents_calibre_config:/config
+    ports:
+      - 8080:8080
+      - 8081:8081
+    restart: unless-stopped
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.parents-calibre-secure.redirectscheme.scheme=https"
+        - "traefik.http.routers.parents-calibre.middlewares=parents-calibre-secure"
+        - "traefik.http.routers.parents-calibre.rule=Host(`parents-calibre.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.parents-calibre.entrypoints=http"
+        - "traefik.http.middlewares.parents-calibre.redirectscheme.scheme=https"
+        - "traefik.http.routers.parents-calibre-secure.rule=Host(`parents-calibre.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.parents-calibre-secure.entrypoints=https"
+        - "traefik.http.routers.parents-calibre-secure.tls=true"
+        - "traefik.http.routers.parents-calibre-secure.tls.certResolver=azure"
+        - "traefik.http.routers.parents-calibre-secure.tls.domains[0].main=${DOMAIN_NAME}"
+        - "traefik.http.routers.parents-calibre-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+volumes:
+    parents_calibre_config:
