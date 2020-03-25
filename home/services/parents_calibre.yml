@@ -16,6 +16,7 @@ services:
     restart: unless-stopped
     labels:
         - "traefik.enable=true"
+        - "trafik.port=8080"
         - "traefik.http.middlewares.parents-calibre-secure.redirectscheme.scheme=https"
         - "traefik.http.routers.parents-calibre.middlewares=parents-calibre-secure"
         - "traefik.http.routers.parents-calibre.rule=Host(`parents-calibre.${SUB_DOMAIN_NAME}`)"
@@ -24,6 +25,7 @@ services:
         - "traefik.http.routers.parents-calibre-secure.rule=Host(`parents-calibre.${SUB_DOMAIN_NAME}`)"
         - "traefik.http.routers.parents-calibre-secure.entrypoints=https"
         - "traefik.http.routers.parents-calibre-secure.tls=true"
+        - "traefik.http.services.parents-calibre-secure.loadbalancer.server.port=8080"
         - "traefik.http.routers.parents-calibre-secure.tls.certResolver=azure"
         - "traefik.http.routers.parents-calibre-secure.tls.domains[0].main=${DOMAIN_NAME}"
         - "traefik.http.routers.parents-calibre-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
