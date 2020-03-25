@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  parents_htpcmanager:
+    image: linuxserver/htpcmanager
+    container_name: parents_htpcmanager
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_VOL_MOUNT}/parents_htpcmanager:/config
+    restart: unless-stopped
+    labels:
+        - "traefik.enable=true"
+        - "trafik.port=8080"
+        - "traefik.http.middlewares.parents-htpcmanager-secure.redirectscheme.scheme=https"
+        - "traefik.http.routers.parents-htpcmanager.middlewares=parents-htpcmanager-secure"
+        - "traefik.http.routers.parents-htpcmanager.rule=Host(`parents-htpcmanager.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.parents-htpcmanager.entrypoints=http"
+        - "traefik.http.middlewares.parents-htpcmanager.redirectscheme.scheme=https"
+        - "traefik.http.routers.parents-htpcmanager-secure.rule=Host(`parents-htpcmanager.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.parents-htpcmanager-secure.entrypoints=https"
+        - "traefik.http.routers.parents-htpcmanager-secure.tls=true"
+        - "traefik.http.services.parents-htpcmanager-secure.loadbalancer.server.port=8080"
+        - "traefik.http.routers.parents-htpcmanager-secure.tls.certResolver=azure"
+        - "traefik.http.routers.parents-htpcmanager-secure.tls.domains[0].main=${DOMAIN_NAME}"
+        - "traefik.http.routers.parents-htpcmanager-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
