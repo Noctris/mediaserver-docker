@@ -11,6 +11,7 @@ sudo docker-compose -f docker-compose.yml \
 -f services/nntp2nntp.yml \
 -f services/jackett.yml \
 -f services/spotweb.yml \
+-f services/lychee.yml \
 -f services/parents_sabnzbd.yml \
 -f services/private_sabnzbd.yml \
 -f services/parents_calibre.yml \
