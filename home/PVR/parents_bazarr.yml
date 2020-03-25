@@ -1,0 +1,31 @@
+version: "3.5"
+services:
+  parents_bazarr:
+    image: linuxserver/bazarr
+    container_name: parents_bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - UMASK_SET=022 #optional
+    volumes:
+      - parents-bazarr_config:/config
+      - "${PARENT_MEDIA}/TV Shows:/tv"
+      - "${PARENT_MEDIA}/Film:/movies"
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.parents-bazarr-ssl.redirectscheme.scheme=https"
+        - "traefik.http.routers.parents-bazarr.middlewares=parents-bazarr-ssl"
+        - "traefik.http.routers.parents-bazarr.rule=Host(`parents-bazarr.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.parents-bazarr.entrypoints=http"
+        - "traefik.http.middlewares.parents-bazarr.redirectscheme.scheme=https"
+        - "traefik.http.routers.parents-bazarr-ssl.rule=Host(`parents-bazarr.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.parents-bazarr-ssl.entrypoints=https"
+        - "traefik.http.routers.parents-bazarr-ssl.tls=true"
+        - "traefik.http.routers.parents-bazarr-ssl.tls.certResolver=azure"
+        - "traefik.http.routers.parents-bazarr-ssl.tls.domains[0].main=${DOMAIN_NAME}"
+        - "traefik.http.routers.parents-bazarr-ssl.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+    restart: unless-stopped
+
+volumes:
+    parents-bazarr_config:
