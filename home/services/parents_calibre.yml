@@ -12,7 +12,7 @@ services:
       #- UMASK_SET=022 #optional
     volumes:
       - parents_calibre_config:/config
-      - "${PARENT_MEDIA}/books:/library"
+      - "${PARENT_MEDIA}/Books:/library"
     restart: unless-stopped
     labels:
         - "traefik.enable=true"
