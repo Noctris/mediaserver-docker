@@ -26,3 +26,6 @@ services:
       - "traefik.http.routers.parents-calibreweb-library-secure.tls.domains[0].main=${DOMAIN_NAME}"
       - "traefik.http.routers.parents-calibreweb-library-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
     restart: unless-stopped
+
+volumes:
+    calibre_web_library:
