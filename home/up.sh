@@ -15,6 +15,7 @@ sudo docker-compose -f docker-compose.yml \
 -f services/parents_sabnzbd.yml \
 -f services/private_sabnzbd.yml \
 -f services/parents_calibre.yml \
+-f services/calibre_web_library.yml \
 -f infra/influxdb.yml \
 -f infra/mariadb.yml \
 -f PVR/radarr_parents.yml \
