@@ -21,7 +21,6 @@ services:
       - "traefik.http.routers.parents-calibreweb-library-secure.rule=Host(`library.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.parents-calibreweb-library-secure.entrypoints=https"
       - "traefik.http.routers.parents-calibreweb-library-secure.tls=true"
-      - "traefik.http.services.parents-calibreweb-library-secure.loadbalancer.server.port=8080"
       - "traefik.http.routers.parents-calibreweb-library-secure.tls.certResolver=azure"
       - "traefik.http.routers.parents-calibreweb-library-secure.tls.domains[0].main=${DOMAIN_NAME}"
       - "traefik.http.routers.parents-calibreweb-library-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
