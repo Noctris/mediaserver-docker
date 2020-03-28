@@ -18,6 +18,7 @@ sudo docker-compose -f docker-compose.yml \
 -f services/calibre_web_library.yml \
 -f infra/influxdb.yml \
 -f infra/mariadb.yml \
+-f infra/mosquitto.yml \
 -f PVR/radarr_parents.yml \
 -f PVR/parents_bazarr.yml \
 -f PVR/parents_lazylibrarian.yml \

@@ -20,6 +20,8 @@ services:
       - "--entrypoints.https.address=:443"
       - "--entrypoints.mariadb-port-test=:3307"
       - "--entrypoints.mariadb-port=:3306"
+      - "--entrypoints.mqtt-port=:1883"
+      - "--entrypoints.mqtt-secure-port=:9001"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.file.directory=/traefik_data/servers"

@@ -1,0 +1,19 @@
+version: "3.5"
+
+services:
+    # Management Platform mosquitto_mqtt_broker to manage docker stuff
+    mosquitto_mqtt_broker:
+      image: eclipse-mosquitto:latest
+      container_name: mosquitto_mqtt_broker
+      volumes:
+          - "${DOCKER_VOL_MOUNT}/mosquitto/config:/mosquitto/config"
+          - "${DOCKER_VOL_MOUNT}/mosquitto/log:/mosquitto/log"
+          - "${DOCKER_VOL_MOUNT}/mosquitto/data:/mosquitto/data"
+      restart: always
+    #   ports:
+    #       - 1883:1883
+    #       - 9001:9001
+      labels:
+          - "traefik.enable=true"
+          - "traefik.tcp.routers.mosquitto_mqtt.entrypoints=mqtt-port"
+          - "traefik.tcp.routers.mosquitto_mqtt_secure.entrypoints=mqtt--secure-port"
