@@ -10,18 +10,18 @@ services:
           - "${DOCKER_VOL_MOUNT}/mosquitto/log:/mosquitto/log"
           - "${DOCKER_VOL_MOUNT}/mosquitto/data:/mosquitto/data"
       restart: always
-    #   ports:
-    #       - 1883:1883
-    #       - 9001:9001
+      ports:
+          - 1883:1883
+          - 9001:9001
       labels:
-          - "traefik.enable=true"
-          - traefik.tcp.routers.mosquitto_mqtt.entrypoints=mqtt-port
-          - traefik.tcp.routers.mosquitto_mqtt.tls=true
-          - traefik.tcp.routers.mosquitto_mqtt.rule=HostSNI(`*`)
-          - traefik.tcp.routers.mosquitto_mqtt.service=mosquitto_mqtt
-          - traefik.tcp.services.mosquitto_mqtt.loadbalancer.server.port=1883
-          - traefik.tcp.routers.mosquitto_mqtt-secure.entrypoints=mqtt-secure-port
-          - traefik.tcp.routers.mosquitto_mqtt-secure.tls=true
-          - traefik.tcp.routers.mosquitto_mqtt-secure.rule=HostSNI(`*`)
-          - traefik.tcp.routers.mosquitto_mqtt-secure.service=mosquitto_mqtt-secure
-          - traefik.tcp.services.mosquitto_mqtt-secure.loadbalancer.server.port=9001
+          - "traefik.enable=false"
+        #   - traefik.tcp.routers.mosquitto_mqtt.entrypoints=mqtt-port
+        #   - traefik.tcp.routers.mosquitto_mqtt.tls=true
+        #   - traefik.tcp.routers.mosquitto_mqtt.rule=HostSNI(`*`)
+        #   - traefik.tcp.routers.mosquitto_mqtt.service=mosquitto_mqtt
+        #   - traefik.tcp.services.mosquitto_mqtt.loadbalancer.server.port=1883
+        #   - traefik.tcp.routers.mosquitto_mqtt-secure.entrypoints=mqtt-secure-port
+        #   - traefik.tcp.routers.mosquitto_mqtt-secure.tls=true
+        #   - traefik.tcp.routers.mosquitto_mqtt-secure.rule=HostSNI(`*`)
+        #   - traefik.tcp.routers.mosquitto_mqtt-secure.service=mosquitto_mqtt-secure
+        #   - traefik.tcp.services.mosquitto_mqtt-secure.loadbalancer.server.port=9001
