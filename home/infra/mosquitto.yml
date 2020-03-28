@@ -20,7 +20,6 @@ services:
           - traefik.tcp.routers.mosquitto_mqtt.rule=HostSNI(`*`)
           - traefik.tcp.routers.mosquitto_mqtt.service=mosquitto_mqtt_broker
           - traefik.tcp.services.mosquitto_mqtt.loadbalancer.server.port=1883
-          - "traefik.enable=true"
           - traefik.tcp.routers.mosquitto_mqtt-secure.entrypoints=mqtt-secure-port
           - traefik.tcp.routers.mosquitto_mqtt-secure.tls=true
           - traefik.tcp.routers.mosquitto_mqtt-secure.rule=HostSNI(`*`)
