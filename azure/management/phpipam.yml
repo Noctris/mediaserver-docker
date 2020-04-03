@@ -6,7 +6,7 @@ services:
     image: pierrecdn/phpipam
     container_name: phpipam
     depends_on:
-        - mariadb_test
+        - mariadb
     environment:
         - MYSQL_ENV_MYSQL_USER=root
         - MYSQL_ENV_MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_TEST}
