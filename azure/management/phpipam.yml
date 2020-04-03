@@ -10,18 +10,16 @@ services:
     environment:
         - MYSQL_ENV_MYSQL_USER=root
         - MYSQL_ENV_MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_TEST}
-        - MYSQL_ENV_MYSQL_HOST=mariadb_test
+        - MYSQL_ENV_MYSQL_HOST=mariadb
     restart: always
     labels:
         - "traefik.enable=true"
         - "traefik.http.middlewares.phpipam-secure.redirectscheme.scheme=https"
         - "traefik.http.routers.phpipam.middlewares=phpipam-secure"
-        - "traefik.http.routers.phpipam.rule=Host(`phpipam.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.phpipam.rule=Host(`ipam.${SUB_DOMAIN_NAME}`) || Host(`ipam.${DOMAIN_NAME}`)"
         - "traefik.http.routers.phpipam.entrypoints=http"
         - "traefik.http.middlewares.phpipam.redirectscheme.scheme=https"
-        #- "traefik.http.routers.phpipam.entrypoints.web.redirect=entryPoint=webSecure"
-        #- "traefik.http.routers.phpipam.entrypoints=webSecure"
-        - "traefik.http.routers.phpipam-secure.rule=Host(`phpipam.${SUB_DOMAIN_NAME}`)"
+        - "traefik.http.routers.phpipam-secure.rule=Host(`ipam.${SUB_DOMAIN_NAME}`) || Host(`ipam.${DOMAIN_NAME}`)"
         - "traefik.http.routers.phpipam-secure.entrypoints=https"
         - "traefik.http.routers.phpipam-secure.tls=true"
         - "traefik.http.routers.phpipam-secure.tls.certResolver=azure"
