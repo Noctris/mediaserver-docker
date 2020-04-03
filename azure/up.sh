@@ -5,4 +5,5 @@ sudo docker-compose -f docker-compose.yml \
 -f management/portainer.yml \
 -f monitoring/zabbix.yml \
 -f services/heimdall.yml \
+-f infrastructure/mariadb.yml \
 up -d

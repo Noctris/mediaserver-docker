@@ -1,0 +1,19 @@
+version: "3.5"
+
+services:
+  # Management Platform mariadb to manage docker stuff
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_TEST}
+    labels:
+      - traefik.enable=true
+      - traefik.tcp.routers.mariadb.entrypoints=mariadb-port
+      - traefik.tcp.routers.mariadb.tls=true
+      - traefik.tcp.routers.mariadb.rule=HostSNI(`*`)
+      - traefik.tcp.routers.mariadb.service=mariadb
+      - traefik.tcp.services.mariadb.loadbalancer.server.port=3306
