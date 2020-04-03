@@ -19,6 +19,6 @@ services:
       - "traefik.http.routers.portainer-ssl.entrypoints=https"
       - "traefik.http.routers.portainer-ssl.rule=Host(`portainer.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer-ssl.tls=true"
-      - "traefik.http.routers.portainer-ssl.tls.certResolver=myresolver"
+      - "traefik.http.routers.portainer-ssl.tls.certResolver=azure"
 volumes:
   portainer_data:
