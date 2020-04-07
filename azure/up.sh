@@ -8,4 +8,5 @@ sudo docker-compose -f docker-compose.yml \
 -f monitoring/zabbix.yml \
 -f services/heimdall.yml \
 -f infrastructure/mariadb.yml \
+-f infrastructure/camunda.yml \
 up -d

@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  # BPM Tool
+  camunda:
+    image: camunda/camunda-bpm-platform:latest
+    container_name: camunda
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "camunda_data:/data"
+    ports:
+      - 9000:9000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.camunda.entrypoints=http"
+      - "traefik.http.routers.camunda.rule=Host(`camunda.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.camunda.middlewares=https-redirect"
+      - "traefik.http.routers.camunda-ssl.entrypoints=https"
+      - "traefik.http.routers.camunda-ssl.rule=Host(`camunda.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.camunda-ssl.tls=true"
+      - "traefik.http.routers.camunda-ssl.tls.certResolver=azure"
+volumes:
+  camunda_data:
