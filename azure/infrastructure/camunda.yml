@@ -9,8 +9,6 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "camunda_data:/data"
-    ports:
-      - 9000:9000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.camunda.entrypoints=http"
