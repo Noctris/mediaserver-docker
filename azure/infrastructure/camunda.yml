@@ -16,6 +16,7 @@ services:
       - "traefik.http.routers.camunda.rule=Host(`camunda.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.camunda.middlewares=https-redirect"
       - "traefik.http.routers.camunda-ssl.entrypoints=https"
+      - "traefik.http.services.camunda.loadbalancer.server.port=8080"
       - "traefik.http.routers.camunda-ssl.rule=Host(`camunda.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.camunda-ssl.tls=true"
       - "traefik.http.routers.camunda-ssl.tls.certResolver=azure"
