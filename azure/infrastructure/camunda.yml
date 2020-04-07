@@ -11,6 +11,7 @@ services:
       - "camunda_data:/data"
     labels:
       - "traefik.enable=true"
+      - "trafik.port=8080"
       - "traefik.http.routers.camunda.entrypoints=http"
       - "traefik.http.routers.camunda.rule=Host(`camunda.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.routers.camunda.middlewares=https-redirect"
