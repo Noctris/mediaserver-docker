@@ -6,6 +6,8 @@ services:
     restart: always
     container_name: "traefik"
     environment:
+      - "PUID=1000"
+      - "GUID=1000"
       - AZURE_CLIENT_ID=${TRAEFIK_AZURE_CLIENT_ID}
       - AZURE_CLIENT_SECRET=${TRAEFIK_AZURE_CLIENT_SECRET}
       - AZURE_RESOURCE_GROUP=${TRAEFIK_AZURE_RESOURCE_GROUP}
