@@ -1,0 +1,42 @@
+version: "3.5"
+
+services:
+  # Management Platform unifi to manage docker stuff
+  unfi_controller:
+    image: linuxserver/unifi-controller
+    container_name: unfi_controller
+    restart: always
+    environment:
+        - PUID=1000
+        - PGID=1000
+        - MEM_LIMIT=1024M #optional
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/unifi:/config"
+    ports:
+        - 3478:3478/udp
+        - 10001:10001/udp
+        - 8080:8080
+        - 8081:8081
+        #- 8443:8443
+        - 8843:8843
+        - 8880:8880
+        - 6789:6789
+    labels:
+      - "traefik.enable=true"
+      - "trafik.port=8843"
+      - "traefik.http.middlewares.unifi-secure.redirectscheme.scheme=https"
+      - "traefik.http.routers.unifi.middlewares=unifi-secure"
+      - "traefik.http.routers.unifi.rule=Host(`unifi.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.unifi.entrypoints=http"
+      - "traefik.http.middlewares.unifi.redirectscheme.scheme=https"
+      #- "traefik.http.routers.unifi.entrypoints.web.redirect=entryPoint=webSecure"
+      #- "traefik.http.routers.unifi.entrypoints=webSecure"
+      - "traefik.http.routers.unifi-secure.rule=Host(`unifi.${SUB_DOMAIN_NAME}`)"
+      - "traefik.http.routers.unifi-secure.entrypoints=https"
+      - "traefik.http.routers.unifi-secure.tls=true"
+      - "traefik.http.routers.unifi-secure.tls.certResolver=azure"
+      - "traefik.http.routers.unifi-secure.tls.domains[0].main=${DOMAIN_NAME}"
+      - "traefik.http.routers.unifi-secure.tls.domains[0].sans=*.${SUB_DOMAIN_NAME}"
+      # Uncomment this label if your Traefik instance is using a specific Docker network and replace the network name 
+      # This is not necessary if you set your default network in Traefik config/parameters
+      #- "traefik.docker.network=noctrismediaserverdocker_proxy"

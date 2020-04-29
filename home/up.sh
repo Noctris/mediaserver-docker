@@ -6,6 +6,7 @@ sudo docker-compose -f docker-compose.yml \
 -f management/phpmyadmin.yml \
 -f management/parents_htpcmanager.yml \
 -f management/organizr.yml \
+-f management/unfi_controller.yml \
 -f download/parents_tm.yml \
 -f services/mariadb_test.yml \
 -f services/nntp2nntp.yml \
