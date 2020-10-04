@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   private_sabnzbd:
-    image: linuxserver/sabnzbd
+    image: linuxserver/sabnzbd:latest
     container_name: private_sabnzbd
     environment:
       - PUID=1000

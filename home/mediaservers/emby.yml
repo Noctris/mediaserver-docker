@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   emby:
-    image: linuxserver/emby
+    image: linuxserver/emby:latest
     container_name: emby
     #depends_on:
      # - nzbget

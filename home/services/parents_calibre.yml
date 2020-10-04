@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   parents_calibre:
-    image: linuxserver/calibre
+    image: linuxserver/calibre:latest
     container_name: parents_calibre
     environment:
       - PUID=1000

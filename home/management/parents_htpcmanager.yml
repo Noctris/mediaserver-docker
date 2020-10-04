@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   parents_htpcmanager:
-    image: linuxserver/htpcmanager
+    image: linuxserver/htpcmanager:latest
     container_name: parents_htpcmanager
     environment:
       - PUID=1000

@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   jackett:
-    image: linuxserver/jackett
+    image: linuxserver/jackett:latest
     container_name: jackett
     environment:
       - PUID=1000
