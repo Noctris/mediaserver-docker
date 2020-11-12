@@ -32,6 +32,7 @@ services:
       #- "traefik.http.routers.unifi.entrypoints=webSecure"
       - "traefik.http.routers.unifi-secure.rule=Host(`unifi.${SUB_DOMAIN_NAME}`)"
       - "traefik.http.services.unifi-secure.loadbalancer.server.port=8843"
+      - "traefik.http.services.unifi-secure.loadbalancer.server.scheme=https"
       - "traefik.http.routers.unifi-secure.entrypoints=https"
       - "traefik.http.routers.unifi-secure.tls=true"
       - "traefik.http.routers.unifi-secure.tls.certResolver=azure"
