@@ -13,9 +13,9 @@ services:
     volumes:
       - "${DOCKER_VOL_MOUNT}/unifi:/config"
     ports:
+        - 8080:8080
         - 3478:3478/udp
         - 10001:10001/udp
-        #- 8080:8080
         - 8081:8081
         #- 8443:8443
         - 8843:8843
