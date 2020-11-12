@@ -23,7 +23,7 @@ services:
         - 6789:6789
     labels:
       - "traefik.enable=true"
-      - "trafik.port=8843"
+      - "trafik.port=8080"
       - "traefik.http.middlewares.unifi-secure.redirectscheme.scheme=https"
       - "traefik.http.routers.unifi.middlewares=unifi-secure"
       - "traefik.http.routers.unifi.rule=Host(`unifi.${SUB_DOMAIN_NAME}`)"
