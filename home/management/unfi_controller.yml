@@ -5,7 +5,7 @@ services:
   unfi_controller:
     image: linuxserver/unifi-controller
     container_name: unfi_controller
-    restart: always
+    restart: unless-stopped
     environment:
         - PUID=1000
         - PGID=1000
@@ -15,7 +15,7 @@ services:
     ports:
         - 3478:3478/udp
         - 10001:10001/udp
-        - 8080:8080
+        #- 8080:8080
         - 8081:8081
         #- 8443:8443
         - 8843:8843
