@@ -1,0 +1,25 @@
+version: "3.5"
+services:
+  thingsboard:
+    image: "thingsboard/tb-postgres"
+    ports:
+      - "8080:9090"
+      - "1883:1883"
+      - "5683:5683/udp"
+    environment:
+      TB_QUEUE_TYPE: in-memory
+    volumes:
+      - "${DOCKER_VOL_MOUNT}/thingsboard/data:/data"
+      - "${DOCKER_VOL_MOUNT}/thingsboard/log:/var/log/thingsboard"
+    labels:
+      - "traefik.enable=true"
+      - "trafik.port=9090"
+      - "traefik.http.routers.thingsboard.middlewares=thingsboard-dashboard-secure"
+      - "traefik.http.routers.thingsboard.rule=Host(`thingsboard.${SUB_DOMAIN_NAME}`) || Host(`tb.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.thingsboard.entrypoints=http"
+      - "traefik.http.routers.thingsboard.middlewares=https-redirect"
+      - "traefik.http.routers.thingsboard-secure.rule=Host(`thingsboard.${SUB_DOMAIN_NAME}`) || Host(`tb.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.thingsboard-secure.entrypoints=https"
+      - "traefik.http.routers.thingsboard-secure.tls=true"
+      - "traefik.http.routers.thingsboard-secure.tls.certResolver=azure"
+    restart: unless-stopped
