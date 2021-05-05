@@ -9,8 +9,8 @@ services:
     environment:
       TB_QUEUE_TYPE: in-memory
     volumes:
-      - "thingsboard_data/data:/data"
-      - "thingsboard_data/log:/var/log/thingsboard"
+      - "thingsboard_data:/data"
+      - "thingsboard_log:/var/log/thingsboard"
     labels:
       - "traefik.enable=true"
       - "trafik.port=9090"
@@ -27,3 +27,4 @@ services:
     restart: unless-stopped
 volumes:
   thingsboard_data:
+  thingsboard_log:
