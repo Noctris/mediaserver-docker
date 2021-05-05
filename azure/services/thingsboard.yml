@@ -13,7 +13,7 @@ services:
       - "thingsboard_log:/var/log/thingsboard"
     labels:
       - "traefik.enable=true"
-      - "trafik.port=9090"
+      - "trafik.port=8080"
       - "traefik.http.routers.thingsboard.middlewares=thingsboard-dashboard-secure"
       - "traefik.http.routers.thingsboard.rule=Host(`thingsboard.${SUB_DOMAIN_NAME}`) || Host(`tb.${DOMAIN_NAME}`)"
       - "traefik.http.routers.thingsboard.entrypoints=http"
