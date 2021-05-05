@@ -3,7 +3,7 @@ version: "3.5"
 services:
   # Management Platform Portainer to manage docker stuff
   portainer:
-    image: portainer/portainer
+    image: portainer/portainer-ce:latest
     container_name: portainer
     restart: always
     volumes:
