@@ -35,7 +35,7 @@ services:
     command:
       - --global.checkNewVersion=true
       - --global.sendAnonymousUsage=true
-      - "--log.level=DEBUG"
+      - "--log.level=INFO"
       - "--log.filePath=/traefik_data/traefik.log"
       - "--accesslog=true"
       - "--accesslog.filePath=/traefik_data/access.log"
