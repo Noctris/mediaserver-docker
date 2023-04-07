@@ -15,15 +15,15 @@ services:
     ports:
       - 9443:9443 
       - 8000:8000
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer-rtr.rule=Host(`portainer.${SUB_DOMAIN1}`)"
-      - "traefik.http.routers.portainer-rtr.entrypoints=https"
-      - "traefik.http.services.portainer-rtr.loadbalancer.server.port=9443"
-      - "traefik.http.routers.portainer-rtr.tls=true"
-      - "traefik.http.routers.portainer-rtr.tls.certResolver=azure"
-      - "traefik.http.routers.portainer-rtr.tls.domains[0].main=${DOMAIN1}"
-      - "traefik.http.routers.portainer-rtr.tls.domains[0].sans=*.${SUB_DOMAIN1}"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.portainer-rtr.rule=Host(`portainer.${SUB_DOMAIN1}`)"
+    #   - "traefik.http.routers.portainer-rtr.entrypoints=https"
+    #   - "traefik.http.services.portainer-rtr.loadbalancer.server.port=9443"
+    #   - "traefik.http.routers.portainer-rtr.tls=true"
+    #   - "traefik.http.routers.portainer-rtr.tls.certResolver=azure"
+    #   - "traefik.http.routers.portainer-rtr.tls.domains[0].main=${DOMAIN1}"
+    #   - "traefik.http.routers.portainer-rtr.tls.domains[0].sans=*.${SUB_DOMAIN1}"
       #- "traefik.docker.network=DMZ"
 
 networks:
