@@ -1,0 +1,41 @@
+version: "3.7"
+
+networks:
+  - DMZ
+  - backend
+
+services:
+  traefik:
+    image: "traefik:latest"
+    restart: always
+    container_name: "traefik"
+    networks:
+      - default
+      - DMZ
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8282:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${DOCKER_VOLUME_PATH}/traefik/data:/traefik_data"
+      #- "${TRAEFIK_CONFIG_SCRIPTS}/rules:/rules"
+    environment:
+      - "PUID=1000"
+      - "GUID=1000"
+      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
+      - AZURE_RESOURCE_GROUP=${AZURE_RESOURCE_GROUP}
+      - AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID}
+      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
+      - AZURE_TTL=1
+    command:
+      - --global.checkNewVersion=true
+      - --global.sendAnonymousUsage=true
+      - "--log.level=DEBUG"
+      - "--log.filePath=/traefik_data/traefik.log"
+      - "--accesslog=true"
+      - "--accesslog.filePath=/traefik_data/access.log"
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.https.address=:443"

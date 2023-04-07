@@ -1,0 +1,1 @@
+docker-compose -f traefik/docker-compose.yaml
