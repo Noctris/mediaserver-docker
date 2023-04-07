@@ -23,6 +23,7 @@ services:
       - "traefik.http.routers.portainer-rtr.tls.certResolver=azure"
       - "traefik.http.routers.portainer-rtr.tls.domains[0].main=${DOMAIN1}"
       - "traefik.http.routers.portainer-rtr.tls.domains[0].sans=*.${SUB_DOMAIN1}"
+      - "traefik.docker.network=DMZ"
 
 networks:
   DMZ:
