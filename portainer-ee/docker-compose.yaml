@@ -4,6 +4,7 @@ services:
     image: portainer/portainer-ee:latest
     container_name: portainer
     restart: unless-stopped
+    network_mode: host
     security_opt:
       - no-new-privileges:true
     # networks:
