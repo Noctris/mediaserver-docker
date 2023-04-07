@@ -41,3 +41,23 @@ services:
       - "--accesslog.filePath=/traefik_data/access.log"
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
+    labels:
+      - "traefik.enable=true"
+      #- 'traefik.http.routers.api.middlewares=authelia@docker'
+        # HTTP-to-HTTPS Redirect
+      - "traefik.http.routers.redirect-http-to-https-catchall-rtr.entrypoints=http"
+      - "traefik.http.routers.redirect-http-to-https-catchall-rtr.rule=HostRegexp(`{host:.+}`)"
+      - "traefik.http.routers.redirect-http-to-https-catchall-rtr.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      #Temp File AUTH, replace with OAuth
+      - "traefik.http.middlewares.traefikbasicAuth.basicauth.users=${TRAEFIK_USER}:${TRAEFIK_PASSW}"
+      - "traefik.http.routers.traefik-rtr.middlewares=traefikbasicAuth"
+      #- "traefik.http.routers.traefik-rtr.middlewares=traefik-forward-auth"
+      # Define API Redirect http listener
+      - "traefik.http.routers.traefik-rtr.entrypoints=https"
+      - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.${SUB_DOMAIN1}`)"
+      - "traefik.http.routers.traefik-rtr.service=api@internal"
+      - "traefik.http.routers.traefik-rtr.tls=true"
+      - "traefik.http.routers.traefik-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.traefik-rtr.tls.domains[0].main=${DOMAIN1}"
+      - "traefik.http.routers.traefik-rtr.tls.domains[0].sans=*.${SUB_DOMAIN1}"
