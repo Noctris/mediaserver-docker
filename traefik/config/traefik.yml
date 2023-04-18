@@ -1,0 +1,55 @@
+#########################################################################
+#
+# Traefik static configuration outside of docker compos
+#
+#
+#
+#########################################################################
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+
+providers:
+  file:
+    directory: /config
+    watch: true
+  docker:
+    watch: true
+    exposedByDefault: false
+
+log:
+  level: DEBUG
+  filePath: /traefik_data/traefik.log
+
+accessLog:
+  filePath: /traefik_data/access.log
+
+
+
+# entryPoints:
+#   mqtt:
+#     address: :1883/tcp
+#   web:
+#     address: :80
+#   websecure:
+#     address: :443
+      
+# tcp:
+#   routers:
+#     mqtt-routers:
+#       rule: "HostSNI('*')"
+#       entryPoints:
+#         - "mqtt"
+ # services:
+ #    mqtt:
+#       services:
+#         - name: emqx
+#           weight: 1
+          
+#     mqtt-ssl:
+#   emqx:
+#     loadbalancer:
+#       servers:
+#         - address: emqx1:1883
+#         - address: emqx2:1883    
+      

@@ -3,8 +3,10 @@ version: "3.7"
 networks:
   DMZ:
     name: DMZ
+    external: false
   backend:
     name: backend
+    external: false
 
 services:
   traefik:
@@ -19,13 +21,14 @@ services:
       - "80:80"
       - "443:443"
       - "8282:8080"
+      - "1883:1883"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${DOCKER_VOLUME_PATH}/traefik/data:/traefik_data"
-      #- "${TRAEFIK_CONFIG_SCRIPTS}/rules:/rules"
+      - "/home/mvhoof/dev/mediaserver-docker/traefik/config:/config"
     environment:
-      - "PUID=1000"
-      - "GUID=1000"
+      - PUID=1000
+      - GUID=1000
       - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
       - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
       - AZURE_RESOURCE_GROUP=${AZURE_RESOURCE_GROUP}
@@ -33,14 +36,43 @@ services:
       - AZURE_TENANT_ID=${AZURE_TENANT_ID}
       - AZURE_TTL=1
     command:
-      - --global.checkNewVersion=true
-      - --global.sendAnonymousUsage=true
-      - "--log.level=INFO"
+      - "--configFile=/home/mvhoof/dev/mediaserver-docker/traefik/config/traefik.yml"
+      - "--providers.file.directory=/config"
+      - "--providers.file.watch=true"
+      #- --global.checkNewVersion=true
+      #- --global.sendAnonymousUsage=true
+      - "--log.level=DEBUG"
       - "--log.filePath=/traefik_data/traefik.log"
       - "--accesslog=true"
       - "--accesslog.filePath=/traefik_data/access.log"
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
+      - "--entrypoints.mqtt.address=:1883"
+      #- '--tcp.services.mqtt.address=:1883'
+      #- "--entrypoints.https.http.middlewares=traefik-forward-auth@docker"
+      # Allow these IPs to set the X-Forwarded-* headers - Cloudflare IPs: https://www.cloudflare.com/ips/
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+
+      - "--api=true"
+      - "--api.dashboard=true"
+      #- "--api.insecure=true"
+      - "--certificatesResolvers.azure.acme.email=${ACME_MAIL}"
+      - "--certificatesResolvers.azure.acme.storage=/traefik_data/acme-azure.json"
+      - "--certificatesResolvers.azure.acme.caServer=https://acme-v02.api.letsencrypt.org/directory" #https://acme-v02.api.letsencrypt.org/directory"
+      - "--certificatesResolvers.azure.acme.dnschallenge=true"
+      - "--certificatesResolvers.azure.acme.dnschallenge.disablePropagationCheck=true"
+      - "--certificatesResolvers.azure.acme.dnschallenge.provider=azure"
+      #- "--certificatesResolvers.azure.acme.dnschallenge.resolvers=8.8.8.8:53"
+      #- "--certificatesResolvers.azure.acme.dnschallenge.resolvers=213.186.33.99:53"
+
+
+      # - "--certificatesResolvers.azure2.acme.email=${ACME_MAIL}"
+      # - "--certificatesResolvers.azure2.acme.storage=/traefik_data/acme-lab.json"
+      # - "--certificatesResolvers.azure2.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" #https://acme-v02.api.letsencrypt.org/directory" 
+      # - "--certificatesResolvers.azure2.acme.dnschallenge=true"
+      # - "--certificatesResolvers.azure.acme.dnschallenge.disablePropagationCheck=true"      
+      # - "--certificatesResolvers.azure2.acme.dnschallenge.provider=azure"
     labels:
       - "traefik.enable=true"
       #- 'traefik.http.routers.api.middlewares=authelia@docker'
@@ -55,10 +87,10 @@ services:
       #- "traefik.http.routers.traefik-rtr.middlewares=traefik-forward-auth"
       # Define API Redirect http listener
       - "traefik.http.routers.traefik-rtr.entrypoints=https"
-      - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.${SUB_DOMAIN1}`)"
+      - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.${SUB_DOMAIN_1}`)"
       - "traefik.http.routers.traefik-rtr.service=api@internal"
       - "traefik.http.routers.traefik-rtr.tls=true"
       - "traefik.http.routers.traefik-rtr.tls.certResolver=azure"
-      - "traefik.http.routers.traefik-rtr.tls.domains[0].main=${DOMAIN1}"
-      - "traefik.http.routers.traefik-rtr.tls.domains[0].sans=*.${SUB_DOMAIN1}"
-      - "traefik.docker.network=DMZ"
+      - "traefik.http.routers.traefik-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.traefik-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      - "traefik.docker.network=default"

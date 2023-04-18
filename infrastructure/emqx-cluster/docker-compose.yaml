@@ -1,0 +1,78 @@
+version: '3.7'
+
+services:
+  emqx1:
+    image: emqx/emqx:latest
+    environment:
+    - "EMQX_NAME=emqx"
+    - "EMQX_HOST=node1.emqx.io"
+    - "EMQX_CLUSTER__DISCOVERY_STRATEGY=static"
+    - "EMQX_CLUSTER__STATIC__SEEDS=[emqx@node1.emqx.io, emqx@node2.emqx.io]"
+    - "EMQX_PERSISTENT_SESSION_STORE__ENABLED=true"
+    - "EMQX_PERSISTENT_SESSION_STORE__BACKEND__SESSION__RAM_CACHE=false"
+    - "EMQX_PERSISTENT_SESSION_STORE__BACKEND__SESSION_MESSAGES__RAM_CACHE=false"
+    - "EMQX_PERSISTENT_SESSION_STORE__BACKEND__MESSAGES__RAM_CACHE=false"
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/emqx/01/data:/opt/emqx/data
+      #- ${DOCKER_VOLUME_PATH}/emqx/01/etc:/opt/emqx/etc
+      - ${DOCKER_VOLUME_PATH}/emqx/01/log:/opt/emqx/log
+    networks:
+      DMZ:
+        aliases:
+        - node1.emqx.io
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.rule=Host(`mq.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.entrypoints=https"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls=true"
+      - "traefik.http.services.emqx-cluster-ui-rtr.loadbalancer.server.port=18083"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      - "traefik.tcp.routers.emqx-cluster-mqtt-rtr.entrypoints=mqtt"
+      - "traefik.tcp.routers.emqx-cluster-mqtt-rtr.tls=false"
+      - "traefik.tcp.routers.emqx-cluster-mqtt-rtr.rule=ALPN(`mqtt`)"
+      #- "traefik.tcp.routers.emqx-cluster-mqtt-rtr.rule=Host(`*`)"
+      # - "traefik.tc.routers.emqx-cluster-mqtt-rtr.entrypoints=mqtt"
+      # - "traefik.tcp.routers.emqx-cluster-mqtt-rtr.tls=false"
+      - "traefik.tcp.services.emqx-cluster-mqtt-rtr.loadbalancer.server.port=1883"
+      - "traefik.docker.network=DMZ"
+
+  emqx2:
+    image: emqx/emqx:latest
+    environment:
+    - "EMQX_NAME=emqx"
+    - "EMQX_HOST=node2.emqx.io"
+    - "EMQX_CLUSTER__DISCOVERY_STRATEGY=static"
+    - "EMQX_CLUSTER__STATIC__SEEDS=[emqx@node1.emqx.io, emqx@node2.emqx.io]"
+    - "EMQX_PERSISTENT_SESSION_STORE__ENABLED=true"
+    - "EMQX_PERSISTENT_SESSION_STORE__BACKEND__SESSION__RAM_CACHE=false"
+    - "EMQX_PERSISTENT_SESSION_STORE__BACKEND__SESSION_MESSAGES__RAM_CACHE=false"
+    - "EMQX_PERSISTENT_SESSION_STORE__BACKEND__MESSAGES__RAM_CACHE=false"
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/emqx/02/data:/opt/emqx/data
+      #- ${DOCKER_VOLUME_PATH}/emqx/02/etc:/opt/emqx/etc
+      - ${DOCKER_VOLUME_PATH}/emqx/02/log:/opt/emqx/log
+    networks:
+      DMZ:
+        aliases:
+        - node2.emqx.io
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.rule=Host(`mq.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.entrypoints=https"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls=true"
+      - "traefik.http.services.emqx-cluster-ui-rtr.loadbalancer.server.port=18083"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.emqx-cluster-ui-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      #- "traefik.tcp.routers.emqx-cluster-mqtt-rtr.rule=ClientIP(`10.32.1.0/24`)"
+      - "traefik.tcp.routers.emqx-cluster-mqtt-rtr.entrypoints=mqtt"
+      - "traefik.tcp.routers.emqx-cluster-mqtt-rtr.tls=false"
+      - "traefik.tcp.services.emqx-cluster-mqtt-rtr.loadbalancer.server.port=1883"
+      - "traefik.docker.network=DMZ"
+
+networks:
+  DMZ:
+    external:
+      name: DMZ
