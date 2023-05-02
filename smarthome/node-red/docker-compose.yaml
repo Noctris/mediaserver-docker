@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  node-red:
+    image: nodered/node-red:latest
+    container_name: node-red
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/node-red:/data
+    networks:
+      DMZ:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=DMZ"
+      - "traefik.http.routers.node-red-rtr.rule=Host(`nodered.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.node-red-rtr.entrypoints=https"
+      - "traefik.http.routers.node-red-rtr.tls=true"
+      - "traefik.http.routers.node-red-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.node-red-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.node-red-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      # - "traefik.http.services.node-red-rtr.loadbalancer.server.port=18083"
+      # - "traefik.http.services.node-red-rtr.middlewares=middlewares-authentik@file"
+
+
+networks:
+  DMZ:
+    external:
+      name: DMZ

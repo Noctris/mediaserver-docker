@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  home-assistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:latest #ghcr.io/home-assistant/home-assistant:latest
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/home-assistant:/config
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/serial/by-id/:/dev/serial/by-id/
+     # - ${DOCKER_VOLUMES}/:/shared
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=${TZ}
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    labels:
+      - "traefik.enable=false"
+      - "traefik.http.routers.home-assistant-rtr.rule=Host(`hassio.${SUB_DOMAIN_1}`) || Host(`hassio.${DOMAIN_1}`)"
+      - "traefik.http.routers.home-assistant-rtr.entrypoints=https"
+      #- "traefik.http.services.home-assistant-svc.loadbalancer.servers.url=http://10.32.1.2:8123"
+      - "traefik.http.routers.home-assistant-rtr.tls=true"
+      - "traefik.http.routers.home-assistant-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.home-assistant-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.home-assistant-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      - "traefik.http.services.home-assistant-svc.loadbalancer.server.port=8123"

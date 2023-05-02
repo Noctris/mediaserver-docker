@@ -1,0 +1,51 @@
+services:
+  db:
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    image: mariadb:10.6.4-focal
+    # If you really want to use MySQL, uncomment the following line
+    #image: mysql:8.0.27
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - ${DATA_PATH}/blog.vanhoof.me/db:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    expose:
+      - 3306
+      - 33060
+  wordpress:
+    image: wordpress:latest
+    volumes:
+      - ${DATA_PATH}/blog.vanhoof.me/www:/var/www/html
+    restart: unless-stopped
+    networks:
+      - backend
+      - DMZ
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blog-vanhoof-me-secure.rule=Host(`blog.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.blog-vanhoof-me-secure.entrypoints=https"
+      - "traefik.http.routers.blog-vanhoof-me-secure.tls=true"
+      - "traefik.http.routers.blog-vanhoof-me-secure.tls.certResolver=azure"
+      - "traefik.http.routers.blog-vanhoof-me-secure.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.blog-vanhoof-me-secure.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      - "traefik.docker.network=DMZ"
+
+networks:
+  DMZ:
+    external:
+      name: DMZ
+  backend:
+    external:
+      name: backend
+

@@ -5,7 +5,7 @@ services:
     image: authelia/authelia
     container_name: authelia
     volumes:
-      - ${DOCKER_VOLUMES}/authelia:/config
+      - ${DOCKER_VOLUME_PATH}/authelia:/config
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.authelia.rule=Host(`authelia.${SUB_DOMAIN_1}`)'

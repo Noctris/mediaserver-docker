@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+   adguardhome:
+     image: adguard/adguardhome
+     container_name: adguardhome
+     ports:
+      # - 53:53/tcp
+     #  - 53:53/udp
+       - 784:784/udp
+       - 853:853/tcp
+       - 3000:3000/tcp
+       - 83:80/tcp
+     volumes:
+       - ${DOCKER_VOLUME_PATH}/adguard/work:/opt/adguardhome/work
+       - ${DOCKER_VOLUME_PATH}/adguard/conf:/opt/adguardhome/conf
+     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adguard-rtr.rule=Host(`adguard.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.adguard-rtr.entrypoints=https"
+      - "traefik.http.routers.adguard-rtr.tls=true"
+     # - "traefik.http.services.adguard-rtr.middlewares=middlewares-authentik@file"
+      - "traefik.http.routers.adguard-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.adguard-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.adguard-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      - "traefik.http.services.adguard-rtr.loadbalancer.server.port=80"

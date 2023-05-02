@@ -1,0 +1,30 @@
+http:
+    routers:
+      # proxmox-rtr-http:
+      #   entryPoints:
+      #     - http
+      #   rule: Host(`http://proxmox.home.vanhoof.me`)
+      #   service: "proxmox-rtr-http-backend"
+      proxmox-rtr-https:
+        entryPoints:
+            - https
+        rule: Host(`https://proxmox.nas.vanhoof.me`)
+        service: proxmox-fwd-svc
+        tls:
+          certResolver: azure
+          domains:
+            - main: "vanhoof.me"
+              sans:
+                - "*.vanhoof.me"
+                - "*.nas.vanhoof.me"
+    services:
+      # proxmox-rtr-http-backend:
+      #   loadBalancer:
+      #     servers:
+      #       - url: "https://10.32.1.3:8006"
+      proxmox-fwd-svc:
+        loadBalancer:
+          servers:
+            - url: "https://10.32.1.3:8006"
+          tls: {} 
+          

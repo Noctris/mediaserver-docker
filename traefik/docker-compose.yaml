@@ -25,8 +25,9 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${DOCKER_VOLUME_PATH}/traefik/data:/traefik_data"
-      - "/home/mvhoof/dev/mediaserver-docker/traefik/config:/config"
+      - "/home/mvhoof/dev/vanhoof/mediaserver-docker/traefik/config:/config"
     environment:
+      - TZ=${TZ}
       - PUID=1000
       - GUID=1000
       - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
@@ -36,7 +37,7 @@ services:
       - AZURE_TENANT_ID=${AZURE_TENANT_ID}
       - AZURE_TTL=1
     command:
-      - "--configFile=/home/mvhoof/dev/mediaserver-docker/traefik/config/traefik.yml"
+      - "--configFile=/home/mvhoof/dev/vanhoof/mediaserver-docker/traefik/traefik.yml"
       - "--providers.file.directory=/config"
       - "--providers.file.watch=true"
       #- --global.checkNewVersion=true
@@ -53,7 +54,7 @@ services:
       # Allow these IPs to set the X-Forwarded-* headers - Cloudflare IPs: https://www.cloudflare.com/ips/
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-
+      - "--serverstransport.insecureskipverify=true"
       - "--api=true"
       - "--api.dashboard=true"
       #- "--api.insecure=true"

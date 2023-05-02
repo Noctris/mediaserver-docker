@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  duplicati:
+    image: linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - TZ=${TZ}
+      - PUID=0
+      - PGID=0
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/duplicati:/config
+#      - ${BACKUP_PATH}:/backup
+      - /:/source
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.duplicati-secure.rule=Host(`duplicati.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.duplicati-secure.entrypoints=https"
+      - "traefik.http.routers.duplicati-secure.tls=true"
+      - "traefik.http.routers.duplicati-secure.tls.certResolver=azure"
+      - "traefik.http.routers.duplicati-secure.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.duplicati-secure.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+    restart: unless-stopped

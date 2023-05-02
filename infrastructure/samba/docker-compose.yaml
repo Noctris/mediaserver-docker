@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  samba:
+    image: "dperson/samba"
+    container_name: "samba"
+    healthcheck:  
+      disable: true  
+    environment:
+      - TZ=${TZ}
+              #sharename;path;browse;readonly;guest;users;admins;writelist;comment
+      - SHARE=scans;/data/scans;yes;no;yes;all;none;;Test Share
+      - SHARE=hassio;/data/hassio;yes;no;yes;all;none;;Home Assistant Config
+      - WORKGROUP={SAMBA_WORKGROUP} 
+      - NMBD=true
+     #Set file permissions on shares and files
+      - SMB=true
+      - PERMISSIONS=false
+      - USER=${MY_SAMBA_USER};${MY_SAMBA_USER}
+      - RECYCLE=true  
+    networks:
+      - default
+    ports:
+      - "137:137/udp"
+      - "138:138/udp"
+      - "139:139/tcp"
+      - "445:445/tcp"
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/samba:/data:z
+      - ${DOCKER_VOLUME_PATH}/home-assistant:/data/hassio:z
+      - ${DATA_PATH}/scans:/data/scans:z

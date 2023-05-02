@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    # networks:
-    #   - DMZ
+    networks:
+       - DMZ
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -15,11 +15,14 @@ services:
     ports:
       - 9443:9443 
       - 8000:8000
+    environment:
+      - TZ=${TZ}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer-rtr.rule=Host(`portainer.${SUB_DOMAIN_1}`)"
       - "traefik.http.routers.portainer-rtr.entrypoints=https"
       - "traefik.http.services.portainer-rtr.loadbalancer.server.port=9443"
+      - "traefik.http.services.portainer-rtr.tls={}"
       - "traefik.http.routers.portainer-rtr.tls=true"
       - "traefik.http.routers.portainer-rtr.tls.certResolver=azure"
       - "traefik.http.routers.portainer-rtr.tls.domains[0].main=${DOMAIN_1}"

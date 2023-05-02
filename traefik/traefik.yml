@@ -26,13 +26,13 @@ accessLog:
 
 
 
-# entryPoints:
-#   mqtt:
-#     address: :1883/tcp
-#   web:
-#     address: :80
-#   websecure:
-#     address: :443
+entryPoints:
+  mqtt:
+    address: :1883/tcp
+  web:
+    address: :80
+  websecure:
+    address: :443
       
 # tcp:
 #   routers:

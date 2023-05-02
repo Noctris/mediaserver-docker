@@ -1,0 +1,29 @@
+---
+version: '3.7'
+
+services:
+  home-panel:
+    image: timmo001/home-panel
+   # container_name: home-panel
+    # ports:
+    #   - 8234:8234
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/home-panel:/data
+    networks:
+      - DMZ
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.home-panel-rtr.rule=Host(`home-panel.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.home-panel-rtr.entrypoints=https"
+      - "traefik.http.routers.home-panel-rtr.tls=true"
+      - "traefik.http.routers.home-panel-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.home-panel-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.home-panel-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
+      - "traefik.docker.network=DMZ"
+      - "traefik.http.services.home-panel-svc.loadBalancer.server.port=8234"
+
+
+networks:
+  DMZ:
+    external:
+      name: DMZ

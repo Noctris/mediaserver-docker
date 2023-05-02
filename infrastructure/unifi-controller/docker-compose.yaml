@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  unifi-controller:
+    image: linuxserver/unifi-controller:latest
+    container_name: unifi-controller
+    restart: unless-stopped
+    environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=${TZ}
+        #- MEM_LIMIT=2048M #optional
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKER_VOLUMES}/unifi-controller:/config
+    ports:
+        - 8080:8080
+        - 3478:3478/udp
+        - 10001:10001/udp
+        - 8081:8081
+        - 8443:8443
+        - 8843:8843
+        - 8880:8880
+        - 6789:6789
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.unifi-controller-rtr.rule=Host(`unifi.${SUB_DOMAIN_1}`) || Host(`unifi.${DOMAIN_1}`)"
+      - "traefik.http.routers.unifi-controller-rtr.entrypoints=https"
+      #- "traefik.http.services.unifi-controller-svc.loadbalancer.servers.url=https://10.32.1.2:8443"
+      - "traefik.http.services.unifi-controller-svc.loadbalancer.server.port=8443"
+      - "traefik.http.services.unifi-controller-svc.loadbalancer.server.scheme=https"
+      - "traefik.http.routers.unifi-controller-rtr.tls=true"
+      - "traefik.http.routers.unifi-controller-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.unifi-controller-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.unifi-controller-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"

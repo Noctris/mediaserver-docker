@@ -1,0 +1,27 @@
+version: "3.5"
+
+services:
+  # Management Platform esphome to manage docker stuff
+  esphome:
+    image: esphome/esphome:latest
+    container_name: esphome
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - PUID=1000
+      - PGID=1000
+      - ESPHOME_DASHBOARD_USE_PING=true
+    volumes:
+      - ${DOCKER_VOLUME_PATH}/esphome:/config
+     #TODO: Shared Secret Status Thing? 
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.esphome-svc.loadBalancer.server.port=6052"
+      - "traefik.http.routers.esphome-rtr.rule=Host(`esphome.${SUB_DOMAIN_1}`)"
+      - "traefik.http.routers.esphome-rtr.entrypoints=https"
+      - "traefik.http.routers.esphome-rtr.tls=true"
+      - "traefik.http.routers.esphome-rtr.tls.certResolver=azure"
+      - "traefik.http.routers.esphome-rtr.tls.domains[0].main=${DOMAIN_1}"
+      - "traefik.http.routers.esphome-rtr.tls.domains[0].sans=*.${SUB_DOMAIN_1}"
